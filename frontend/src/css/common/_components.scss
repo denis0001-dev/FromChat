@@ -1,0 +1,92 @@
+@use "colors" as *;
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+
+    label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        color: $dark;
+    }
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid $gray;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+    }
+}
+
+.btn {
+    display: inline-block;
+    background: linear-gradient(135deg, $primary, $primary-dark);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+
+    &:hover {
+        background: linear-gradient(135deg, $primary-dark, $primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.alert {
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+
+    &.alert-success {
+        background-color: #C6F6D5;
+        color: #22543D;
+    }
+    
+    &.alert-danger {
+        background-color: #FED7D7;
+        color: #742A2A;
+    }
+}
+
+.link {
+    color: $primary; 
+    font-weight: 600;
+}
+
+button, input {
+    font: inherit;
+}

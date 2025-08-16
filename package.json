@@ -1,0 +1,30 @@
+{
+    "name": "pixelchat",
+    "private": true,
+    "version": "0.0.0",
+    "type": "module",
+    "scripts": {
+        "backend:run": "cd backend && ../.venv/bin/fastapi dev --port 8300 main.py",
+        "backend:dependencies": "python3 -m venv .venv && ./.venv/bin/pip3 install -r backend/requirements.txt",
+        "backend:reinstall": "rm -rf .venv && npm run backend:dependencies",
+
+        "frontend:dev": "vite frontend",
+        "frontend:build": "tsc --project frontend && vite build frontend",
+        "frontend:preview": "vite preview frontend",
+        "frontend:dependencies": "npm install",
+        
+        "dev": "concurrently 'npm run frontend:dev' 'npm run backend:run'",
+        "build": "npm run frontend:build",
+        "install": "npm run backend:dependencies"
+    },
+    "devDependencies": {
+        "concurrently": "^9.2.0",
+        "sass-embedded": "^1.90.0",
+        "postcss": "^8.5.6",
+        "typescript": "~5.8.3",
+        "vite": "^7.1.2",
+        "vite-plugin-html": "^3.2.2",
+        "terser": "^5.43.1",
+        "autoprefixer": "^10.4.21"
+    }
+}

@@ -1,0 +1,202 @@
+@use "common/colors" as *;
+
+#chat-interface {
+    /* Header */
+    .header {
+        background: linear-gradient(135deg, $primary, $primary-dark);
+        color: white;
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .logo {
+                font-size: 1.8rem;
+                font-weight: 700;
+                display: flex;
+                align-items: center;
+
+                i {
+                    margin-right: 10px;
+                    color: $secondary;
+                }
+            }
+
+            .nav-links {
+                display: flex;
+                list-style: none;
+
+                li {
+                    margin-left: 1.5rem;
+
+                    a {
+                        color: white;
+                        text-decoration: none;
+                        font-weight: 500;
+                        transition: all 0.3s ease;
+                        padding: 0.5rem 1rem;
+                        border-radius: 4px;
+
+                        &:hover {
+                            background-color: rgba(255, 255, 255, 0.2);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .chat-container {
+        display: flex;
+        height: calc(100vh - 70px);
+        margin-top: 70px;
+
+        .chat-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #F7FAFC;
+
+            .chat-header {
+                padding: 1rem;
+                background: white;
+                border-bottom: 1px solid $gray;
+                display: flex;
+                align-items: center;
+
+                .chat-header-avatar {
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    margin-right: 1rem;
+                }
+
+                .chat-header-info {
+                    h4 {
+                        font-size: 1.1rem;
+                        margin-bottom: 0.2rem;
+                    }
+
+                    p {
+                        font-size: 0.8rem;
+                        color: #718096;
+                    }
+
+                    .online-status {
+                        display: inline-block;
+                        width: 10px;
+                        height: 10px;
+                        border-radius: 50%;
+                        background-color: $success;
+                        margin-right: 5px;
+                    }
+                }
+            }
+
+            .chat-messages {
+                flex: 1;
+                padding: 1rem;
+                overflow-y: auto;
+
+                .message {
+                    margin-bottom: 1rem;
+                    max-width: 70%;
+                    position: relative;
+
+                    .message-inner {
+                        padding: 0.8rem 1rem;
+                        border-radius: 12px;
+                        position: relative;
+                        word-wrap: break-word;
+
+                        .message-time {
+                            font-size: 0.7rem;
+                            color: #A0AEC0;
+                            margin-top: 0.3rem;
+                            text-align: right;
+                        }
+                    }
+
+                    &.received .message-inner {
+                        background: white;
+                        border-top-left-radius: 0;
+                        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                    }
+
+                    &.sent {
+                        margin-left: auto;
+
+                        .message-inner {
+                            background: linear-gradient(135deg, $primary, $primary-dark);
+                            color: white;
+                            border-top-right-radius: 0;
+                        }
+
+                        .message-time {
+                            color: rgba(255, 255, 255, 0.7);
+                        }
+                    }
+                }
+            
+                .message-username {
+                    font-weight: 600;
+                    margin-bottom: 0.3rem;
+                    font-size: 0.9rem;
+                }
+            }
+        
+            .chat-input {
+                padding: 1rem;
+                background: white;
+                border-top: 1px solid $gray;
+
+                .input-group {
+                    display: flex;
+
+                    .message-input {
+                        flex: 1;
+                        padding: 0.8rem 1rem;
+                        border: 1px solid $gray;
+                        border-radius: 25px;
+                        font-size: 1rem;
+                        outline: none;
+                        transition: all 0.3s ease;
+
+                        &:focus {
+                            border-color: $primary;
+                            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+                        }
+                    }
+                    
+                    .send-btn {
+                        margin-left: 1rem;
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        background: linear-gradient(135deg, $primary, $primary-dark);
+                        color: white;
+                        border: none;
+                        cursor: pointer;
+                        transition: all 0.3s ease;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+
+                        &:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                        }
+                    }
+                } 
+            }
+        }
+    }
+}

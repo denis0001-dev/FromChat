@@ -1,0 +1,5 @@
+PyJWT>=2.8.0
+fastapi[standard]>=0.116.1
+pydantic>=2.11.7
+sqlalchemy>=2.0.43
+bcrypt>=4.3.0
