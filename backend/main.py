@@ -50,6 +50,7 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
     password = request.password.strip()
     confirm_password = request.confirm_password.strip()
 
+    # Validate input
     if not is_valid_username(username):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

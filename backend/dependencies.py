@@ -7,10 +7,18 @@ from db import SessionLocal
 from app import security
 
 
+# Зависимость для получения сессии БД
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
 # Зависимость для получения текущего пользователя
 def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security),
-    db: Session = Depends(lambda: SessionLocal())
+    db: Session = Depends(get_db)
 ):
     token = credentials.credentials
     payload = verify_token(token)
@@ -28,12 +36,3 @@ def get_current_user(
             headers={"WWW-Authenticate": "Bearer"},
         )
     return {"user_id": user.id, "username": user.username}
-
-
-# Зависимость для получения сессии БД
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
