@@ -379,3 +379,4 @@ pyrightconfig.json
 instance
 .vite
 *.db
+package-lock.json
