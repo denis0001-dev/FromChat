@@ -1,128 +1,128 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>PixelChat</title>
-      <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-  </head>
-  <body>
-      <!-- Login Form -->
-      <div id="login-form" class="auth-container">
-          <div class="auth-card fade-in">
-              <div class="auth-header">
-                  <h2><i class="fas fa-sign-in-alt"></i>Добро пожаловать!</h2>
-                  <p>Войдите в свой аккаунт</p>
-              </div>
-              <div class="auth-body">
-                  <div id="login-alerts"></div>
-                  
-                  <form id="login-form-element">
-                      <div class="form-group">
-                          <label for="login-username">Имя пользователя</label>
-                          <input type="text" class="form-control" id="login-username" name="username" required>
-                      </div>
-                      <div class="form-group">
-                          <label for="login-password">Пароль</label>
-                          <input type="password" class="form-control" id="login-password" name="password" required>
-                      </div>
-                      <button type="submit" class="btn btn-block">Войти</button>
-                  </form>
-                  
-                  <div class="text-center mt-3">
-                      <p>Ещё нет аккаунта? <a href="#" id="register-link" class="link">Зарегистрируйтесь</a></p>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- Register Form -->
-      <div id="register-form" class="auth-container" style="display: none;">
-          <div class="auth-card fade-in">
-              <div class="auth-header">
-                  <h2><i class="fas fa-user-plus"></i> Регистрация</h2>
-                  <p>Создайте новый аккаунт</p>
-              </div>
-              <div class="auth-body">
-                  <div id="register-alerts"></div>
-                  
-                  <form id="register-form-element">
-                      <div class="form-group">
-                          <label for="register-username">Имя пользователя</label>
-                          <input type="text" class="form-control" id="register-username" name="username" required>
-                          <small class="text-muted">От 3 до 20 символов, без пробелов</small>
-                      </div>
-                      <div class="form-group">
-                          <label for="register-password">Пароль</label>
-                          <input type="password" class="form-control" id="register-password" name="password" required>
-                          <small class="text-muted">Минимум 5 символов, без пробелов</small>
-                      </div>
-                      <div class="form-group">
-                          <label for="register-confirm-password">Подтвердите пароль</label>
-                          <input type="password" class="form-control" id="register-confirm-password" name="confirm_password" required>
-                      </div>
-                      <button type="submit" class="btn btn-block">Зарегистрироваться</button>
-                  </form>
-                  
-                  <div class="text-center mt-3">
-                      <p>
-                        Уже есть аккаунт? 
-                        <a href="#" id="login-link" class="link">Войдите</a>
-                    </p>
-                  </div>
-              </div>
-          </div>
-      </div>
-
-      <!-- Chat Interface -->
-      <div id="chat-interface" style="display: none;">
-          <div class="header">
-            <div class="container header-content">
-                <div class="logo">
-                    <i class="fas fa-bolt"></i>
-                    <span>PixelChat</span>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PixelChat</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    </head>
+    <body>
+        <!-- Login Form -->
+        <div id="login-form" class="auth-container">
+            <div class="auth-card fade-in">
+                <div class="auth-header">
+                    <h2><span class="material-symbols filled large">login</span> Добро пожаловать!</h2>
+                    <p>Войдите в свой аккаунт</p>
                 </div>
-                <ul class="nav-links">
-                    <li>
-                        <a href="#" id="chat-link">
-                            <i class="fas fa-comment-alt"></i> Общий чат
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="logout-link">
-                            <i class="fas fa-sign-out-alt"></i> Выйти
-                        </a>
-                    </li>
-                </ul>
+                <div class="auth-body">
+                    <div id="login-alerts"></div>
+                    
+                    <form id="login-form-element">
+                        <div class="form-group">
+                            <label for="login-username">Имя пользователя</label>
+                            <input type="text" class="form-control" id="login-username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Пароль</label>
+                            <input type="password" class="form-control" id="login-password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn btn-block">Войти</button>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <p>Ещё нет аккаунта? <a href="#" id="register-link" class="link">Зарегистрируйтесь</a></p>
+                    </div>
+                </div>
             </div>
-          </div>
+        </div>
 
-          <div class="container chat-container">
-              <div class="chat-main">
-                  <div class="chat-header">
-                      <img src="/default-avatar.png" alt="Avatar" class="chat-header-avatar">
-                      <div class="chat-header-info">
-                          <h4>Общий чат</h4>
-                          <p><span class="online-status"></span> Онлайн</p>
-                      </div>
-                  </div>
-                  
-                  <div class="chat-messages" id="chat-messages">
-                      <!-- Messages will be loaded here dynamically -->
-                  </div>
-                  
-                  <div class="chat-input">
-                      <form class="input-group" id="message-form">
-                          <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
-                          <button type="submit" class="send-btn">
-                              <i class="fas fa-paper-plane"></i>
-                          </button>
-                      </form>
-                  </div>
-              </div>
-          </div>
-      </div>
+        <!-- Register Form -->
+        <div id="register-form" class="auth-container" style="display: none;">
+            <div class="auth-card fade-in">
+                <div class="auth-header">
+                    <h2><span class="material-symbols filled large">person_add</span> Регистрация</h2>
+                    <p>Создайте новый аккаунт</p>
+                </div>
+                <div class="auth-body">
+                    <div id="register-alerts"></div>
+                    
+                    <form id="register-form-element">
+                        <div class="form-group">
+                            <label for="register-username">Имя пользователя</label>
+                            <input type="text" class="form-control" id="register-username" name="username" required>
+                            <small class="text-muted">От 3 до 20 символов, без пробелов</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Пароль</label>
+                            <input type="password" class="form-control" id="register-password" name="password" required>
+                            <small class="text-muted">Минимум 5 символов, без пробелов</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">Подтвердите пароль</label>
+                            <input type="password" class="form-control" id="register-confirm-password" name="confirm_password" required>
+                        </div>
+                        <button type="submit" class="btn btn-block">Зарегистрироваться</button>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <p>
+                            Уже есть аккаунт? 
+                            <a href="#" id="login-link" class="link">Войдите</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <script src="src/main.ts" type="module"></script>
-  </body>
+        <!-- Chat Interface -->
+        <div id="chat-interface" style="display: none;">
+            <div class="header">
+                <div class="container header-content">
+                    <div class="logo">
+                        <i class="fas fa-bolt"></i>
+                        <span>PixelChat</span>
+                    </div>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="#" id="chat-link">
+                                <span class="material-symbols filled">chat_bubble</span> Общий чат
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="logout-link">
+                                <i class="fas fa-sign-out-alt"></i> Выйти
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="container chat-container">
+                <div class="chat-main">
+                    <div class="chat-header">
+                        <img src="/default-avatar.png" alt="Avatar" class="chat-header-avatar">
+                        <div class="chat-header-info">
+                            <h4>Общий чат</h4>
+                            <p><span class="online-status"></span> Онлайн</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-messages" id="chat-messages">
+                        <!-- Messages will be loaded here dynamically -->
+                    </div>
+                    
+                    <div class="chat-input">
+                        <form class="input-group" id="message-form">
+                            <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
+                            <button type="submit" class="send-btn">
+                                <span class="material-symbols filled">send</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="src/main.ts" type="module"></script>
+    </body>
 </html> 

@@ -43,6 +43,10 @@
                         transition: all 0.3s ease;
                         padding: 0.5rem 1rem;
                         border-radius: 4px;
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 10px;
 
                         &:hover {
                             background-color: rgba(255, 255, 255, 0.2);
