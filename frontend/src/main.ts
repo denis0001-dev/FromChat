@@ -99,20 +99,18 @@ export function sendMessage() {
     }
 }
 
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    // Настройка отправки сообщений
-    document.getElementById('message-form')!.addEventListener('submit', (e) => {
-        e.preventDefault();
-        sendMessage();
-    });
 
-    // Проверка новых сообщений каждые 2 секунды (only when chat is visible)
-    setInterval(() => {
-        if (document.getElementById('chat-interface')!.style.display !== 'none') {
-            loadMessages();
-        }
-    }, 2000);
+// Initialization
+document.getElementById('message-form')!.addEventListener('submit', (e) => {
+    e.preventDefault();
+    sendMessage();
+});
 
-    showLogin();
-}); 
+// Проверка новых сообщений каждые 2 секунды (only when chat is visible)
+setInterval(() => {
+    if (document.getElementById('chat-interface')!.style.display !== 'none') {
+        loadMessages();
+    }
+}, 2000);
+
+showLogin();
