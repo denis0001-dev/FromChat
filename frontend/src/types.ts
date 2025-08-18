@@ -45,3 +45,24 @@ export interface LoginResponse {
     username: string;
     token: string;
 }
+
+// ---------------
+// WebSocket types
+// ---------------
+
+export interface WebSocketMessage {
+    type: string;
+    credentials?: WebSocketCredentials;
+    data?: any;
+    error?: WebSocketError;
+}
+
+export interface WebSocketError {
+    code: number;
+    detail: string;
+}
+
+export interface WebSocketCredentials {
+    scheme: string;
+    credentials: string;
+}

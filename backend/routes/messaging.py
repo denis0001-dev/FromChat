@@ -1,6 +1,7 @@
 from datetime import datetime
 from email.policy import HTTP
-from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect, WebSocketException, logger, status
+from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from dependencies import get_current_user, get_db
 from models import Message, SendMessageRequest
@@ -70,41 +71,56 @@ class MessaggingSocketManager:
     def __init__(self) -> None:
         self.connections: list[WebSocket] = []
 
-    def get_dependencies(self):
-        return get_current_user(), next(get_db())
-
     async def send_error(self, websocket: WebSocket, type: str, e: HTTPException):
         await websocket.send_json({"type": type, "error": {"code": e.status_code, "detail": e.detail}})
 
-    async def handle_connection(self, websocket: WebSocket):
+    async def handle_connection(self, websocket: WebSocket, db: Session):
         while True:
             data = await websocket.receive_json()
+            type = data["type"]
 
-            if data.type == "ping":
+            def get_current_user_inner() -> dict | None:
+                if data["credentials"]:
+                    return get_current_user(
+                        HTTPAuthorizationCredentials(
+                            scheme=data["credentials"]["scheme"], 
+                            credentials=data["credentials"]["credentials"]
+                        ), 
+                        db
+                    )
+                else:
+                    return None
+
+            if type == "ping":
                 await websocket.send_json({"type": "ping", "data": {"status": "success"}})
-            elif data.type == "getMessages":
+            elif type == "getMessages":
                 try:
-                    current_user, db = self.get_dependencies()
+                    current_user = get_current_user_inner()
+                    if not current_user:
+                        raise HTTPException(401)
 
-                    await websocket.send_json({"type": data.type, "data": await get_messages_inner(current_user, db)})
+                    await websocket.send_json({"type": type, "data": await get_messages_inner(current_user, db)})
                 except HTTPException as e:
-                    await self.send_error(websocket, data.type, e)
-            elif data.type == "sendMessage":
+                    await self.send_error(websocket, type, e)
+            elif type == "sendMessage":
                 try:
-                    current_user, db = self.get_dependencies()
-                    request: SendMessageRequest = SendMessageRequest.model_validate(data.data)
+                    current_user = get_current_user_inner()
+                    if not current_user:
+                        raise HTTPException(401)
+                    
+                    request: SendMessageRequest = SendMessageRequest.model_validate(data["data"])
 
                     response = await send_message_inner(request, current_user, db)
                     await self.broadcast({
                         "type": "newMessage",
-                        "data": response.message
+                        "data": response["message"]
                     })
 
-                    await websocket.send_json({"type": data.type, "data": response})
+                    await websocket.send_json({"type": type, "data": response})
                 except HTTPException as e:
-                    await self.send_error(websocket, data.type, e)
+                    await self.send_error(websocket, type, e)
             else:
-                await websocket.send_json({"type": data.type, "error": {"code": 400, "detail": "Invalid type"}})
+                await websocket.send_json({"type": type, "error": {"code": 400, "detail": "Invalid type"}})
 
     async def disconnect(self, websocket: WebSocket, code: int = 1000, message: str | None = None):
         try:
@@ -112,11 +128,11 @@ class MessaggingSocketManager:
         finally: 
             self.connections.remove(websocket)
     
-    async def connect(self, websocket: WebSocket):
+    async def connect(self, websocket: WebSocket, db: Session):
         await websocket.accept()
         self.connections.append(websocket)
         try:
-            await self.handle_connection(websocket)
+            await self.handle_connection(websocket, db)
         finally:
             self.connections.remove(websocket)
 
@@ -127,5 +143,9 @@ class MessaggingSocketManager:
 messagingManager = MessaggingSocketManager()
 
 @router.websocket("/chat/ws")
-async def messaging(websocket: WebSocket):
-    await messagingManager.connect(websocket)
+async def chat_websocket(
+    websocket: WebSocket,
+    db: Session = Depends(get_db)
+):
+    logger.logger.log(1, f"WebSocket connected: {websocket}")
+    await messagingManager.connect(websocket, db)

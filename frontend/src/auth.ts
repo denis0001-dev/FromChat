@@ -4,7 +4,7 @@ import { API_BASE_URL } from "./config";
 
 // Authentication and navigation handling
 export let currentUser: User | null = null;
-let authToken: string | null = null;
+export let authToken: string | null = null;
 
 
 // Helper function to get auth headers
@@ -39,6 +39,7 @@ export function showChat() {
     document.getElementById('login-form')!.style.display = 'none';
     document.getElementById('register-form')!.style.display = 'none';
     document.getElementById('chat-interface')!.style.display = 'block';
+    loadMessages();
 }
 
 // Clear all alerts

@@ -1,8 +1,10 @@
 import './css/style.scss';
-import { showLogin, getAuthHeaders } from './auth';
-import { API_BASE_URL } from './config';
-import type { Message, Messages } from './types';
+import { showLogin, getAuthHeaders, authToken } from './auth';
+import { API_BASE_URL, API_FULL_BASE_URL } from './config';
+import type { Message, Messages, WebSocketMessage } from './types';
 import "./links";
+
+const websocket = new WebSocket(`ws://${API_FULL_BASE_URL}/chat/ws`);
 
 
 // Функция для форматирования времени
@@ -91,30 +93,47 @@ export function sendMessage() {
     const message = input.value.trim();
 
     if (message) {
-        fetch(`${API_BASE_URL}/send_message`, {
-            method: 'POST',
-            headers: getAuthHeaders(),
-            body: JSON.stringify({ content: message })
-        }).then(response => {
-            if (response.ok) {
-                input.value = '';
+        const payload: WebSocketMessage = {
+            data: {
+                content: message
+            }, 
+            credentials: {
+                scheme: "Bearer", 
+                credentials: authToken!
+            },
+            type: "sendMessage"
+        }
+
+        let callback: ((e: MessageEvent) => void) | null = null
+        callback = (e) => {
+            websocket.removeEventListener("message", callback!);
+            const response: WebSocketMessage = JSON.parse(e.data)
+            console.log(response)
+            if (!response.error) {
+                input.value = "";
             }
-        });
+        }
+        websocket.addEventListener("message", callback);
+
+        websocket.send(JSON.stringify(payload));
     }
 }
 
 
-// Initialization
+websocket.addEventListener("message", (e) => {
+    const message: WebSocketMessage = JSON.parse(e.data);
+    switch (message.type) {
+        case "newMessage": {
+            const newMessage: Message = message.data;
+            addMessage(newMessage, newMessage.is_author);
+            break;
+        }
+    }
+});
+
+showLogin();
+
 document.getElementById('message-form')!.addEventListener('submit', (e) => {
     e.preventDefault();
     sendMessage();
 });
-
-// Проверка новых сообщений каждые 2 секунды (only when chat is visible)
-setInterval(() => {
-    if (document.getElementById('chat-interface')!.style.display !== 'none') {
-        loadMessages();
-    }
-}, 2000);
-
-showLogin();
