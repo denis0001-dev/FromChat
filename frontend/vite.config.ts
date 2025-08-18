@@ -48,6 +48,7 @@ export default defineConfig({
                 /^webfonts/
             ]
         },
-        cssMinify: true
+        cssMinify: true,
+        assetsInlineLimit: 0
     }
 })
