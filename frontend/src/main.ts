@@ -19,15 +19,20 @@ function formatTime(dateString: string) {
 export function addMessage(message: Message, isAuthor: boolean) {
     const messagesContainer = document.querySelector('.chat-messages') as HTMLElement;
     const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${isAuthor ? 'sent' : 'received'}`;
+    messageDiv.classList.add("message");
+    if (isAuthor) {
+        messageDiv.classList.add("sent");
+    } else {
+        messageDiv.classList.add("receive");
+    }
     messageDiv.dataset.id = `${message.id}`;
 
     const messageInner = document.createElement('div');
-    messageInner.className = 'message-inner';
+    messageInner.classList.add('message-inner');
 
     if (!isAuthor) {
         const usernameDiv = document.createElement('div');
-        usernameDiv.className = 'message-username';
+        usernameDiv.classList.add('message-username');
         usernameDiv.textContent = message.username;
         messageInner.appendChild(usernameDiv);
     }
@@ -37,13 +42,12 @@ export function addMessage(message: Message, isAuthor: boolean) {
     messageInner.appendChild(contentDiv);
 
     const timeDiv = document.createElement('div');
-    timeDiv.className = 'message-time';
+    timeDiv.classList.add('message-time');
     timeDiv.textContent = formatTime(message.timestamp);
 
     if (isAuthor && message.is_read) {
-        const checkIcon = document.createElement('i');
-        checkIcon.className = 'fas fa-check-double';
-        checkIcon.style = 'margin-left: 5px; color: #48BB78;';
+        const checkIcon = document.createElement('span');
+        checkIcon.classList.add("material-symbols", "outlined");
         timeDiv.appendChild(checkIcon);
     }
 
