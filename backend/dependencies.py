@@ -1,11 +1,11 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPAuthorizationCredentials
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 from utils import *
 from models import *
 from db import SessionLocal
-from app import security
 
+security = HTTPBearer()
 
 # Зависимость для получения сессии БД
 def get_db():

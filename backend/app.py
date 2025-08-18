@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from fastapi.security import HTTPBearer
 from fastapi.middleware.cors import CORSMiddleware
+
+from routes import account, messaging
 
 # Инициализация FastAPI
 app = FastAPI(title="PixelChat")
@@ -14,6 +15,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# Security для FastAPI
-security = HTTPBearer()
+# Routes
+app.include_router(account.router)
+app.include_router(messaging.router)
