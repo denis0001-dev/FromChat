@@ -43,11 +43,6 @@ export default defineConfig({
                 drop_debugger: true
             }
         },
-        rollupOptions: {
-            external: [
-                /^webfonts/
-            ]
-        },
         cssMinify: true,
         assetsInlineLimit: 0
     }
