@@ -35,4 +35,4 @@ def get_current_user(
             detail="User not found",
             headers={"WWW-Authenticate": "Bearer"},
         )
-    return {"user_id": user.id, "username": user.username}
+    return user

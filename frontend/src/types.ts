@@ -11,7 +11,6 @@ export interface Message {
     username: string;
     content: string;
     is_read: boolean;
-    is_author: boolean;
     timestamp: string;
 }
 
@@ -20,6 +19,10 @@ export interface Messages {
 }
 
 export interface User {
+    id: number;
+    created_at: string;
+    last_seen: string;
+    online: boolean;
     username: string;
 }
 
@@ -42,7 +45,7 @@ export interface RegisterRequest {
 
 // Responses
 export interface LoginResponse {
-    username: string;
+    user: User;
     token: string;
 }
 

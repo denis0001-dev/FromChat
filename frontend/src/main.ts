@@ -1,5 +1,5 @@
 import './css/style.scss';
-import { showLogin, getAuthHeaders, authToken } from './auth';
+import { showLogin, getAuthHeaders, authToken, currentUser } from './auth';
 import { API_BASE_URL, API_FULL_BASE_URL } from './config';
 import type { Message, Messages, WebSocketMessage } from './types';
 import "./links";
@@ -80,7 +80,7 @@ export function loadMessages() {
                 // Добавляем только новые сообщения
                 data.messages.forEach(msg => {
                     if (msg.id > lastMessageId) {
-                        addMessage(msg, msg.is_author);
+                        addMessage(msg, msg.username == currentUser!.username);
                     }
                 });
             }
@@ -125,7 +125,7 @@ websocket.addEventListener("message", (e) => {
     switch (message.type) {
         case "newMessage": {
             const newMessage: Message = message.data;
-            addMessage(newMessage, newMessage.is_author);
+            addMessage(newMessage, newMessage.username == currentUser!.username);
             break;
         }
     }

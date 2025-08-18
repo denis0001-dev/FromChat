@@ -4,34 +4,33 @@ from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisco
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from dependencies import get_current_user, get_db
-from models import Message, SendMessageRequest
+from models import Message, SendMessageRequest, User
 
 
 router = APIRouter()
 
-def convert_message(msg: Message, current_user: dict) -> dict:
+def convert_message(msg: Message) -> dict:
     return {
         "id": msg.id,
         "content": msg.content,
         "timestamp": msg.timestamp.isoformat(),
-        "is_author": msg.user_id == current_user["user_id"],
         "is_read": msg.is_read,
         "username": msg.author.username
     }
 
-async def get_messages_inner(current_user: dict, db: Session):
+async def get_messages_inner(db: Session):
     messages = db.query(Message).order_by(Message.timestamp.asc()).all()
 
     messages_data = []
     for msg in messages:
-        messages_data.append(convert_message(msg, current_user))
+        messages_data.append(convert_message(msg))
 
     return {
         "status": "success",
         "messages": messages_data
     }
 
-async def send_message_inner(request: SendMessageRequest, current_user: dict, db: Session):
+async def send_message_inner(request: SendMessageRequest, current_user: User, db: Session):
     if not request.content.strip():
         raise HTTPException(
             status_code=400,
@@ -40,7 +39,7 @@ async def send_message_inner(request: SendMessageRequest, current_user: dict, db
 
     new_message = Message(
         content=request.content.strip(),
-        user_id=current_user["user_id"],
+        user_id=current_user.id,
         timestamp=datetime.now()
     )
 
@@ -48,12 +47,12 @@ async def send_message_inner(request: SendMessageRequest, current_user: dict, db
     db.commit()
     db.refresh(new_message)
 
-    return {"status": "success", "message": convert_message(new_message, current_user)}
+    return {"status": "success", "message": convert_message(new_message)}
 
 @router.post("/send_message")
 async def send_message(
     request: SendMessageRequest,
-    current_user: dict = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
     return await send_message_inner(request, current_user, db)
@@ -61,10 +60,10 @@ async def send_message(
 
 @router.get("/get_messages")
 async def get_messages(
-    current_user: dict = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    return await get_messages_inner(current_user, db)
+    return await get_messages_inner(db)
 
 
 class MessaggingSocketManager:
@@ -79,7 +78,7 @@ class MessaggingSocketManager:
             data = await websocket.receive_json()
             type = data["type"]
 
-            def get_current_user_inner() -> dict | None:
+            def get_current_user_inner() -> User | None:
                 if data["credentials"]:
                     return get_current_user(
                         HTTPAuthorizationCredentials(

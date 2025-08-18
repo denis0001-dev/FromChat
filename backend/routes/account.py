@@ -2,6 +2,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from routes.messaging import convert_message
 from dependencies import get_current_user, get_db
 from models import LoginRequest, RegisterRequest, User
 from utils import create_token, get_password_hash, verify_password
@@ -9,11 +10,20 @@ from validation import is_valid_password, is_valid_username
 
 router = APIRouter()
 
+def convert_user(user: User) -> dict:
+    return {
+        "id": user.id,
+        "created_at": user.created_at.isoformat(),
+        "last_seen": user.last_seen.isoformat(),
+        "online": user.online,
+        "username": user.username
+    }
+
 @router.get("/check_auth")
-def check_auth(current_user: dict = Depends(get_current_user)):
+def check_auth(current_user: User = Depends(get_current_user)):
     return {
         "authenticated": True,
-        "username": current_user["username"]
+        "username": current_user.username
     }
 
 
@@ -37,7 +47,7 @@ def login(request: LoginRequest, db: Session = Depends(get_db)):
         "status": "success",
         "message": "Login successful",
         "token": token,
-        "username": user.username
+        "user": convert_user(user)
     }
 
 
@@ -92,14 +102,12 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
 
 @router.get("/logout")
 def logout(
-    current_user: dict = Depends(get_current_user),
+    current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    user = db.query(User).filter(User.id == current_user["user_id"]).first()
-    if user:
-        user.online = False
-        user.last_seen = datetime.now()
-        db.commit()
+    current_user.online = False
+    current_user.last_seen = datetime.now()
+    db.commit()
 
     return {
         "status": "success",

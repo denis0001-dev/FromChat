@@ -90,7 +90,7 @@ document.getElementById('login-form-element')!.addEventListener('submit', async 
             const data: LoginResponse = await response.json();
             // Store the JWT token
             authToken = data.token;
-            currentUser = { username: data.username };
+            currentUser = data.user;
             showChat();
             loadMessages(); // Start loading messages
         } else {
