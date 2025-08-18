@@ -4,8 +4,8 @@
 @use "common/components";
 @use "common/colors" as *;
 
-@use "lib/fonts/montserrat/index" as *;
-@use "lib/fonts/material-symbols/index" as *;
+@use "lib/fonts/montserrat";
+@use "lib/fonts/material-symbols";
 
 * {
     margin: 0;
