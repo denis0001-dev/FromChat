@@ -77,7 +77,7 @@
         <!-- Chat Interface -->
         <div id="chat-interface" style="display: none;">
             <div class="header">
-                <div class="container header-content">
+                <div class="header-content">
                     <div class="logo">
                         <span id="productname">Loading...</span>
                     </div>
@@ -96,7 +96,7 @@
                 </div>
             </div>
 
-            <div class="container chat-container">
+            <div class="chat-container">
                 <div class="chat-main">
                     <div class="chat-header">
                         <img src="src/images/default-avatar.png" alt="Avatar" class="chat-header-avatar">
@@ -110,13 +110,15 @@
                         <!-- Messages will be loaded here dynamically -->
                     </div>
                     
-                    <div class="chat-input">
-                        <form class="input-group" id="message-form">
-                            <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
-                            <button type="submit" class="send-btn">
-                                <span class="material-symbols filled">send</span>
-                            </button>
-                        </form>
+                    <div class="chat-input-wrapper">
+                        <div class="chat-input">
+                            <form class="input-group" id="message-form">
+                                <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
+                                <button type="submit" class="send-btn">
+                                    <span class="material-symbols filled">send</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

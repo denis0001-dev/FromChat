@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Dark
 $color-dark-primary: rgb(145 206 244);
 $color-dark-surface-tint: rgb(145 206 244);
@@ -99,3 +101,13 @@ $color-light-surface-container-low: rgb(240 244 248);
 $color-light-surface-container: rgb(235 238 243);
 $color-light-surface-container-high: rgb(229 232 237);
 $color-light-surface-container-highest: rgb(223 227 231);
+
+@mixin hoverStateLayer($background: $color-surface, $overlayColor: $color-dark-on-primary) {
+    &:hover {
+        background-color: color.mix($overlayColor, $background, 8%);
+    }
+
+    &:active {
+        background-color: color.mix($overlayColor, $background, 18%);
+    }
+}

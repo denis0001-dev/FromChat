@@ -25,7 +25,7 @@ export function addMessage(message: Message, isAuthor: boolean) {
     if (isAuthor) {
         messageDiv.classList.add("sent");
     } else {
-        messageDiv.classList.add("receive");
+        messageDiv.classList.add("received");
     }
     messageDiv.dataset.id = `${message.id}`;
 

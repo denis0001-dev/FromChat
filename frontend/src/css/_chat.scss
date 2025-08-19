@@ -1,12 +1,12 @@
 @use "common/colors" as *;
+@use "common/material" as *;
 
 #chat-interface {
     /* Header */
     .header {
-        background: linear-gradient(135deg, $primary, $primary-dark);
+        background-color: $color-dark-surface-container;
         color: white;
-        padding: 1rem 0;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 16px 16px;
         position: fixed;
         width: 100%;
         top: 0;
@@ -60,14 +60,13 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            background-color: #F7FAFC;
 
             .chat-header {
-                padding: 1rem;
-                background: white;
-                border-bottom: 1px solid $gray;
+                padding: 16px;
+                background: $color-dark-surface-container;
                 display: flex;
                 align-items: center;
+                box-shadow: black 0px 0px 20px;
 
                 .chat-header-avatar {
                     width: 45px;
@@ -104,6 +103,19 @@
                 padding: 1rem;
                 overflow-y: auto;
 
+                &::-webkit-scrollbar {
+                    width: 7px;
+                }
+
+                &::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+
+                &::-webkit-scrollbar-thumb {
+                    background-color: $color-dark-surface-container-high;
+                    border-radius: 20px;
+                }
+
                 .message {
                     margin-bottom: 1rem;
                     max-width: 70%;
@@ -117,15 +129,15 @@
 
                         .message-time {
                             font-size: 0.7rem;
-                            color: #A0AEC0;
+                            color: $color-dark-on-surface-variant;
                             margin-top: 0.3rem;
                             text-align: right;
                         }
                     }
 
                     &.received .message-inner {
-                        background: white;
-                        border-top-left-radius: 0;
+                        background-color: $color-dark-surface-container;
+                        border-top-left-radius: 5px;
                         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
                     }
 
@@ -133,13 +145,13 @@
                         margin-left: auto;
 
                         .message-inner {
-                            background: linear-gradient(135deg, $primary, $primary-dark);
-                            color: white;
-                            border-top-right-radius: 0;
+                            background-color: $color-dark-primary-container;
+                            color: $color-dark-on-primary-container;
+                            border-top-right-radius: 5px;
                         }
 
                         .message-time {
-                            color: rgba(255, 255, 255, 0.7);
+                            color: $color-dark-on-primary-container;
                         }
                     }
                 }
@@ -150,50 +162,64 @@
                     font-size: 0.9rem;
                 }
             }
-        
-            .chat-input {
-                padding: 1rem;
-                background: white;
-                border-top: 1px solid $gray;
 
-                .input-group {
-                    display: flex;
+            .chat-input-wrapper {
+                position: relative;
 
-                    .message-input {
-                        flex: 1;
-                        padding: 0.8rem 1rem;
-                        border: 1px solid $gray;
-                        border-radius: 25px;
-                        font-size: 1rem;
-                        outline: none;
-                        transition: all 0.3s ease;
+                &::before {
+                    $height: 20px;
 
-                        &:focus {
-                            border-color: $primary;
-                            box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
-                        }
-                    }
-                    
-                    .send-btn {
-                        margin-left: 1rem;
-                        width: 50px;
-                        height: 50px;
-                        border-radius: 50%;
-                        background: linear-gradient(135deg, $primary, $primary-dark);
-                        color: white;
-                        border: none;
-                        cursor: pointer;
-                        transition: all 0.3s ease;
+                    content: '';
+                    position: absolute;
+                    top: -$height;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    height: $height;
+                    background: linear-gradient(
+                        0deg,
+                        $color-dark-surface,
+                        rgba(255, 255, 255, 0),
+                    );
+                }
+
+                .chat-input {
+                    margin: 0 20px 20px 20px;
+                    background-color: $color-dark-surface-container;
+                    border-radius: 40px;
+    
+                    .input-group {
                         display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        &:hover {
-                            transform: translateY(-2px);
-                            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    
+                        .message-input {
+                            flex: 1;
+                            padding: 10px 20px;
+                            border: none;
+                            border-radius: 25px;
+                            font-size: 1rem;
+                            outline: none;
+                            background-color: inherit;
+                            caret-color: $color-dark-primary;
                         }
-                    }
-                } 
+                        
+                        .send-btn {
+                            margin: 10px;
+                            width: 50px;
+                            height: 50px;
+                            border-radius: 50%;
+                            background-color: $color-dark-primary;
+                            color: $color-dark-on-primary;
+                            border: none;
+                            cursor: pointer;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            transition: background-color 0.25s ease;
+    
+                            @include hoverStateLayer($background: $color-dark-primary);
+                        }
+                    } 
+                }
             }
         }
     }

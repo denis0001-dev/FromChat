@@ -3,6 +3,7 @@
 @use "common/animations";
 @use "common/components";
 @use "common/colors" as *;
+@use "common/material" as *;
 
 @use "lib/fonts/montserrat";
 @use "lib/fonts/material-symbols";
@@ -15,7 +16,7 @@
 
 body {
     font-family: 'Montserrat', sans-serif;
-    background-color: #f8f9fa;
-    color: $dark;
+    background-color: $color-dark-surface;
+    color: $color-dark-on-surface;
     line-height: 1.6;
 }
