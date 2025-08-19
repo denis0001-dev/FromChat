@@ -143,3 +143,4 @@ document.getElementById('message-form')!.addEventListener('submit', (e) => {
 });
 
 document.getElementById("productname")!.textContent = PRODUCT_NAME;
+document.title = PRODUCT_NAME;
