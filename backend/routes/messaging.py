@@ -1,13 +1,13 @@
 from datetime import datetime
-from email.policy import HTTP
-from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect, WebSocketException, logger, status
+import logging
+from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from dependencies import get_current_user, get_db
 from models import Message, SendMessageRequest, User
 
-
 router = APIRouter()
+logger = logging.getLogger("uvicorn.error")
 
 def convert_message(msg: Message) -> dict:
     return {
@@ -59,10 +59,7 @@ async def send_message(
 
 
 @router.get("/get_messages")
-async def get_messages(
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
+async def get_messages(db: Session = Depends(get_db)):
     return await get_messages_inner(db)
 
 
@@ -132,6 +129,8 @@ class MessaggingSocketManager:
         self.connections.append(websocket)
         try:
             await self.handle_connection(websocket, db)
+        except WebSocketDisconnect as e:
+            logger.info(f"WebSocket disconnected with code {e.code}: {e.reason}")
         finally:
             self.connections.remove(websocket)
 
@@ -146,5 +145,4 @@ async def chat_websocket(
     websocket: WebSocket,
     db: Session = Depends(get_db)
 ):
-    logger.logger.log(1, f"WebSocket connected: {websocket}")
     await messagingManager.connect(websocket, db)

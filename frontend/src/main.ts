@@ -1,6 +1,6 @@
 import './css/style.scss';
 import { showLogin, getAuthHeaders, authToken, currentUser } from './auth';
-import { API_BASE_URL, API_FULL_BASE_URL } from './config';
+import { API_BASE_URL, API_FULL_BASE_URL, PRODUCT_NAME } from './config';
 import type { Message, Messages, WebSocketMessage } from './types';
 import "./links";
 
@@ -120,6 +120,10 @@ export function sendMessage() {
 }
 
 
+// --------------
+// Initialization
+// --------------
+
 websocket.addEventListener("message", (e) => {
     const message: WebSocketMessage = JSON.parse(e.data);
     switch (message.type) {
@@ -137,3 +141,5 @@ document.getElementById('message-form')!.addEventListener('submit', (e) => {
     e.preventDefault();
     sendMessage();
 });
+
+document.getElementById("productname")!.textContent = PRODUCT_NAME;
