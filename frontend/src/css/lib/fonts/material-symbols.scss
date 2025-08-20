@@ -1,9 +1,23 @@
-/* fallback */
-@font-face {
-    font-family: 'Material Symbols Outlined';
+@mixin iconsFontStyle() {
     font-style: normal;
     font-weight: 400;
     src: url(material-symbols.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+    font-family: 'Material Symbols Outlined';
+    @include iconsFontStyle();
+}
+
+@font-face {
+    font-family: 'Material Icons Outlined';
+    @include iconsFontStyle();
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    @include iconsFontStyle();
 }
 
 .material-symbols {
