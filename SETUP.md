@@ -2,8 +2,7 @@
 
 ## Важные моменты
 - Для работы с проектом нужна Windows 10/11.
-- Нужно открывать **именно** _Windows PowerShell_, **НЕ** _Windows PowerShell ISE_. Если видны варианты с x86 и x64, выбирайте x64. 
-- Если в шаге 3.1 вас попросят установить пакет `python<xxx>-venv`, выполните `sudo apt install <пакет, который просят установить>` и повторите шаг. 
+- Нужно открывать **именно** _Windows PowerShell_, **НЕ** _Windows PowerShell ISE_. Если видны варианты с x86 и x64, выбирайте x64.
 - Если VS Code предупредит вас о том, что у вас WSL 2, закройте VS Code и выполните команду в PowerShell: `wsl --set-version Ubuntu 2`
 
 ## 1. Установка WSL
@@ -18,11 +17,11 @@
 
 ## 2. Настройка VS Code
 1. Запустите VS Code. 
-2. Перейдите в Extensions (значок кубиков слева) и установите расширение Remote - WSL или просто WSL. Расширение должно быть от Microsoft.
+2. Перейдите в Extensions (значок кубиков слева) и установите расширение _Remote - WSL_ или просто _WSL_. Расширение должно быть от Microsoft.
 3. Нажмите на синюю кнопку в нижнем левом углу и нажмите _Connect to WSL_.
 
 ## 3. Настройка среды
-1. В VS Code нажмите Ctrl+Shift+P и введите _Git: Clone Repository_. Введите URL репозитория в полезных ссылках. В диалоге выбора папки введите _/home/<ваше имя пользователя в WSL>_.
+1. В VS Code нажмите Ctrl+Shift+P и введите _Git: Clone Repository_. Введите URL репозитория. В диалоге выбора папки введите _/home/<ваше имя пользователя в WSL>_.
 2. Откройте терминал (Terminal > New Terminal) и выполните команду:
 
    ```bash
@@ -33,10 +32,9 @@
    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
    # Установка Node.js 24
    nvm install 24
-
+   nvm use 24
    # Установка зависимостей npm
    npm install
    ```
