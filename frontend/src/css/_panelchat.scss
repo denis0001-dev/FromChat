@@ -10,6 +10,35 @@
     height: 100vh;
 }
 
+#profile {
+    display: none;
+    flex-direction: column;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    position: fixed;
+    height: 100vh;
+    width: 27%;
+    background-color: $color-dark-surface-container;
+    .profileheader{
+        display: flex;
+        gap: 200px;
+        p{
+            color: white;
+        }
+        a{
+            text-decoration: none;
+            color: white;
+            border: solid 2px $color-dark-on-surface-variant;
+            padding: 5px;
+            border-radius: 10px;
+            &:hover{
+                background-color: rgba(255, 255, 255, 0.241);
+            }
+        }
+    }
+}
+
 #chat-list {
     display: flex;
     flex-direction: column;
@@ -35,14 +64,15 @@
             display: flex;
             justify-content: start;
 
-            a {
-                display: flex;
-                color: $color-dark-surface;
+            #closeprofile a {
                 text-decoration: none;
-                width: 100%;
-
+                color: white;
+                border: solid 2px $color-dark-on-surface-variant;
+                padding: 5px;
+                border-radius: 10px;
+                
                 &:hover {
-                    font-size: 26px;
+                    background-color: rgba(255, 255, 255, 0.241);
                 }
             }
 
@@ -104,18 +134,23 @@
             display: flex;
             flex-direction: row;
         }
-    }
-}
 
-.ponel {
-    display: flex;
-    position: fixed;
-    top: 95%;
-    left: 2%;
-    gap: 10px;
-
-    a {
-        text-decoration: none;
-        color: $color-dark-surface;
+        .ponel {
+            display: flex;
+            position: fixed;
+            top: 95%;
+            left: 0.5%;
+            gap: 10px;
+            a {
+                text-decoration: none;
+                color: $color-dark-on-surface-variant;
+                border: solid 2px $color-dark-on-surface-variant;
+                padding: 5px;
+                border-radius: 10px;
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.241);
+                }
+            }
+        }
     }
 }

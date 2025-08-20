@@ -144,6 +144,7 @@ document.getElementById('message-form')!.addEventListener('submit', (e) => {
 
 document.getElementById("productname")!.textContent = PRODUCT_NAME;
 document.title = PRODUCT_NAME;
+// сварачивание и разворачивание чата
 const but = document.getElementById('chat-recrol')!;
 const but_list1 = document.getElementById('chat1but')!;
 const but_list2 = document.getElementById('chat1but2')!;
@@ -165,3 +166,18 @@ but_list2.addEventListener('click',() => {
     cont1.style.display = 'flex';
     namechat.textContent = 'общий чат 2';
 });
+// открытие профиля
+const butprofile = document.getElementById('profbut')!
+const chatlist = document.getElementById('chat-list')!
+const profile = document.getElementById('profile')!
+const closeprofile = document.getElementById('closeprofile')!
+butprofile.addEventListener('click',()=>{
+    chatlist.style.display = 'none'
+    cont1.style.display = 'none'
+    profile.style.display = 'flex'
+
+})
+closeprofile.addEventListener('click',()=>{
+    chatlist.style.display = 'flex'
+    profile.style.display = 'none'
+})
