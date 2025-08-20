@@ -4,13 +4,18 @@
 #chat-interface {
     /* Header */
     .header {
+        display: flex;
         background-color: $color-dark-surface-container;
         color: white;
         padding: 16px 16px;
-        position: fixed;
-        width: 100%;
-        top: 0;
+        position: static;
+        justify-content: end;
+        width: fit-content;
         z-index: 1000;
+        position: absolute;
+        top: 0;
+        right: 0;
+
 
         .header-content {
             display: flex;
@@ -24,11 +29,10 @@
                 align-items: center;
             }
 
-            .nav-links {
-                display: flex;
+            #logouts {
+                display: none;
                 list-style: none;
                 gap: 10px;
-
                 li {
                     a {
                         color: white;
@@ -53,13 +57,15 @@
 
     .chat-container {
         display: flex;
-        height: calc(100vh - 70px);
-        margin-top: 70px;
+        width: 100%;
+        flex-direction: column;
+
 
         .chat-main {
-            flex: 1;
+            flex-grow: 1;
             display: flex;
             flex-direction: column;
+            height: 100%;
 
             .chat-header {
                 padding: 16px;
@@ -77,16 +83,20 @@
                 }
 
                 .chat-header-info {
-                    h4 {
-                        font-size: 1.1rem;
-                        margin-bottom: 0.2rem;
-                    }
+                    display: flex;
+                    .info-chat{
+                        display: flex;
+                        flex-direction: column;
+                        h4 {
+                            font-size: 1.1rem;
+                            margin-bottom: 0.2rem;
+                        }
 
-                    p {
-                        font-size: 0.8rem;
-                        color: #718096;
+                        p {
+                            font-size: 0.8rem;
+                            color: #718096;
+                        }
                     }
-
                     .online-status {
                         display: inline-block;
                         width: 10px;
@@ -94,6 +104,21 @@
                         border-radius: 50%;
                         background-color: $success;
                         margin-right: 5px;
+                    }
+                    a{
+                        display: flex;
+                        flex-direction: row;
+                        text-decoration: none;
+                        color: white;
+                        justify-content: end;
+                        padding: 0;
+                        margin: 0;
+                        position: absolute;
+                        right: 2%;
+                        top: 2%;
+                        &:hover{
+                            border: none;
+                        }
                     }
                 }
             }
@@ -225,4 +250,5 @@
             }
         }
     }
+    
 }

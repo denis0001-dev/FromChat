@@ -1,5 +1,6 @@
 @use "auth";
 @use "chat";
+@use "panelchat";
 @use "common/animations";
 @use "common/components";
 @use "common/colors" as *;
@@ -19,4 +20,6 @@ body {
     background-color: $color-dark-surface;
     color: $color-dark-on-surface;
     line-height: 1.6;
+    height: 100vh;
+    position: relative;
 }

@@ -1,0 +1,85 @@
+@use "common/colors" as *;
+@use "common/material" as *;
+// контейнер чата и панели с чатами
+.all-conteiner{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100vh;
+}
+#chat-list{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    width: 40%;
+    background-color: $color-light-primary-container;
+    height: 100%;
+    z-index: 1000;
+    .chat-sitting{
+        display: flex;
+        color: $color-dark-on-primary-container;
+        font-size: 42px;
+        font-weight: bolder;
+        background-color: rgb(159, 163, 165);
+        width: 100%;
+        justify-content: center;
+        .profile{
+            font-size: 24px;
+            display: flex;
+            justify-content: end;
+            a{
+                display: flex;
+                color: $color-dark-surface;
+                text-decoration: none;
+                width: 100%;
+                &:hover{
+                    font-size: 26px;
+                }
+            }
+        }
+    }
+    .chats-chanel-kontarti{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 5px;
+        a{
+            display: flex;
+            text-decoration: none;
+            padding: 10px;
+            border:  solid 2px black;
+            margin-left: 20px;
+            margin-right: 20px;
+            background-color: $gray;
+            color: $color-dark-shadow;
+            font-weight: 20px;
+        }
+    }
+    .chat-sortirovka{
+        display: flex;
+        flex-direction: row;
+        font-size: 24px;
+        justify-content: center;
+            ul{
+                display: flex;
+                flex-direction: row;
+                gap: 5px;
+            }
+            li{
+                display: flex;
+                flex-direction: row;
+            }
+    }
+
+    .ponel{
+        display: flex;
+        position: fixed;
+        top: 95%;
+        left: 2%;
+        gap: 10px;
+        a{
+            text-decoration: none;
+            color: $color-dark-surface;
+        }
+    }
+}

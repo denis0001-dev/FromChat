@@ -144,3 +144,24 @@ document.getElementById('message-form')!.addEventListener('submit', (e) => {
 
 document.getElementById("productname")!.textContent = PRODUCT_NAME;
 document.title = PRODUCT_NAME;
+const but = document.getElementById('chat-recrol')!;
+const but_list1 = document.getElementById('chat1but')!;
+const but_list2 = document.getElementById('chat1but2')!;
+const cont1 = document.getElementById('conteinerchat')!;
+const logout = document.getElementById('logouts')!;
+const namechat = document.getElementById('namechat')!;
+but.addEventListener('click',() => {
+    but.style.display = 'none';
+    cont1.style.display = 'none';
+    logout.style.display = 'flex';
+});
+but_list1.addEventListener('click',() => {
+    but.style.display = 'flex';
+    cont1.style.display = 'flex';
+    namechat.textContent = 'общий чат';
+});
+but_list2.addEventListener('click',() => {
+    but.style.display = 'flex';
+    cont1.style.display = 'flex';
+    namechat.textContent = 'общий чат 2';
+});

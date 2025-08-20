@@ -76,54 +76,59 @@
 
         <!-- Chat Interface -->
         <div id="chat-interface" style="display: none;">
-            <div class="header">
-                <div class="header-content">
-                    <div class="logo">
-                        <span id="productname">Loading...</span>
-                    </div>
-                    <ul class="nav-links">
-                        <li>
-                            <a href="#" id="chat-link">
-                                <span class="material-symbols filled">chat_bubble</span> Общий чат
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" id="logout-link">
-                                <span class="material-symbols filled">logout</span> Выйти
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="chat-container">
-                <div class="chat-main">
-                    <div class="chat-header">
-                        <img src="src/images/default-avatar.png" alt="Avatar" class="chat-header-avatar">
-                        <div class="chat-header-info">
-                            <h4>Общий чат</h4>
-                            <p><span class="online-status"></span> Онлайн</p>
+            <div class="all-conteiner">
+                <div class="chat-list" id="chat-list">
+                    <header class="chat-sitting">
+                        <div id="productname">Loading...</div> 
+                        <div class="profile">
+                            <a href="#">Профиль</a>
                         </div>
+                    </header>
+                    <div class="chat-sortirovka"><nav><ul>
+                        <li>чаты</li>
+                        <li>канал</li>
+                        <li>контакты</li>
+                    </ul></nav></div>
+                    <div class="chats-chanel-kontarti">
+                        <a href="#" id="chat1but">Общий чат</a>
+                        <a href="#" id="chat1but2">Общий чат 2</a>
                     </div>
-                    
-                    <div class="chat-messages" id="chat-messages">
-                        <!-- Messages will be loaded here dynamically -->
-                    </div>
-                    
-                    <div class="chat-input-wrapper">
-                        <div class="chat-input">
-                            <form class="input-group" id="message-form">
-                                <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
-                                <button type="submit" class="send-btn">
-                                    <span class="material-symbols filled">send</span>
-                                </button>
-                            </form>
+                    <div class="ponel"><a href="#">+чат</a> <a href="#">+канал</a> <a href="#">Выйти</a></div>
+                    <footer></footer>
+                </div>
+                <div class="chat-container">          
+                    <div class="chat-main" id="conteinerchat">
+                        <div class="chat-header">
+                            <img src="src/images/default-avatar.png" alt="Avatar" class="chat-header-avatar">
+                            <div class="chat-header-info">
+                                <div class="info-chat">
+                                    <h4 id="namechat">Общий чат</h4>
+                                    <p>
+                                        <span class="online-status"></span> Онлайн
+                                    </p>
+                                </div>
+                                <a href="#" id="chat-recrol">Свернуть чат</a>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-messages" id="chat-messages">
+                            <!-- Messages will be loaded here dynamically -->
+                        </div>
+                        
+                        <div class="chat-input-wrapper">
+                            <div class="chat-input">
+                                <form class="input-group" id="message-form">
+                                    <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
+                                    <button type="submit" class="send-btn">
+                                        <span class="material-symbols filled">send</span>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
         <script src="src/main.ts" type="module"></script>
     </body>
 </html> 
