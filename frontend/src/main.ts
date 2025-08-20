@@ -1,8 +1,10 @@
 import './css/style.scss';
+import "mdui/mdui.css";
 import { showLogin, getAuthHeaders, authToken, currentUser } from './auth';
 import { API_BASE_URL, API_FULL_BASE_URL, PRODUCT_NAME } from './config';
 import type { Message, Messages, WebSocketMessage } from './types';
 import "./links";
+import "./material";
 
 const websocket = new WebSocket(`ws://${API_FULL_BASE_URL}/chat/ws`);
 

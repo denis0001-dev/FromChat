@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" class="mdui-theme-dark">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -78,7 +78,10 @@
         <div id="chat-interface" style="display: none;">
             <div class="all-container">
                 <div class="profile" id="profile">
-                    <div class="profileheader"><p>Твой профиль</p><a href="#" id="closeprofile">закрыть</a></div>
+                    <div class="profileheader">
+                        <p>Твой профиль</p>
+                        <a href="#" id="closeprofile">закрыть</a>
+                    </div>
                 </div>
                 <div class="chat-list" id="chat-list">
                     <header class="chat-header-left">
@@ -88,25 +91,33 @@
                         </div>
                     </header>
                     <div class="chat-tabs">
-                        <nav>
-                            <ul>
-                                <li>Чаты</li>
-                                <li>Каналы</li>
-                                <li>Контакты</li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="chats">
-                        <a href="#" id="chat1but">
-                            <img src="./src/images/default-avatar.png" alt=""> 
-                            Общий чат
-                        </a>
-                        <a href="#" id="chat1but2">
-                            <img src="./src/images/default-avatar.png" alt="">
-                            Общий чат 2
-                        </a>
-                    </div>
+                        <mdui-tabs value="chats" full-width>
+                            <mdui-tab value="chats">
+                                Чаты
+                            </mdui-tab>
+                            <mdui-tab value="channels">
+                                Каналы
+                            </mdui-tab>
+                            <mdui-tab value="contacts">
+                                Контакты
+                            </mdui-tab>
 
+                            <mdui-tab-panel slot="panel" value="chats">
+                                <div class="chats">
+                                    <a href="#" id="chat1but">
+                                        <img src="./src/images/default-avatar.png" alt=""> 
+                                        Общий чат
+                                    </a>
+                                    <a href="#" id="chat1but2">
+                                        <img src="./src/images/default-avatar.png" alt="">
+                                        Общий чат 2
+                                    </a>
+                                </div>
+                            </mdui-tab-panel>
+                            <mdui-tab-panel slot="panel" value="channels">ertgergert</mdui-tab-panel>
+                            <mdui-tab-panel slot="panel" value="contacts">erhnbftgynftdhge4w</mdui-tab-panel>
+                        </mdui-tabs>
+                    </div>
                     <div class="ponel">
                         <a href="#">+чат</a> 
                         <a href="#">+канал</a> 

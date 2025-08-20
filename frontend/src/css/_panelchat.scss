@@ -91,11 +91,14 @@
         }
     }
 
-    .chats {
+    .chat-tabs {
         display: flex;
         flex-direction: column;
         gap: 10px;
         margin-top: 5px;
+        width: 100%;
+        --mdui-color-surface: $color-dark-surface-container;
+        --mdui-color-surface-variant: transparent;
 
         a {
             display: flex;
@@ -117,45 +120,6 @@
                 border-radius: 20%;
                 object-fit: cover;
                 margin-right: 1rem;
-            }
-        }
-    }
-
-    .chat-tabs {
-        display: flex;
-        flex-direction: row;
-        font-size: 24px;
-        justify-content: center;
-        color: white;
-
-        ul {
-            display: flex;
-            flex-direction: row;
-            gap: 5px;
-        }
-
-        li {
-            display: flex;
-            flex-direction: row;
-        }
-
-        .ponel {
-            display: flex;
-            position: fixed;
-            top: 95%;
-            left: 0.5%;
-            gap: 10px;
-
-            a {
-                text-decoration: none;
-                color: $color-dark-on-surface-variant;
-                border: solid 2px $color-dark-on-surface-variant;
-                padding: 5px;
-                border-radius: 10px;
-
-                &:hover {
-                    background-color: rgba(255, 255, 255, 0.241);
-                }
             }
         }
     }
