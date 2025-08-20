@@ -1,4 +1,4 @@
-import { loadMessages } from "./main";
+import { loadMessages } from "./chat";
 import type { Headers, ErrorResponse, User, LoginResponse, LoginRequest, RegisterRequest } from "./types";
 import { API_BASE_URL } from "./config";
 
