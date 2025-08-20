@@ -22,7 +22,8 @@
 3. Нажмите на синюю кнопку в нижнем левом углу и нажмите _Connect to WSL_.
 
 ## 3. Настройка среды
-1. Откройте терминал (Terminal > New Terminal) и выполните команду:
+1. В VS Code нажмите Ctrl+Shift+P и введите _Git: Clone Repository_. Введите URL репозитория в полезных ссылках. В диалоге выбора папки введите _/home/<ваше имя пользователя в WSL>_.
+2. Откройте терминал (Terminal > New Terminal) и выполните команду:
 
    ```bash
    # Установка Python и Node.js
@@ -34,12 +35,11 @@
    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
 
    # Установка Node.js 24
-   nvm install 24 
-   nvm use 24
-   ```
+   nvm install 24
 
-2. В VS Code нажмите Ctrl+Shift+P и введите _Git: Clone Repository_. Введите URL репозитория в полезных ссылках. В диалоге выбора папки введите _/home/<ваше имя пользователя в WSL>_.
-3. Выполните `npm install`, что установить зависимости.
+   # Установка зависимостей npm
+   npm install
+   ```
 
 ## 4. Работа с проектом
 Чтобы запустить проект, выполните `npm run dev` или нажмите Ctrl+Shift+B. Проект запустится по адресу http://localhost:8301.
