@@ -9,9 +9,8 @@
 @use "lib/fonts/montserrat";
 @use "lib/fonts/material-symbols";
 
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
@@ -22,5 +21,15 @@ body {
     line-height: 1.6;
     height: 100vh;
     position: relative;
+    margin: 0;
+}
 
+mdui-dialog {
+    > *:first-child {
+        margin-block-start: 0;
+    }
+
+    > *:last-child {
+        margin-block-end: 0;
+    }
 }

@@ -2,7 +2,6 @@
 @use "common/material" as *;
 
 #chat-interface {
-    /* Header */
     .header {
         display: flex;
         background-color: $color-dark-surface-container;
@@ -15,7 +14,6 @@
         position: absolute;
         top: 0;
         right: 0;
-
 
         .header-content {
             display: flex;
@@ -33,6 +31,7 @@
                 display: none;
                 list-style: none;
                 gap: 10px;
+
                 li {
                     a {
                         color: white;
@@ -83,19 +82,24 @@
 
                 .chat-header-info {
                     display: flex;
-                    .info-chat{
+
+                    .info-chat {
                         display: flex;
                         flex-direction: column;
+
                         h4 {
                             font-size: 1.1rem;
+                            margin: 0;
                             margin-bottom: 0.2rem;
                         }
 
                         p {
+                            margin: 0;
                             font-size: 0.8rem;
                             color: #718096;
                         }
                     }
+
                     .online-status {
                         display: inline-block;
                         width: 10px;
@@ -104,7 +108,8 @@
                         background-color: $success;
                         margin-right: 5px;
                     }
-                    a{
+
+                    a {
                         display: flex;
                         flex-direction: row;
                         text-decoration: none;
@@ -115,7 +120,8 @@
                         position: absolute;
                         right: 2%;
                         top: 2%;
-                        &:hover{
+
+                        &:hover {
                             border: none;
                         }
                     }
@@ -249,5 +255,4 @@
             }
         }
     }
-    
 }

@@ -77,12 +77,6 @@
         <!-- Chat Interface -->
         <div id="chat-interface" style="display: none;">
             <div class="all-container">
-                <div class="profile" id="profile">
-                    <div class="profileheader">
-                        <p>Твой профиль</p>
-                        <a href="#" id="closeprofile">закрыть</a>
-                    </div>
-                </div>
                 <div class="chat-list" id="chat-list">
                     <header class="chat-header-left">
                         <div id="productname">Loading...</div> 
@@ -156,6 +150,15 @@
                 </div>
             </div>
         </div>
+        <mdui-dialog id="profile-dialog" close-on-overlay-click close-on-esc>
+            <p>
+            Скоро будет...
+            </p>
+            
+            <p>
+                <mdui-button id="profile-dialog-close">Закрыть</mdui-button>
+            </p>
+        </mdui-dialog>
         <script src="src/main.ts" type="module"></script>
     </body>
 </html> 

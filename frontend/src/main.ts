@@ -5,6 +5,7 @@ import { API_BASE_URL, API_FULL_BASE_URL, PRODUCT_NAME } from './config';
 import type { Message, Messages, WebSocketMessage } from './types';
 import "./links";
 import "./material";
+import type { Dialog } from 'mdui/components/dialog.js';
 
 const websocket = new WebSocket(`ws://${API_FULL_BASE_URL}/chat/ws`);
 
@@ -146,6 +147,8 @@ document.getElementById('message-form')!.addEventListener('submit', (e) => {
 
 document.getElementById("productname")!.textContent = PRODUCT_NAME;
 document.title = PRODUCT_NAME;
+
+
 // сварачивание и разворачивание чата
 const but = document.getElementById('chat-recrol')!;
 const but_list1 = document.getElementById('chat1but')!;
@@ -153,6 +156,7 @@ const but_list2 = document.getElementById('chat1but2')!;
 const cont1 = document.getElementById('conteinerchat')!;
 const logout = document.getElementById('logouts')!;
 const namechat = document.getElementById('namechat')!;
+
 but.addEventListener('click',() => {
     but.style.display = 'none';
     cont1.style.display = 'none';
@@ -168,18 +172,16 @@ but_list2.addEventListener('click',() => {
     cont1.style.display = 'flex';
     namechat.textContent = 'общий чат 2';
 });
-// открытие профиля
-const butprofile = document.getElementById('profbut')!
-const chatlist = document.getElementById('chat-list')!
-const profile = document.getElementById('profile')!
-const closeprofile = document.getElementById('closeprofile')!
-butprofile.addEventListener('click',()=>{
-    chatlist.style.display = 'none'
-    cont1.style.display = 'none'
-    profile.style.display = 'flex'
 
-})
-closeprofile.addEventListener('click',()=>{
-    chatlist.style.display = 'flex'
-    profile.style.display = 'none'
-})
+// открытие профиля
+const butprofile = document.getElementById('profbut')!;
+const dialog = document.getElementById("profile-dialog") as Dialog;
+const dialogClose = document.getElementById("profile-dialog-close")!;
+
+butprofile.addEventListener('click', () => {
+    dialog.open = true;
+});
+
+dialogClose.addEventListener("click", () => {
+    dialog.open = false;
+});
