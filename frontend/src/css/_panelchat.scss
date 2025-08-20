@@ -20,6 +20,7 @@
     height: 100vh;
     width: 27%;
     background-color: $color-dark-surface-container;
+    position: relative;
 
     .profileheader {
         display: flex;
@@ -104,5 +105,13 @@
             object-fit: cover;
             margin-right: 1rem;
         }
+    }
+
+    mdui-bottom-app-bar {
+        position: relative;
+        width: 100%;
+        padding-left: 16px;
+        padding-right: 16px;
+        margin-top: auto;
     }
 }
