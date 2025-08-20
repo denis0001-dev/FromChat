@@ -21,15 +21,28 @@
                     <div id="login-alerts"></div>
                     
                     <form id="login-form-element">
-                        <div class="form-group">
-                            <label for="login-username">Имя пользователя</label>
-                            <input type="text" class="form-control" id="login-username" name="username" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="login-password">Пароль</label>
-                            <input type="password" class="form-control" id="login-password" name="password" required>
-                        </div>
-                        <button type="submit" class="btn btn-block">Войти</button>
+                        <mdui-text-field 
+                            label="Имя пользователя" 
+                            id="login-username" 
+                            name="username" 
+                            variant="outlined"
+                            icon="person--filled"
+                            autocomplete="username"
+                            required>
+                        </mdui-text-field>
+                        <mdui-text-field 
+                            label="Пароль" 
+                            id="login-password" 
+                            name="password" 
+                            variant="outlined" 
+                            type="password" 
+                            toggle-password
+                            icon="password--filled"
+                            autocomplete="current-password"
+                            required>
+                        </mdui-text-field>
+
+                        <mdui-button type="submit">Войти</mdui-button>
                     </form>
                     
                     <div class="text-center mt-3">
@@ -53,21 +66,41 @@
                     <div id="register-alerts"></div>
                     
                     <form id="register-form-element">
-                        <div class="form-group">
-                            <label for="register-username">Имя пользователя</label>
-                            <input type="text" class="form-control" id="register-username" name="username" required>
-                            <small class="text-muted">От 3 до 20 символов, без пробелов</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-password">Пароль</label>
-                            <input type="password" class="form-control" id="register-password" name="password" required>
-                            <small class="text-muted">Минимум 5 символов, без пробелов</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="register-confirm-password">Подтвердите пароль</label>
-                            <input type="password" class="form-control" id="register-confirm-password" name="confirm_password" required>
-                        </div>
-                        <button type="submit" class="btn btn-block">Зарегистрироваться</button>
+                        <mdui-text-field 
+                            label="Имя пользователя" 
+                            id="register-username" 
+                            name="username" 
+                            variant="outlined"
+                            icon="person--filled"
+                            autocomplete="username"
+                            maxlength="20"
+                            counter
+                            required>
+                        </mdui-text-field>
+                        <mdui-text-field 
+                            label="Пароль" 
+                            id="register-password" 
+                            name="password" 
+                            variant="outlined" 
+                            type="password" 
+                            toggle-password
+                            icon="password--filled"
+                            autocomplete="new-password"
+                            required>
+                        </mdui-text-field>
+                        <mdui-text-field 
+                            label="Подтвердите пароль" 
+                            id="register-confirm-password" 
+                            name="confirm_password" 
+                            variant="outlined" 
+                            type="password" 
+                            toggle-password
+                            icon="password--filled"
+                            autocomplete="new-password"
+                            required>
+                        </mdui-text-field>
+
+                        <mdui-button type="submit">Зарегистрироваться</mdui-button>
                     </form>
                     
                     <div class="text-center mt-3">
