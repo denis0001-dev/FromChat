@@ -12,21 +12,27 @@
     flex-direction: column;
     flex-grow: 0;
     width: 40%;
-    background-color: $color-light-primary-container;
+    background-color: $color-dark-surface-container;
     height: 100%;
     z-index: 1000;
+    border-right: solid 2px black;
     .chat-sitting{
         display: flex;
-        color: $color-dark-on-primary-container;
+        color: white;
         font-size: 42px;
         font-weight: bolder;
-        background-color: rgb(159, 163, 165);
+        background-color: $color-dark-surface-container;
         width: 100%;
         justify-content: center;
+        height: 85px;
+        border-block-end: solid 2px black;
+        gap: 110px;
+        align-items: center;
+    
         .profile{
             font-size: 24px;
             display: flex;
-            justify-content: end;
+            justify-content: start;
             a{
                 display: flex;
                 color: $color-dark-surface;
@@ -35,6 +41,12 @@
                 &:hover{
                     font-size: 26px;
                 }
+            }
+            img{
+                display: flex;
+                border-radius: 100px;
+                width: 56px;
+                height: 56px;
             }
         }
     }
@@ -47,12 +59,21 @@
             display: flex;
             text-decoration: none;
             padding: 10px;
-            border:  solid 2px black;
+            border:  solid 2px $color-dark-surface;
             margin-left: 20px;
             margin-right: 20px;
-            background-color: $gray;
+            background-color: $color-dark-on-surface-variant;
             color: $color-dark-shadow;
             font-weight: 20px;
+            border-radius: 20px;
+            align-items: center;
+            img{
+                    width: 45px;
+                    height: 45px;
+                    border-radius: 20%;
+                    object-fit: cover;
+                    margin-right: 1rem;
+                }
         }
     }
     .chat-sortirovka{
@@ -69,6 +90,7 @@
                 display: flex;
                 flex-direction: row;
             }
+            }
     }
 
     .ponel{
@@ -82,4 +104,4 @@
             color: $color-dark-surface;
         }
     }
-}
+
