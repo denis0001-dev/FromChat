@@ -6,3 +6,4 @@ import "./material";
 import "./chat";
 import "./leftpanel";
 import "./init";
+import "./profile";

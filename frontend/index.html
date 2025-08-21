@@ -21,7 +21,7 @@
                     <div id="login-alerts"></div>
                     
                     <form id="login-form-element">
-                        <mdui-text-field 
+                        <mdui-text-field
                             label="Имя пользователя" 
                             id="login-username" 
                             name="username" 
@@ -30,7 +30,7 @@
                             autocomplete="username"
                             required>
                         </mdui-text-field>
-                        <mdui-text-field 
+                        <mdui-text-field
                             label="Пароль" 
                             id="login-password" 
                             name="password" 
@@ -120,7 +120,9 @@
                     <header class="chat-header-left">
                         <div id="productname">Loading...</div> 
                         <div class="profile">
-                            <a href="#" id="profbut"><img src="./src/images/default-avatar.png" alt=""></a>
+                            <a href="#" id="profbut">
+                                <img src="./src/images/default-avatar.png" alt="" id="preview1" />
+                            </a>
                         </div>
                     </header>
                     <div class="chat-tabs">
@@ -189,15 +191,40 @@
                 </div>
             </div>
         </div>
+
         <mdui-dialog id="profile-dialog" close-on-overlay-click close-on-esc>
-            <p>
-            Скоро будет...
-            </p>
-            
+            <div class="name-and-img">
+                <div id="icon-profile">    
+                    <img id="preview" src="./src/images/default-avatar.png" alt="Ваше фото" />
+                    <button id="uploadButton">Выбрать фото</button>
+                    <input type="file" id="fileInput" accept="image/*" />
+                </div>
+                <div class="name-and-discription">
+                    <div class="name">
+                        <div id="name-title">
+                            <p id="text-nik">Ваш ник</p>
+                            <input type="text" id="nik" style="display: none;" />
+                        </div>
+                        <div id="change-name"> 
+                            <img src="./src/images/pesel.svg" alt="" />
+                        </div>
+                    </div>
+                    <div class="discription">
+                        <div id="discription-title">
+                            <p id="text-discr">Ваше описание</p>
+                            <input type="text" id="discr" style="display: none;" />
+                        </div>
+                        <div id="change-discription">
+                            <img src="./src/images/pesel.svg" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <p>
                 <mdui-button id="profile-dialog-close">Закрыть</mdui-button>
             </p>
         </mdui-dialog>
         <script src="src/main.ts" type="module"></script>
     </body>
-</html> 
+</html>

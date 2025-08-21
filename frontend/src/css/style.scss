@@ -1,5 +1,6 @@
 @use "auth";
 @use "chat";
+@use "prifole";
 @use "panelchat";
 @use "common/animations";
 @use "common/components";
@@ -25,6 +26,7 @@ body {
 }
 
 mdui-dialog {
+    
     > *:first-child {
         margin-block-start: 0;
     }

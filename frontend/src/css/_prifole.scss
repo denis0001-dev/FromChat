@@ -1,0 +1,104 @@
+@use "common/colors" as *;
+@use "common/material" as *;
+
+.name-and-img{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    
+    #icon-profile{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        #preview {
+            width: 200px;
+                height: auto;
+                display: flex;
+                img{
+                    width: 96px;
+                    height: 95px;
+                }
+            }
+        #uploadButton {
+                background-color: rgba(0,0,0,0.5);
+                color: #fff;
+                border: none;
+                padding: 8px 16px;
+                cursor: pointer;
+                border-radius: 4px;
+                font-size: 16px;
+                opacity: 0.8;
+            }
+        #uploadButton:hover {
+                opacity: 1;
+            }
+            /* скрываем чекбокс, чтобы он был только триггером */
+            #fileInput {
+                display: none;
+            }
+    }
+    .name-and-discription{
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+        .name{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            #name-title{
+                display: flex;
+                margin: 0;
+                #text-nik{
+                    display: flex;
+                }
+                p{
+                    display: flex;
+                    color: $color-dark-surface;
+                    align-items: center;
+                    font-size: 24px;
+                }
+            }
+            #change-name{
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                img{
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    
+                }
+            }
+        }
+        .discription{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            #discription-title{
+                display: flex;
+                margin: 0;
+                p{
+                    display: flex;
+                    color: $color-dark-surface;
+                    align-items: center;
+                    font-size: 18px;
+                }
+            }
+            #change-discription{
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                img{
+                    align-items: center;
+                    width: 30px;
+                    height: 30px;
+                    
+                }
+            }
+        }
+    }
+}
