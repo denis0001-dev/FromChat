@@ -6,3 +6,7 @@ export function formatTime(dateString: string) {
     const minutesString = minutes < 10 ? '0' + minutes : minutes;
     return hoursString + ':' + minutesString;
 }
+
+export function delay(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
