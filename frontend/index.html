@@ -120,7 +120,7 @@
                     <header class="chat-header-left">
                         <div id="productname">Loading...</div> 
                         <div class="profile">
-                            <a href="#" id="profbut">
+                            <a href="#" id="profile-open">
                                 <img src="./src/images/default-avatar.png" alt="" id="preview1" />
                             </a>
                         </div>
@@ -139,10 +139,10 @@
 
                             <mdui-tab-panel slot="panel" value="chats">
                                 <mdui-list>
-                                    <mdui-list-item headline="Общий чат" description="Вы: Последнее сообщение" id="chat1but">
+                                    <mdui-list-item headline="Общий чат" description="Вы: Последнее сообщение" id="chat-list-chat-1">
                                         <img src="./src/images/default-avatar.png" alt="" slot="icon" />
                                     </mdui-list-item>
-                                    <mdui-list-item headline="Общий чат 2" description="Вы: Последнее сообщение" id="chat1but2">
+                                    <mdui-list-item headline="Общий чат 2" description="Вы: Последнее сообщение" id="chat-list-chat-2">
                                         <img src="./src/images/default-avatar.png" alt="" slot="icon" />
                                     </mdui-list-item>
                                 </mdui-list>
@@ -159,17 +159,18 @@
                     </mdui-bottom-app-bar>
                 </div>
                 <div class="chat-container">          
-                    <div class="chat-main" id="conteinerchat">
+                    <div class="chat-main" id="chat-inner">
                         <div class="chat-header">
                             <img src="src/images/default-avatar.png" alt="Avatar" class="chat-header-avatar">
                             <div class="chat-header-info">
                                 <div class="info-chat">
-                                    <h4 id="namechat">Общий чат</h4>
+                                    <h4 id="chat-name">Общий чат</h4>
                                     <p>
-                                        <span class="online-status"></span> Онлайн
+                                        <span class="online-status"></span>
+                                        Онлайн
                                     </p>
                                 </div>
-                                <a href="#" id="chat-recrol">Свернуть чат</a>
+                                <a href="#" id="hide-chat">Свернуть чат</a>
                             </div>
                         </div>
                         

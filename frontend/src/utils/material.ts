@@ -1,3 +1,10 @@
+/**
+ * @fileoverview MDUI component imports and configuration
+ * @description Imports all required MDUI components and sets up the theme
+ * @author Cursor
+ * @version 1.0.0
+ */
+
 import 'mdui/components/tabs';
 import 'mdui/components/tab';
 import 'mdui/components/tab-panel';

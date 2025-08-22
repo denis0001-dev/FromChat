@@ -1,0 +1,11 @@
+---
+description: Documentation rules
+alwaysApply: false
+---
+
+When documenting this project, follow these rules:
+
+1. For TS, use JSDoc.
+2. When something is self-explanatory or is a constant for a HTML element, don't document it.
+3. Do NOT change the structure of the code, only add documentation.
+4. When filling in the author field, say that you are Cursor.

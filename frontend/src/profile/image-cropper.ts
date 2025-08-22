@@ -1,14 +1,56 @@
+/**
+ * @fileoverview Canvas-based image cropping component
+ * @description Provides circular image cropping functionality with drag support
+ * @author Cursor
+ * @version 1.0.0
+ */
+
 import type { Size2D } from "../types";
 
+/**
+ * Image cropper class for circular profile picture cropping
+ * @class ImageCropper
+ */
 export class ImageCropper {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
+
+    /**
+     * Image element to be cropped
+     * @type {HTMLImageElement}
+     * @private
+     */
     private image!: HTMLImageElement;
+
+    /**
+     * Size of the crop area (diameter)
+     * @type {number}
+     * @private
+     */
     private cropSize: number = 200;
     private isDragging: boolean = false;
+
+    /**
+     * Starting position of the drag operation
+     * @type {Size2D}
+     * @private
+     */
     private dragStart: Size2D = { x: 0, y: 0 };
+
+    /**
+     * Current position of the crop area
+     * @type {Size2D}
+     * @private
+     */
     private cropPosition: Size2D = { x: 0, y: 0 };
 
+    /**
+     * Creates a new ImageCropper instance
+     * @param {HTMLElement} container - Container element to append the canvas to
+     * @constructor
+     * @example
+     * const cropper = new ImageCropper(document.getElementById('cropper-area'));
+     */
     constructor(container: HTMLElement) {
         this.canvas = document.createElement('canvas');
         this.canvas.width = this.cropSize;
@@ -19,6 +61,11 @@ export class ImageCropper {
         this.setupEventListeners();
     }
 
+    /**
+     * Sets up mouse and touch event listeners
+     * @function setupEventListeners
+     * @private
+     */
     private setupEventListeners(): void {
         this.canvas.addEventListener('mousedown', this.onMouseDown.bind(this));
         this.canvas.addEventListener('mousemove', this.onMouseMove.bind(this));
@@ -28,11 +75,23 @@ export class ImageCropper {
         this.canvas.addEventListener('touchend', this.onTouchEnd.bind(this));
     }
 
+    /**
+     * Handles mouse down events
+     * @param {MouseEvent} e - Mouse event
+     * @function onMouseDown
+     * @private
+     */
     private onMouseDown(e: MouseEvent): void {
         this.isDragging = true;
         this.dragStart = { x: e.clientX, y: e.clientY };
     }
 
+    /**
+     * Handles mouse move events during dragging
+     * @param {MouseEvent} e - Mouse event
+     * @function onMouseMove
+     * @private
+     */
     private onMouseMove(e: MouseEvent): void {
         if (!this.isDragging) return;
         
@@ -46,10 +105,21 @@ export class ImageCropper {
         this.render();
     }
 
+    /**
+     * Handles mouse up events
+     * @function onMouseUp
+     * @private
+     */
     private onMouseUp(): void {
         this.isDragging = false;
     }
 
+    /**
+     * Handles touch start events
+     * @param {TouchEvent} e - Touch event
+     * @function onTouchStart
+     * @private
+     */
     private onTouchStart(e: TouchEvent): void {
         e.preventDefault();
         const touch = e.touches[0];
@@ -57,6 +127,12 @@ export class ImageCropper {
         this.dragStart = { x: touch.clientX, y: touch.clientY };
     }
 
+    /**
+     * Handles touch move events during dragging
+     * @param {TouchEvent} e - Touch event
+     * @function onTouchMove
+     * @private
+     */
     private onTouchMove(e: TouchEvent): void {
         e.preventDefault();
         if (!this.isDragging) return;
@@ -72,10 +148,23 @@ export class ImageCropper {
         this.render();
     }
 
+    /**
+     * Handles touch end events
+     * @function onTouchEnd
+     * @private
+     */
     private onTouchEnd(): void {
         this.isDragging = false;
     }
 
+    /**
+     * Loads an image file for cropping
+     * @param {File} file - Image file to load
+     * @returns {Promise<void>} Promise that resolves when image is loaded
+     * @async
+     * @example
+     * await cropper.loadImage(fileInput.files[0]);
+     */
     loadImage(file: File): Promise<void> {
         return new Promise((resolve) => {
             this.image = new Image();
@@ -87,6 +176,11 @@ export class ImageCropper {
         });
     }
 
+    /**
+     * Renders the image with circular crop overlay
+     * @function render
+     * @private
+     */
     private render(): void {
         if (!this.image) return;
 
@@ -119,10 +213,23 @@ export class ImageCropper {
         this.ctx.restore();
     }
 
+    /**
+     * Gets the cropped image as a data URL
+     * @returns {string} Data URL of the cropped image
+     * @example
+     * const croppedImage = cropper.getCroppedImage();
+     * // Use croppedImage as src for an img element
+     */
     getCroppedImage(): string {
         return this.canvas.toDataURL('image/jpeg', 0.8);
     }
 
+    /**
+     * Destroys the cropper and removes the canvas from DOM
+     * @function destroy
+     * @example
+     * cropper.destroy();
+     */
     destroy(): void {
         if (this.canvas.parentNode) {
             this.canvas.parentNode.removeChild(this.canvas);

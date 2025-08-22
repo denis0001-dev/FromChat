@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Profile module entry point and initialization
+ * @description Coordinates profile system initialization and form handling
+ * @author Cursor
+ * @version 1.0.0
+ */
+
 import type { Dialog } from "mdui/components/dialog";
 import { loadProfileData } from './profile/editor';
 import { loadProfilePicture, initializeProfileUpload } from "./profile/upload";
@@ -15,7 +22,13 @@ form.addEventListener("submit", async (e) => {
     dialog.open = false;
 });
 
-// Initialize profile functionality after login
+/**
+ * Initializes profile functionality after user login
+ * @function initializeProfile
+ * @example
+ * // Called after successful authentication
+ * initializeProfile();
+ */
 export function initializeProfile(): void {
     // Initialize profile modules
     initializeProfileUpload();

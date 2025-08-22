@@ -1,11 +1,25 @@
+/**
+ * @fileoverview Chat functionality and message management
+ * @description Handles message display, loading, sending, and real-time updates
+ * @author Cursor
+ * @version 1.0.0
+ */
+
 import { getAuthHeaders, currentUser, authToken } from "./auth";
 import { API_BASE_URL } from "./config";
 import { websocket } from "./websocket";
 import type { Message, Messages, WebSocketMessage } from "./types";
-import { formatTime } from "./utils";
+import { formatTime } from "./utils/utils";
 
-
-export function addMessage(message: Message, isAuthor: boolean) {
+/**
+ * Adds a new message to the chat interface
+ * @param {Message} message - Message object to display
+ * @param {boolean} isAuthor - Whether the current user is the message author
+ * @function addMessage
+ * @example
+ * addMessage(messageData, messageData.username === currentUser.username);
+ */
+export function addMessage(message: Message, isAuthor: boolean): void {
     const messagesContainer = document.querySelector('.chat-messages') as HTMLElement;
     const messageDiv = document.createElement('div');
     messageDiv.classList.add("message");
@@ -64,7 +78,13 @@ export function addMessage(message: Message, isAuthor: boolean) {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-export function loadMessages() {
+/**
+ * Loads chat messages from the server
+ * @function loadMessages
+ * @example
+ * loadMessages();
+ */
+export function loadMessages(): void {
     fetch(`${API_BASE_URL}/get_messages`, {
         headers: getAuthHeaders()
     })
@@ -89,7 +109,13 @@ export function loadMessages() {
         });
 }
 
-export function sendMessage() {
+/**
+ * Sends a message via WebSocket
+ * @function sendMessage
+ * @example
+ * sendMessage();
+ */
+export function sendMessage(): void {
     const input = document.querySelector('.message-input') as HTMLInputElement;
     const message = input.value.trim();
 

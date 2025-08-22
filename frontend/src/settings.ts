@@ -1,3 +1,10 @@
+/**
+ * @fileoverview Settings dialog management and panel navigation
+ * @description Handles settings dialog functionality and dynamic panel switching
+ * @author Cursor
+ * @version 1.0.0
+ */
+
 import type { Dialog } from "mdui/components/dialog";
 
 const dialog = document.getElementById('settings-dialog') as Dialog;
@@ -8,49 +15,65 @@ const closeButton = document.getElementById('settings-close')!;
 const settingsList = document.querySelector('#settings-menu mdui-list')!;
 const settingsPanels = document.querySelectorAll('.settings-panel');
 
-// Initialize settings
-function initializeSettings() {
-    // Add click listeners to all list items
+/**
+ * Mapping between list item text and their corresponding panel IDs
+ * @type {Object.<string, string>}
+ */
+const panelMapping = {
+    'Уведомления': 'notifications-settings',
+    'Внешний вид': 'appearance-settings',
+    'Безопасность': 'security-settings',
+    'Язык': 'language-settings',
+    'Хранилище': 'storage-settings',
+    'Помощь': 'help-settings',
+    'О приложении': 'about-settings'
+};
+
+/**
+ * Handles click events on settings list items
+ * @param {Element} item - The clicked list item element
+ * @function handleListItemClick
+ * @private
+ */
+function handleListItemClick(item: Element): void {
+    // Remove active class from all items and panels
     const listItems = settingsList.querySelectorAll('mdui-list-item');
+    listItems.forEach(li => li.removeAttribute('active'));
+    settingsPanels.forEach(panel => panel.classList.remove('active'));
     
-    // Create a mapping between list items and their corresponding panels
-    const panelMapping = {
-        'Уведомления': 'notifications-settings',
-        'Внешний вид': 'appearance-settings',
-        'Безопасность': 'security-settings',
-        'Язык': 'language-settings',
-        'Хранилище': 'storage-settings',
-        'Помощь': 'help-settings',
-        'О приложении': 'about-settings'
-    };
+    // Add active class to clicked item
+    item.setAttribute('active', '');
     
+    // Show corresponding panel using the mapping
+    const itemText = item.textContent?.trim();
+    const panelId = panelMapping[itemText as keyof typeof panelMapping];
+    
+    if (panelId) {
+        const targetPanel = document.getElementById(panelId);
+        if (targetPanel) {
+            targetPanel.classList.add('active');
+        }
+    }
+}
+
+/**
+ * Sets up click listeners for all settings list items
+ * @function setupSettingsNavigation
+ * @private
+ */
+function setupSettingsNavigation(): void {
+    const listItems = settingsList.querySelectorAll('mdui-list-item');
     listItems.forEach((item) => {
-        item.addEventListener('click', () => {
-            // Remove active class from all items and panels
-            listItems.forEach(li => li.removeAttribute('active'));
-            settingsPanels.forEach(panel => panel.classList.remove('active'));
-            
-            // Add active class to clicked item
-            item.setAttribute('active', '');
-            
-            // Show corresponding panel using the mapping
-            const itemText = item.textContent?.trim();
-            const panelId = panelMapping[itemText as keyof typeof panelMapping];
-            
-            if (panelId) {
-                const targetPanel = document.getElementById(panelId);
-                if (targetPanel) {
-                    targetPanel.classList.add('active');
-                }
-            }
-        });
+        item.addEventListener('click', () => handleListItemClick(item));
     });
 }
 
-// Dialog event listeners
-openButton.addEventListener('click', () => {
-    dialog.open = true;
-    // Reset to first panel when opening
+/**
+ * Resets settings dialog to show the first panel
+ * @function resetToFirstPanel
+ * @private
+ */
+function resetToFirstPanel(): void {
     const firstItem = settingsList.querySelector('mdui-list-item');
     const firstPanel = document.querySelector('.settings-panel');
     if (firstItem && firstPanel) {
@@ -59,15 +82,23 @@ openButton.addEventListener('click', () => {
         firstItem.setAttribute('active', '');
         firstPanel.classList.add('active');
     }
-});
-
-closeButton.addEventListener('click', () => {
-    dialog.open = false;
-});
-
-// Initialize when DOM is loaded
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeSettings);
-} else {
-    initializeSettings();
 }
+
+/**
+ * Sets up dialog event listeners
+ * @function setupDialogListeners
+ * @private
+ */
+function setupDialogListeners(): void {
+    openButton.addEventListener('click', () => {
+        dialog.open = true;
+        resetToFirstPanel();
+    });
+
+    closeButton.addEventListener('click', () => {
+        dialog.open = false;
+    });
+}
+
+setupSettingsNavigation();
+setupDialogListeners();
