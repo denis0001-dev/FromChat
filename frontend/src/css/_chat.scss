@@ -151,6 +151,23 @@
                     max-width: 70%;
                     position: relative;
                     width: max-content;
+                    display: flex;
+                    align-items: flex-end;
+                    gap: 8px;
+
+                    .message-profile-pic {
+                        width: 32px;
+                        height: 32px;
+                        flex-shrink: 0;
+                        margin-bottom: 4px;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+                    }
 
                     .message-inner {
                         padding: 0.8rem 1rem;
@@ -174,6 +191,7 @@
 
                     &.sent {
                         margin-left: auto;
+                        flex-direction: row-reverse;
 
                         .message-inner {
                             background-color: $color-dark-primary-container;

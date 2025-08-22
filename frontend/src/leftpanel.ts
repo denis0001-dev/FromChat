@@ -1,4 +1,5 @@
 import type { Dialog } from "mdui/components/dialog";
+import { loadProfilePicture } from "./profile/upload";
 
 // сварачивание и разворачивание чата
 const but = document.getElementById('chat-recrol')!;
@@ -29,6 +30,8 @@ const dialogClose = document.getElementById("profile-dialog-close")!;
 
 butprofile.addEventListener('click', () => {
     dialog.open = true;
+    // Load profile picture when dialog opens
+    loadProfilePicture();
 });
 
 dialogClose.addEventListener("click", () => {

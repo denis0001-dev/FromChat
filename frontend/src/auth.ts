@@ -1,4 +1,5 @@
 import { loadMessages } from "./chat";
+import { initializeProfile } from "./profile";
 import type { Headers, ErrorResponse, User, LoginResponse, LoginRequest, RegisterRequest } from "./types";
 import { API_BASE_URL } from "./config";
 
@@ -8,10 +9,13 @@ export let authToken: string | null = null;
 
 
 // Helper function to get auth headers
-export function getAuthHeaders(): Headers {
-    const headers: Headers = {
-        'Content-Type': 'application/json',
-    };
+export function getAuthHeaders(json: boolean = true): Headers {
+    const headers: Headers = {};
+
+    if (json) {
+        headers["Content-Type"] = "application/json";
+    }
+
     if (authToken) {
         headers['Authorization'] = `Bearer ${authToken}`;
     }
@@ -93,6 +97,7 @@ document.getElementById('login-form-element')!.addEventListener('submit', async 
             currentUser = data.user;
             showChat();
             loadMessages(); // Start loading messages
+            initializeProfile(); // Initialize profile after login
         } else {
             const data: ErrorResponse = await response.json();
             showAlert('login-alerts', data.message || 'Неверное имя пользователя или пароль', 'danger');

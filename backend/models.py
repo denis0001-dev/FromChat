@@ -15,6 +15,7 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False, index=True)
     password_hash = Column(String(200), nullable=False)
+    profile_picture = Column(String(255), nullable=True)
     online = Column(Boolean, default=False)
     last_seen = Column(DateTime, default=datetime.now)
     created_at = Column(DateTime, default=datetime.now)
@@ -56,6 +57,7 @@ class MessageResponse(BaseModel):
     is_author: bool
     is_read: bool
     username: str
+    profile_picture: str | None
 
     class Config:
         from_attributes = True

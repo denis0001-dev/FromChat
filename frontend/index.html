@@ -193,19 +193,50 @@
         </div>
 
         <mdui-dialog id="profile-dialog" close-on-overlay-click close-on-esc>
-            <div class="header-top">
-                <div class="left">
-                    <img id="profile-picture" src="./src/images/default-avatar.png" alt="Ваше фото" />
+            <div class="profile-dialog-content">
+                <div class="header-top">
+                    <div class="profile-picture-container">
+                        <img id="profile-picture" src="./src/images/default-avatar.png" alt="Ваше фото" />
+                        <mdui-button-icon icon="camera_alt--filled" id="upload-pfp-btn" class="upload-overlay" variant="filled"></mdui-button-icon>
+                        <input type="file" id="pfp-file-input" accept="image/*" style="display: none;">
+                    </div>
+                    <mdui-text-field id="username-field" label="Имя пользователя" variant="outlined" value="user123" autocomplete="username"></mdui-text-field>
                 </div>
-                <div class="right">
-                    <div id="profile-username">Loading...</div>
+
+                <form id="profile-form">
+                    <mdui-text-field 
+                        id="description-field"
+                        label="О себе" 
+                        variant="outlined" 
+                        multiline 
+                        rows="3" 
+                        placeholder="Расскажите о себе..."
+                        autocomplete="none"></mdui-text-field>
+                    <div class="dialog-actions">
+                        <mdui-button type="submit" id="profile-submit">Сохранить изменения</mdui-button>
+                        <mdui-button id="profile-dialog-close" variant="outlined">Закрыть</mdui-button>
+                    </div>
                 </div>
             </div>
-
-            <p>
-                <mdui-button id="profile-dialog-close">Закрыть</mdui-button>
-            </p>
         </mdui-dialog>
+
+        <!-- Profile Picture Cropper Dialog -->
+        <mdui-dialog id="cropper-dialog" close-on-overlay-click close-on-esc>
+            <div class="cropper-dialog-content">
+                <div class="cropper-header">
+                    <h3>Обрезать фото профиля</h3>
+                    <mdui-button-icon icon="close" id="cropper-close"></mdui-button-icon>
+                </div>
+                <div class="cropper-container">
+                    <div id="cropper-area"></div>
+                </div>
+                <div class="cropper-actions">
+                    <mdui-button id="crop-cancel" variant="outlined">Отмена</mdui-button>
+                    <mdui-button id="crop-save">Сохранить</mdui-button>
+                </div>
+            </div>
+        </mdui-dialog>
+
         <mdui-dialog id="settings-dialog" close-on-overlay-click close-on-esc fullscreen>
             <div class="fullscreen-wrapper">
                 <div id="settings-dialog-inner">
@@ -215,8 +246,7 @@
                     </div>
                     <div id="settings-menu">
                         <mdui-list>
-                            <mdui-list-item icon="account_circle--filled" rounded active>Профиль</mdui-list-item>
-                            <mdui-list-item icon="notifications--filled" rounded>Уведомления</mdui-list-item>
+                            <mdui-list-item icon="notifications--filled" rounded active>Уведомления</mdui-list-item>
                             <mdui-list-item icon="palette--filled" rounded>Внешний вид</mdui-list-item>
                             <mdui-list-item icon="security--filled" rounded>Безопасность</mdui-list-item>
                             <mdui-list-item icon="language--filled" rounded>Язык</mdui-list-item>
@@ -225,15 +255,7 @@
                             <mdui-list-item icon="info--filled" rounded>О приложении</mdui-list-item>
                         </mdui-list>
                         <div class="screen">
-                            <div id="profile-settings" class="settings-panel active">
-                                <h3>Профиль</h3>
-                                <mdui-text-field label="Имя пользователя" variant="outlined" value="user123"></mdui-text-field>
-                                <mdui-text-field label="Email" variant="outlined" type="email" value="user@example.com"></mdui-text-field>
-                                <mdui-text-field label="О себе" variant="outlined" multiline rows="3" placeholder="Расскажите о себе..."></mdui-text-field>
-                                <mdui-button>Сохранить изменения</mdui-button>
-                            </div>
-                            
-                            <div id="notifications-settings" class="settings-panel">
+                            <div id="notifications-settings" class="settings-panel active">
                                 <h3>Уведомления</h3>
                                 <mdui-switch checked>Новые сообщения</mdui-switch>
                                 <mdui-switch checked>Звуковые уведомления</mdui-switch>
@@ -288,7 +310,7 @@
                             <div id="about-settings" class="settings-panel">
                                 <h3>О приложении</h3>
                                 <p>Версия: 1.0.0</p>
-                                <p>© 2024 Boost Chat. Все права защищены.</p>
+                                <p>© 2024 From Chat. Все права защищены.</p>
                                 <mdui-button variant="outlined">Политика конфиденциальности</mdui-button>
                                 <mdui-button variant="outlined">Условия использования</mdui-button>
                             </div>

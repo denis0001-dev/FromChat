@@ -19,6 +19,22 @@ export function addMessage(message: Message, isAuthor: boolean) {
     const messageInner = document.createElement('div');
     messageInner.classList.add('message-inner');
 
+    // Add profile picture for received messages
+    if (!isAuthor) {
+        const profilePicDiv = document.createElement('div');
+        profilePicDiv.classList.add('message-profile-pic');
+        
+        const profileImg = document.createElement('img');
+        profileImg.src = message.profile_picture || './src/images/default-avatar.png';
+        profileImg.alt = message.username;
+        profileImg.onerror = () => {
+            profileImg.src = './src/images/default-avatar.png';
+        };
+        
+        profilePicDiv.appendChild(profileImg);
+        messageDiv.appendChild(profilePicDiv);
+    }
+
     if (!isAuthor) {
         const usernameDiv = document.createElement('div');
         usernameDiv.classList.add('message-username');

@@ -15,7 +15,6 @@ function initializeSettings() {
     
     // Create a mapping between list items and their corresponding panels
     const panelMapping = {
-        'Профиль': 'profile-settings',
         'Уведомления': 'notifications-settings',
         'Внешний вид': 'appearance-settings',
         'Безопасность': 'security-settings',

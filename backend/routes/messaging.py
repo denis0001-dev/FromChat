@@ -15,7 +15,8 @@ def convert_message(msg: Message) -> dict:
         "content": msg.content,
         "timestamp": msg.timestamp.isoformat(),
         "is_read": msg.is_read,
-        "username": msg.author.username
+        "username": msg.author.username,
+        "profile_picture": msg.author.profile_picture
     }
 
 async def get_messages_inner(db: Session):

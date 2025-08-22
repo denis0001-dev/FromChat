@@ -4,6 +4,11 @@ export interface ErrorResponse {
     message: string;
 }
 
+export interface Size2D {
+    x: number;
+    y: number;
+}
+
 
 // App types
 export interface Message {
@@ -12,6 +17,7 @@ export interface Message {
     content: string;
     is_read: boolean;
     timestamp: string;
+    profile_picture?: string;
 }
 
 export interface Messages {
