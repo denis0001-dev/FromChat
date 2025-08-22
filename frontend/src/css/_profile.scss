@@ -1,0 +1,34 @@
+@use "common/colors" as *;
+@use "common/material" as *;
+
+#profile-dialog {
+    .header-top {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        position: relative;
+
+        .left {
+            $size: 70px;
+
+            width: $size;
+            height: $size;
+
+            #profile-picture {
+                width: $size;
+                height: $size;
+                border-radius: 50%;
+            }
+        }
+
+        .right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            #profile-username {
+                font-size: larger;
+            }
+        }
+    }
+}

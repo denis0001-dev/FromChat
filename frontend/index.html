@@ -193,31 +193,12 @@
         </div>
 
         <mdui-dialog id="profile-dialog" close-on-overlay-click close-on-esc>
-            <div class="name-and-img">
-                <div id="icon-profile">    
-                    <img id="preview" src="./src/images/default-avatar.png" alt="Ваше фото" />
-                    <button id="uploadButton">Выбрать фото</button>
-                    <input type="file" id="fileInput" accept="image/*" />
+            <div class="header-top">
+                <div class="left">
+                    <img id="profile-picture" src="./src/images/default-avatar.png" alt="Ваше фото" />
                 </div>
-                <div class="name-and-discription">
-                    <div class="name">
-                        <div id="name-title">
-                            <p id="text-nik">Ваш ник</p>
-                            <input type="text" id="nik" style="display: none;" />
-                        </div>
-                        <div id="change-name"> 
-                            <img src="./src/images/pesel.svg" alt="" />
-                        </div>
-                    </div>
-                    <div class="discription">
-                        <div id="discription-title">
-                            <p id="text-discr">Ваше описание</p>
-                            <input type="text" id="discr" style="display: none;" />
-                        </div>
-                        <div id="change-discription">
-                            <img src="./src/images/pesel.svg" alt="">
-                        </div>
-                    </div>
+                <div class="right">
+                    <div id="profile-username">Loading...</div>
                 </div>
             </div>
 
