@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, Boolean, DateTime, ForeignKey, inspect, text
 from sqlalchemy.orm import relationship
 from datetime import datetime
 from db import engine
@@ -15,6 +15,8 @@ class User(Base):
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False, index=True)
     password_hash = Column(String(200), nullable=False)
+    profile_picture = Column(String(255), nullable=True)
+    bio = Column(Text, nullable=True)
     online = Column(Boolean, default=False)
     last_seen = Column(DateTime, default=datetime.now)
     created_at = Column(DateTime, default=datetime.now)
@@ -29,8 +31,11 @@ class Message(Base):
     timestamp = Column(DateTime, default=datetime.now)
     user_id = Column(Integer, ForeignKey("user.id"), nullable=False)
     is_read = Column(Boolean, default=False)
+    reply_to_id = Column(Integer, ForeignKey("message.id"), nullable=True)
+    is_edited = Column(Boolean, default=False)
 
     author = relationship("User", back_populates="messages")
+    reply_to = relationship("Message", remote_side=[id])
 
 
 # Pydantic модели
@@ -49,6 +54,36 @@ class SendMessageRequest(BaseModel):
     content: str
 
 
+class EditMessageRequest(BaseModel):
+    content: str
+
+
+class ReplyMessageRequest(BaseModel):
+    content: str
+    reply_to_id: int
+
+
+class DeleteMessageRequest(BaseModel):
+    message_id: int
+
+
+class UpdateBioRequest(BaseModel):
+    bio: str
+
+
+class UserProfileResponse(BaseModel):
+    id: int
+    username: str
+    profile_picture: str | None
+    bio: str | None
+    online: bool
+    last_seen: datetime
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+
+
 class MessageResponse(BaseModel):
     id: int
     content: str
@@ -56,6 +91,7 @@ class MessageResponse(BaseModel):
     is_author: bool
     is_read: bool
     username: str
+    profile_picture: str | None
 
     class Config:
         from_attributes = True

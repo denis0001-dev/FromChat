@@ -7,7 +7,6 @@
         background-color: $color-dark-surface-container;
         color: white;
         padding: 16px 16px;
-        position: static;
         justify-content: end;
         width: fit-content;
         z-index: 1000;
@@ -70,7 +69,7 @@
                 background: $color-dark-surface-container;
                 display: flex;
                 align-items: center;
-                box-shadow: black 0px 0px 20px;
+                box-shadow: black 0 0 20px;
 
                 .chat-header-avatar {
                     width: 45px;
@@ -89,8 +88,7 @@
 
                         h4 {
                             font-size: 1.1rem;
-                            margin: 0;
-                            margin-bottom: 0.2rem;
+                            margin: 0 0 0.2rem;
                         }
 
                         p {
@@ -151,12 +149,69 @@
                     max-width: 70%;
                     position: relative;
                     width: max-content;
+                    display: flex;
+                    align-items: flex-end;
+                    gap: 8px;
+
+                    .message-profile-pic {
+                        width: 32px;
+                        height: 32px;
+                        flex-shrink: 0;
+                        margin-bottom: 4px;
+
+                        img {
+                            width: 100%;
+                            height: 100%;
+                            border-radius: 50%;
+                            object-fit: cover;
+                            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+                            &:hover {
+                                transform: scale(1.1);
+                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                            }
+                        }
+                    }
 
                     .message-inner {
                         padding: 0.8rem 1rem;
                         border-radius: 12px;
                         position: relative;
                         word-wrap: break-word;
+
+                        .message-content {
+                            word-wrap: break-word;
+                            margin-bottom: 0.3rem;
+                        }
+
+                        .message-reply {
+                            background-color: rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            padding: 0.5rem;
+                            margin-bottom: 0.5rem;
+                            border-left: 3px solid $color-dark-primary;
+
+                            .reply-content {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 0.2rem;
+
+                                .reply-username {
+                                    font-weight: 600;
+                                    font-size: 0.8rem;
+                                    color: $color-dark-primary;
+                                }
+
+                                .reply-text {
+                                    font-size: 0.85rem;
+                                    color: $color-dark-on-surface-variant;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    max-width: 200px;
+                                }
+                            }
+                        }
 
                         .message-time {
                             font-size: 0.7rem;
@@ -174,6 +229,7 @@
 
                     &.sent {
                         margin-left: auto;
+                        flex-direction: row-reverse;
 
                         .message-inner {
                             background-color: $color-dark-primary-container;
@@ -191,6 +247,12 @@
                     font-weight: 600;
                     margin-bottom: 0.3rem;
                     font-size: 0.9rem;
+                    transition: color 0.2s ease;
+
+                    &:hover {
+                        color: $color-dark-primary;
+                        text-decoration: underline;
+                    }
                 }
             }
 
@@ -256,3 +318,78 @@
         }
     }
 }
+
+// Message Context Menu
+#message-context-menu {
+    position: fixed;
+    background-color: $color-dark-surface-container;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 0.5rem 0;
+    z-index: 1000;
+    display: none;
+    min-width: 150px;
+    max-width: 200px;
+    white-space: nowrap;
+
+    .context-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        color: $color-dark-on-surface;
+        transition: background-color 0.2s ease;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .material-symbols {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+    }
+}
+
+// Dialog content styles
+.dialog-content {
+    padding: 1.5rem;
+
+    h3 {
+        margin: 0 0 1rem 0;
+        color: $color-dark-on-surface;
+        font-size: 1.2rem;
+    }
+
+    .dialog-actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
+}
+
+// Reply preview styles
+.reply-preview {
+    background-color: $color-dark-surface;
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid $color-dark-primary;
+
+    .reply-preview-content {
+        color: $color-dark-on-surface-variant;
+        font-size: 0.9rem;
+        line-height: 1.4;
+
+        strong {
+            color: $color-dark-primary;
+        }
+    }
+}
+

@@ -1,36 +1,70 @@
+/**
+ * @fileoverview Left panel UI controls and interactions
+ * @description Handles chat collapse/expand, chat switching, and profile dialog
+ * @author Cursor
+ * @version 1.0.0
+ */
+
 import type { Dialog } from "mdui/components/dialog";
+import { loadProfilePicture } from "./profile/upload";
 
 // сварачивание и разворачивание чата
-const but = document.getElementById('chat-recrol')!;
-const but_list1 = document.getElementById('chat1but')!;
-const but_list2 = document.getElementById('chat1but2')!;
-const cont1 = document.getElementById('conteinerchat')!;
-const namechat = document.getElementById('namechat')!;
-
-but.addEventListener('click', () => {
-    but.style.display = 'none';
-    cont1.style.display = 'none';
-});
-but_list1.addEventListener('click', () => {
-    but.style.display = 'flex';
-    cont1.style.display = 'flex';
-    namechat.textContent = 'общий чат';
-});
-but_list2.addEventListener('click', () => {
-    but.style.display = 'flex';
-    cont1.style.display = 'flex';
-    namechat.textContent = 'общий чат 2';
-});
-
-// открытие профиля
-const butprofile = document.getElementById('profbut')!;
+const chatCollapseBtn = document.getElementById('hide-chat')!;
+const chat1 = document.getElementById('chat-list-chat-1')!;
+const chat2 = document.getElementById('chat-list-chat-2')!;
+const chatInner = document.getElementById('chat-inner')!;
+const chatName = document.getElementById('chat-name')!;
+const profileButton = document.getElementById('profile-open')!;
 const dialog = document.getElementById("profile-dialog") as Dialog;
 const dialogClose = document.getElementById("profile-dialog-close")!;
 
-butprofile.addEventListener('click', () => {
-    dialog.open = true;
-});
+/**
+ * Sets up chat collapse functionality
+ * @function setupChatCollapse
+ * @private
+ */
+function setupChatCollapse(): void {
+    chatCollapseBtn.addEventListener('click', () => {
+        chatCollapseBtn.style.display = 'none';
+        chatInner.style.display = 'none';
+    });
+}
 
-dialogClose.addEventListener("click", () => {
-    dialog.open = false;
-});
+/**
+ * Sets up chat switching functionality
+ * @function setupChatSwitching
+ * @private
+ */
+function setupChatSwitching(): void {
+    chat1.addEventListener('click', () => {
+        chatCollapseBtn.style.display = 'flex';
+        chatInner.style.display = 'flex';
+        chatName.textContent = 'общий чат';
+    });
+    
+    chat2.addEventListener('click', () => {
+        chatCollapseBtn.style.display = 'flex';
+        chatInner.style.display = 'flex';
+        chatName.textContent = 'общий чат 2';
+    });
+}
+
+/**
+ * Sets up profile dialog functionality
+ * @function setupProfileDialog
+ * @private
+ */
+function setupProfileDialog(): void {
+    profileButton.addEventListener('click', () => {
+        dialog.open = true;
+        loadProfilePicture();
+    });
+
+    dialogClose.addEventListener("click", () => {
+        dialog.open = false;
+    });
+}
+
+setupChatCollapse();
+setupChatSwitching();
+setupProfileDialog();

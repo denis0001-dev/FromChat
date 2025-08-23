@@ -4,3 +4,5 @@ pydantic>=2.11.7
 sqlalchemy>=2.0.43
 bcrypt>=4.3.0
 websockets>=15.0.1
+Pillow>=10.0.0
+python-multipart>=0.0.6
