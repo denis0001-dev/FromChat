@@ -26,13 +26,21 @@ COPY deployment/frontend/ .
 # 3. Put it all together
 FROM node:24-slim
 
+# 3.1. Non-root user
+RUN useradd -u 1001 app && \
+    mkdir -p /app && \
+    chown -R app /app && \
+    mkdir /server && \
+    chown -R app /server
+USER app
+
 # 3.1. Frontend static files
 WORKDIR /app
-COPY --from=frontend /app/frontend/dist .
+COPY --from=frontend --chown=app /app/frontend/dist .
 
 # 3.2. Static file server
 WORKDIR /server
-COPY --from=server /server .
+COPY --from=server --chown=app /server .
 
 # 4. Final command
 ENV STATIC_FILE_PATH=/app
