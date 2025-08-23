@@ -40,16 +40,20 @@ export interface Size2D {
  * @property {string} username - Username of the message sender
  * @property {string} content - Message content
  * @property {boolean} is_read - Whether the message has been read
+ * @property {boolean} is_edited - Whether the message has been edited
  * @property {string} timestamp - ISO timestamp of the message
  * @property {string} [profile_picture] - URL to sender's profile picture
+ * @property {Message} [reply_to] - The message this is replying to
  */
 export interface Message {
     id: number;
     username: string;
     content: string;
     is_read: boolean;
+    is_edited: boolean;
     timestamp: string;
     profile_picture?: string;
+    reply_to?: Message;
 }
 
 /**
@@ -69,6 +73,7 @@ export interface Messages {
  * @property {string} last_seen - ISO timestamp of last activity
  * @property {boolean} online - Whether the user is currently online
  * @property {string} username - Username
+ * @property {string} [bio] - User biography
  */
 export interface User {
     id: number;
@@ -76,6 +81,28 @@ export interface User {
     last_seen: string;
     online: boolean;
     username: string;
+    bio?: string;
+}
+
+/**
+ * User profile response structure
+ * @interface UserProfile
+ * @property {number} id - Unique user identifier
+ * @property {string} username - Username
+ * @property {string} [profile_picture] - URL to user's profile picture
+ * @property {string} [bio] - User biography
+ * @property {boolean} online - Whether the user is currently online
+ * @property {string} last_seen - ISO timestamp of last activity
+ * @property {string} created_at - ISO timestamp of account creation
+ */
+export interface UserProfile {
+    id: number;
+    username: string;
+    profile_picture?: string;
+    bio?: string;
+    online: boolean;
+    last_seen: string;
+    created_at: string;
 }
 
 // ----------

@@ -100,3 +100,33 @@ export async function updateProfile(data: Partial<ProfileData>): Promise<boolean
         return false;
     }
 }
+
+/**
+ * Updates user bio
+ * @async
+ * @function updateBio
+ * @param {string} bio - New bio text
+ * @returns {Promise<boolean>} True if update was successful, false otherwise
+ * @example
+ * const success = await updateBio('My new bio text');
+ * if (success) {
+ *   console.log('Bio updated successfully');
+ * }
+ */
+export async function updateBio(bio: string): Promise<boolean> {
+    try {
+        const response = await fetch('/api/user/bio', {
+            method: 'PUT',
+            headers: {
+                ...getAuthHeaders(),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ bio })
+        });
+
+        return response.ok;
+    } catch (error) {
+        console.error('Error updating bio:', error);
+        return false;
+    }
+}

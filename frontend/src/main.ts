@@ -14,3 +14,5 @@ import "./settings";
 import "./leftpanel";
 import "./init";
 import "./profile";
+import "./message-context-menu";
+import "./user-profile-dialog";

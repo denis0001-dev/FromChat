@@ -7,7 +7,6 @@
         background-color: $color-dark-surface-container;
         color: white;
         padding: 16px 16px;
-        position: static;
         justify-content: end;
         width: fit-content;
         z-index: 1000;
@@ -70,7 +69,7 @@
                 background: $color-dark-surface-container;
                 display: flex;
                 align-items: center;
-                box-shadow: black 0px 0px 20px;
+                box-shadow: black 0 0 20px;
 
                 .chat-header-avatar {
                     width: 45px;
@@ -89,8 +88,7 @@
 
                         h4 {
                             font-size: 1.1rem;
-                            margin: 0;
-                            margin-bottom: 0.2rem;
+                            margin: 0 0 0.2rem;
                         }
 
                         p {
@@ -166,6 +164,12 @@
                             height: 100%;
                             border-radius: 50%;
                             object-fit: cover;
+                            transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+                            &:hover {
+                                transform: scale(1.1);
+                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                            }
                         }
                     }
 
@@ -174,6 +178,40 @@
                         border-radius: 12px;
                         position: relative;
                         word-wrap: break-word;
+
+                        .message-content {
+                            word-wrap: break-word;
+                            margin-bottom: 0.3rem;
+                        }
+
+                        .message-reply {
+                            background-color: rgba(255, 255, 255, 0.1);
+                            border-radius: 8px;
+                            padding: 0.5rem;
+                            margin-bottom: 0.5rem;
+                            border-left: 3px solid $color-dark-primary;
+
+                            .reply-content {
+                                display: flex;
+                                flex-direction: column;
+                                gap: 0.2rem;
+
+                                .reply-username {
+                                    font-weight: 600;
+                                    font-size: 0.8rem;
+                                    color: $color-dark-primary;
+                                }
+
+                                .reply-text {
+                                    font-size: 0.85rem;
+                                    color: $color-dark-on-surface-variant;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    white-space: nowrap;
+                                    max-width: 200px;
+                                }
+                            }
+                        }
 
                         .message-time {
                             font-size: 0.7rem;
@@ -209,6 +247,12 @@
                     font-weight: 600;
                     margin-bottom: 0.3rem;
                     font-size: 0.9rem;
+                    transition: color 0.2s ease;
+
+                    &:hover {
+                        color: $color-dark-primary;
+                        text-decoration: underline;
+                    }
                 }
             }
 
@@ -269,6 +313,204 @@
                             @include hoverStateLayer($background: $color-dark-primary);
                         }
                     } 
+                }
+            }
+        }
+    }
+}
+
+// Message Context Menu
+.message-context-menu {
+    position: fixed;
+    background-color: $color-dark-surface-container;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    padding: 0.5rem 0;
+    z-index: 1000;
+    display: none;
+    min-width: 150px;
+    max-width: 200px;
+    white-space: nowrap;
+
+    .context-menu-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        cursor: pointer;
+        color: $color-dark-on-surface;
+        transition: background-color 0.2s ease;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .material-symbols {
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+    }
+}
+
+// Dialog content styles
+.dialog-content {
+    padding: 1.5rem;
+
+    h3 {
+        margin: 0 0 1rem 0;
+        color: $color-dark-on-surface;
+        font-size: 1.2rem;
+    }
+
+    .dialog-actions {
+        display: flex;
+        gap: 0.75rem;
+        justify-content: flex-end;
+        margin-top: 1.5rem;
+    }
+}
+
+// Reply preview styles
+.reply-preview {
+    background-color: $color-dark-surface;
+    border-radius: 8px;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid $color-dark-primary;
+
+    .reply-preview-content {
+        color: $color-dark-on-surface-variant;
+        font-size: 0.9rem;
+        line-height: 1.4;
+
+        strong {
+            color: $color-dark-primary;
+        }
+    }
+}
+
+// User profile dialog content styles
+.profile-dialog-content {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+
+    .profile-picture-section {
+        flex-shrink: 0;
+
+        .profile-picture {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid $color-dark-outline;
+        }
+    }
+
+    .profile-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .username-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+
+            .username {
+                margin: 0;
+                color: $color-dark-on-surface;
+                font-size: 1.1rem;
+                font-weight: 600;
+            }
+
+            .online-status {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                font-size: 0.85rem;
+                padding: 0.25rem 0.5rem;
+                border-radius: 12px;
+                font-weight: 500;
+
+                &.online {
+                    color: $success;
+                    background-color: rgba(76, 175, 80, 0.1);
+
+                    .online-indicator {
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background-color: $success;
+                    }
+                }
+
+                &.offline {
+                    color: $color-dark-on-surface-variant;
+                    background-color: rgba(255, 255, 255, 0.05);
+
+                    .offline-indicator {
+                        width: 8px;
+                        height: 8px;
+                        border-radius: 50%;
+                        background-color: $color-dark-on-surface-variant;
+                    }
+                }
+            }
+        }
+
+        .bio-section {
+            label {
+                display: block;
+                color: $color-dark-on-surface-variant;
+                font-size: 0.85rem;
+                font-weight: 500;
+                margin-bottom: 0.5rem;
+            }
+
+            .bio-display {
+                color: $color-dark-on-surface;
+                font-size: 0.9rem;
+                line-height: 1.4;
+                padding: 0.75rem;
+                background-color: $color-dark-surface;
+                border-radius: 8px;
+                border: 1px solid $color-dark-outline;
+                min-height: 60px;
+            }
+
+            .bio-actions {
+                display: flex;
+                gap: 0.5rem;
+                margin-top: 0.5rem;
+            }
+        }
+
+        .profile-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .stat {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0.5rem 0;
+
+                .stat-label {
+                    color: $color-dark-on-surface-variant;
+                    font-size: 0.85rem;
+                }
+
+                .stat-value {
+                    color: $color-dark-on-surface;
+                    font-size: 0.85rem;
+                    font-weight: 500;
                 }
             }
         }

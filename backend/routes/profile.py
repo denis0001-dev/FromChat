@@ -7,7 +7,7 @@ import uuid
 import io
 
 from dependencies import get_db, get_current_user
-from models import User
+from models import User, UpdateBioRequest, UserProfileResponse
 
 router = APIRouter()
 
@@ -92,7 +92,53 @@ async def get_user_profile(
         "id": current_user.id,
         "username": current_user.username,
         "profile_picture": current_user.profile_picture,
+        "bio": current_user.bio,
         "online": current_user.online,
         "last_seen": current_user.last_seen,
         "created_at": current_user.created_at
     }
+
+
+@router.put("/user/bio")
+async def update_user_bio(
+    request: UpdateBioRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """
+    Update current user's bio
+    """
+    if len(request.bio) > 500:  # Limit bio to 500 characters
+        raise HTTPException(status_code=400, detail="Bio must be 500 characters or less")
+    
+    current_user.bio = request.bio.strip()
+    db.commit()
+    
+    return {
+        "message": "Bio updated successfully",
+        "bio": current_user.bio
+    }
+
+
+@router.get("/user/{username}")
+async def get_user_by_username(
+    username: str,
+    db: Session = Depends(get_db)
+):
+    """
+    Get user profile by username
+    """
+    user = db.query(User).filter(User.username == username).first()
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    return UserProfileResponse(
+        id=user.id,
+        username=user.username,
+        profile_picture=user.profile_picture,
+        bio=user.bio,
+        online=user.online,
+        last_seen=user.last_seen,
+        created_at=user.created_at
+    )

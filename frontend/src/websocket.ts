@@ -5,10 +5,9 @@
  * @version 1.0.0
  */
 
-import { currentUser } from "./auth";
-import { addMessage } from "./chat";
+import { handleWebSocketMessage } from "./chat";
 import { API_FULL_BASE_URL } from "./config";
-import type { WebSocketMessage, Message } from "./types";
+import type { WebSocketMessage } from "./types";
 import { delay } from "./utils/utils";
 
 /**
@@ -25,7 +24,7 @@ function create(): WebSocket {
  * Global WebSocket instance
  * @type {WebSocket}
  */
-export let websocket = create();
+export let websocket: WebSocket = create();
 
 // --------------
 // Initialization
@@ -33,13 +32,7 @@ export let websocket = create();
 
 websocket.addEventListener("message", (e) => {
     const message: WebSocketMessage = JSON.parse(e.data);
-    switch (message.type) {
-        case "newMessage": {
-            const newMessage: Message = message.data;
-            addMessage(newMessage, newMessage.username == currentUser!.username);
-            break;
-        }
-    }
+    handleWebSocketMessage(message);
 });
 
 websocket.addEventListener("error", async () => {

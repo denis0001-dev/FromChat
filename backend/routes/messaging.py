@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisco
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from dependencies import get_current_user, get_db
-from models import Message, SendMessageRequest, User
+from models import Message, SendMessageRequest, EditMessageRequest, ReplyMessageRequest, User
 
 router = APIRouter()
 logger = logging.getLogger("uvicorn.error")
@@ -15,23 +15,19 @@ def convert_message(msg: Message) -> dict:
         "content": msg.content,
         "timestamp": msg.timestamp.isoformat(),
         "is_read": msg.is_read,
+        "is_edited": msg.is_edited,
         "username": msg.author.username,
-        "profile_picture": msg.author.profile_picture
+        "profile_picture": msg.author.profile_picture,
+        "reply_to": convert_message(msg.reply_to) if msg.reply_to else None
     }
 
-async def get_messages_inner(db: Session):
-    messages = db.query(Message).order_by(Message.timestamp.asc()).all()
 
-    messages_data = []
-    for msg in messages:
-        messages_data.append(convert_message(msg))
-
-    return {
-        "status": "success",
-        "messages": messages_data
-    }
-
-async def send_message_inner(request: SendMessageRequest, current_user: User, db: Session):
+@router.post("/send_message")
+async def send_message(
+    request: SendMessageRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
     if not request.content.strip():
         raise HTTPException(
             status_code=400,
@@ -50,18 +46,94 @@ async def send_message_inner(request: SendMessageRequest, current_user: User, db
 
     return {"status": "success", "message": convert_message(new_message)}
 
-@router.post("/send_message")
-async def send_message(
-    request: SendMessageRequest,
-    current_user: User = Depends(get_current_user),
-    db: Session = Depends(get_db)
-):
-    return await send_message_inner(request, current_user, db)
-
 
 @router.get("/get_messages")
 async def get_messages(db: Session = Depends(get_db)):
-    return await get_messages_inner(db)
+    messages = db.query(Message).order_by(Message.timestamp.asc()).all()
+
+    messages_data = []
+    for msg in messages:
+        messages_data.append(convert_message(msg))
+
+    return {
+        "status": "success",
+        "messages": messages_data
+    }
+
+
+@router.put("/edit_message/{message_id}")
+async def edit_message(
+    message_id: int,
+    request: EditMessageRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    message = db.query(Message).filter(Message.id == message_id).first()
+    
+    if not message:
+        raise HTTPException(status_code=404, detail="Message not found")
+    
+    if message.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="You can only edit your own messages")
+    
+    if not request.content.strip():
+        raise HTTPException(status_code=400, detail="Message content cannot be empty")
+    
+    message.content = request.content.strip()
+    message.is_edited = True
+    
+    db.commit()
+    db.refresh(message)
+    
+    return {"status": "success", "message": convert_message(message)}
+
+
+@router.delete("/delete_message/{message_id}")
+async def delete_message(
+    message_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    message = db.query(Message).filter(Message.id == message_id).first()
+    
+    if not message:
+        raise HTTPException(status_code=404, detail="Message not found")
+    
+    if message.user_id != current_user.id:
+        raise HTTPException(status_code=403, detail="You can only delete your own messages")
+    
+    db.delete(message)
+    db.commit()
+    
+    return {"status": "success", "message_id": message_id}
+
+
+@router.post("/reply_message")
+async def reply_message(
+    request: ReplyMessageRequest,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Check if the message being replied to exists
+    original_message = db.query(Message).filter(Message.id == request.reply_to_id).first()
+    if not original_message:
+        raise HTTPException(status_code=404, detail="Original message not found")
+    
+    if not request.content.strip():
+        raise HTTPException(status_code=400, detail="No content provided")
+    
+    new_message = Message(
+        content=request.content.strip(),
+        user_id=current_user.id,
+        timestamp=datetime.now(),
+        reply_to_id=request.reply_to_id
+    )
+    
+    db.add(new_message)
+    db.commit()
+    db.refresh(new_message)
+    
+    return {"status": "success", "message": convert_message(new_message)}
 
 
 class MessaggingSocketManager:
@@ -96,7 +168,7 @@ class MessaggingSocketManager:
                     if not current_user:
                         raise HTTPException(401)
 
-                    await websocket.send_json({"type": type, "data": await get_messages_inner(current_user, db)})
+                    await websocket.send_json({"type": type, "data": await get_messages(current_user, db)})
                 except HTTPException as e:
                     await self.send_error(websocket, type, e)
             elif type == "sendMessage":
@@ -107,7 +179,57 @@ class MessaggingSocketManager:
                     
                     request: SendMessageRequest = SendMessageRequest.model_validate(data["data"])
 
-                    response = await send_message_inner(request, current_user, db)
+                    response = await send_message(request, current_user, db)
+                    await self.broadcast({
+                        "type": "newMessage",
+                        "data": response["message"]
+                    })
+
+                    await websocket.send_json({"type": type, "data": response})
+                except HTTPException as e:
+                    await self.send_error(websocket, type, e)
+            elif type == "editMessage":
+                try:
+                    current_user = get_current_user_inner()
+                    if not current_user:
+                        raise HTTPException(401)
+                    
+                    message_id = data["data"]["message_id"]
+                    request: EditMessageRequest = EditMessageRequest.model_validate(data["data"])
+
+                    response = await edit_message(message_id, request, current_user, db)
+                    await self.broadcast({
+                        "type": "messageEdited",
+                        "data": response["message"]
+                    })
+
+                    await websocket.send_json({"type": type, "data": response})
+                except HTTPException as e:
+                    await self.send_error(websocket, type, e)
+            elif type == "deleteMessage":
+                try:
+                    current_user = get_current_user_inner()
+                    if not current_user:
+                        raise HTTPException(401)
+                    
+                    message_id = data["data"]["message_id"]
+                    response = await delete_message(message_id, current_user, db)
+                    await self.broadcast({
+                        "type": "messageDeleted",
+                        "data": {"message_id": message_id}
+                    })
+
+                    await websocket.send_json({"type": type, "data": response})
+                except HTTPException as e:
+                    await self.send_error(websocket, type, e)
+            elif type == "replyMessage":
+                try:
+                    current_user = get_current_user_inner()
+                    if not current_user:
+                        raise HTTPException(401)
+                    
+                    request: ReplyMessageRequest = ReplyMessageRequest.model_validate(data["data"])
+                    response = await reply_message(request, current_user, db)
                     await self.broadcast({
                         "type": "newMessage",
                         "data": response["message"]

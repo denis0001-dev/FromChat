@@ -10,6 +10,8 @@ import { API_BASE_URL } from "./config";
 import { websocket } from "./websocket";
 import type { Message, Messages, WebSocketMessage } from "./types";
 import { formatTime } from "./utils/utils";
+import { messageContextMenu } from "./message-context-menu";
+import { userProfileDialog } from "./user-profile-dialog";
 
 /**
  * Adds a new message to the chat interface
@@ -45,6 +47,12 @@ export function addMessage(message: Message, isAuthor: boolean): void {
             profileImg.src = './src/images/default-avatar.png';
         };
         
+        // Add click handler to profile picture
+        profileImg.style.cursor = 'pointer';
+        profileImg.addEventListener('click', () => {
+            userProfileDialog.show(message.username);
+        });
+        
         profilePicDiv.appendChild(profileImg);
         messageDiv.appendChild(profilePicDiv);
     }
@@ -53,16 +61,42 @@ export function addMessage(message: Message, isAuthor: boolean): void {
         const usernameDiv = document.createElement('div');
         usernameDiv.classList.add('message-username');
         usernameDiv.textContent = message.username;
+        
+        // Add click handler to username
+        usernameDiv.style.cursor = 'pointer';
+        usernameDiv.addEventListener('click', () => {
+            userProfileDialog.show(message.username);
+        });
+        
         messageInner.appendChild(usernameDiv);
     }
 
+    // Add reply preview if this is a reply
+    if (message.reply_to) {
+        const replyDiv = document.createElement('div');
+        replyDiv.classList.add('message-reply');
+        replyDiv.innerHTML = `
+            <div class="reply-content">
+                <span class="reply-username">${message.reply_to.username}</span>
+                <span class="reply-text">${message.reply_to.content}</span>
+            </div>
+        `;
+        messageInner.appendChild(replyDiv);
+    }
+
     const contentDiv = document.createElement('div');
+    contentDiv.classList.add('message-content');
     contentDiv.textContent = message.content;
     messageInner.appendChild(contentDiv);
 
     const timeDiv = document.createElement('div');
     timeDiv.classList.add('message-time');
-    timeDiv.textContent = formatTime(message.timestamp);
+    
+    let timeText = formatTime(message.timestamp);
+    if (message.is_edited) {
+        timeText += ' (edited)';
+    }
+    timeDiv.textContent = timeText;
 
     if (isAuthor && message.is_read) {
         const checkIcon = document.createElement('span');
@@ -73,6 +107,12 @@ export function addMessage(message: Message, isAuthor: boolean): void {
     messageInner.appendChild(timeDiv);
     messageDiv.appendChild(messageInner);
     messagesContainer.appendChild(messageDiv);
+
+    // Add right-click context menu
+    messageDiv.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        messageContextMenu.show(message, e.clientX, e.clientY);
+    });
 
     // Прокрутка к новому сообщению
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -151,3 +191,66 @@ document.getElementById('message-form')!.addEventListener('submit', (e) => {
     e.preventDefault();
     sendMessage();
 });
+
+/**
+ * Updates an existing message in the chat interface
+ * @param {Message} message - Updated message object
+ * @function updateMessage
+ */
+export function updateMessage(message: Message): void {
+    const messageElement = document.querySelector(`[data-id="${message.id}"]`) as HTMLElement;
+    if (!messageElement) return;
+
+    const contentDiv = messageElement.querySelector('.message-content') as HTMLElement;
+    const timeDiv = messageElement.querySelector('.message-time') as HTMLElement;
+
+    if (contentDiv) {
+        contentDiv.textContent = message.content;
+    }
+
+    if (timeDiv) {
+        let timeText = formatTime(message.timestamp);
+        if (message.is_edited) {
+            timeText += ' (edited)';
+        }
+        timeDiv.textContent = timeText;
+    }
+}
+
+/**
+ * Removes a message from the chat interface
+ * @param {number} messageId - ID of the message to remove
+ * @function removeMessage
+ */
+export function removeMessage(messageId: number): void {
+    const messageElement = document.querySelector(`[data-id="${messageId}"]`) as HTMLElement;
+    if (messageElement) {
+        messageElement.remove();
+    }
+}
+
+/**
+ * Handles WebSocket message updates
+ * @param {WebSocketMessage} response - WebSocket response
+ * @function handleWebSocketMessage
+ */
+export function handleWebSocketMessage(response: WebSocketMessage): void {
+    switch (response.type) {
+        case 'messageEdited':
+            if (response.data) {
+                updateMessage(response.data);
+            }
+            break;
+        case 'messageDeleted':
+            if (response.data && response.data.message_id) {
+                removeMessage(response.data.message_id);
+            }
+            break;
+        case 'newMessage':
+            if (response.data) {
+                const isAuthor = response.data.username === currentUser?.username;
+                addMessage(response.data, isAuthor);
+            }
+            break;
+    }
+}
