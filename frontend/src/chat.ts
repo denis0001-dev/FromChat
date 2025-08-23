@@ -45,12 +45,12 @@ export function addMessage(message: Message, isAuthor: boolean): void {
         profileImg.src = message.profile_picture || defaultAvatar;
         profileImg.alt = message.username;
 
-        let errorLock = false
+        let errorLock = false;
 
         profileImg.addEventListener("error", () => {
             if (!errorLock) {
                 profileImg.src = defaultAvatar;
-                errorLock = true
+                errorLock = true;
             }
         });
         

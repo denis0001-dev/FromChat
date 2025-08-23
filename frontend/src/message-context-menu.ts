@@ -9,11 +9,14 @@ import { currentUser, authToken } from "./auth";
 import { websocket } from "./websocket";
 import type { Message, WebSocketMessage } from "./types";
 import { showSuccess, showError } from "./utils/notification";
+import { delay } from "./utils/utils";
+import type { Dialog } from "mdui/components/dialog";
+import type { TextField } from "mdui/components/text-field";
 
 
 let menu = document.getElementById("message-context-menu")!;
-let editDialog = document.getElementById("edit-message-dialog");
-let replyDialog = document.getElementById("reply-message-dialog");
+let editDialog = document.getElementById("edit-message-dialog") as Dialog;
+let replyDialog = document.getElementById("reply-message-dialog") as Dialog;
 let currentMessage: Message | null = null;
 
 function init() {
@@ -73,8 +76,6 @@ function bindEvents(): void {
  * @param {number} y - Y coordinate
  */
 export function show(message: Message, x: number, y: number): void {
-    if (!menu) return;
-
     currentMessage = message;
     
     // Only show edit and delete for own messages
@@ -88,26 +89,28 @@ export function show(message: Message, x: number, y: number): void {
         editItem.style.display = 'none';
         deleteItem.style.display = 'none';
     }
-
-    // Calculate menu position
-    const viewportWidth = window.innerWidth;
-    const viewportHeight = window.innerHeight;
     
-    // Default menu size estimates
-    const menuWidth = 150;
-    const menuHeight = 120;
+    // Position the menu properly
+    menu.style.display = 'block';
+
+    let menuWidth = menu.offsetWidth;
+    let menuHeight = menu.offsetHeight;
     
     let adjustedX = x;
     let adjustedY = y;
+    let vertical = "top";
+    let horizontal = "right";
 
     // Adjust horizontal position if menu would go off-screen
-    if (x + menuWidth > viewportWidth) {
+    if (x + menuWidth > window.innerWidth) {
         adjustedX = x - menuWidth;
+        horizontal = "left";
     }
 
     // Adjust vertical position if menu would go off-screen
-    if (y + menuHeight > viewportHeight) {
+    if (y + menuHeight > window.innerHeight) {
         adjustedY = y - menuHeight;
+        vertical = "bottom";
     }
 
     // Ensure menu doesn't go off the left or top edges
@@ -116,16 +119,19 @@ export function show(message: Message, x: number, y: number): void {
 
     menu.style.left = `${adjustedX}px`;
     menu.style.top = `${adjustedY}px`;
-    menu.style.display = 'block';
+    menu.classList.add(`pos-${vertical}-${horizontal}`, "open");
 }
 
 /**
  * Hides the context menu
  */
 export function hide(): void {
-    if (menu) {
-        menu.style.display = 'none';
-    }
+    menu.style.display = 'none';
+    menu.classList.forEach((name) => {
+        if (name.match(/pos-\w+-\w+/)) {
+            menu.classList.remove(name);
+        }
+    })
     currentMessage = null;
 }
 
@@ -156,21 +162,16 @@ function handleAction(action: string, message: Message): void {
  * @param {Message} message - The message to edit
  * @private
  */
-function showEditDialog(message: Message): void {
-    if (!editDialog) return;
-
-    const textField = editDialog.querySelector('#edit-message-input') as any;
-    if (textField) {
-        textField.value = message.content;
-    }
+async function showEditDialog(message: Message): Promise<void> {
+    const textField = editDialog.querySelector('#edit-message-input') as TextField;
+    textField.value = message.content;
     
     currentMessage = message;
-    (editDialog as any).open = true;
+    editDialog.open = true;
     
     // Focus the text field
-    setTimeout(() => {
-        textField?.focus();
-    }, 100);
+    await delay(100);
+    textField?.focus();
 }
 
 /**
@@ -178,9 +179,7 @@ function showEditDialog(message: Message): void {
  * @private
  */
 function hideEditDialog(): void {
-    if (editDialog) {
-        (editDialog as any).open = false;
-    }
+    editDialog.open = false;
 }
 
 /**
@@ -188,9 +187,9 @@ function hideEditDialog(): void {
  * @private
  */
 function saveEdit(): void {
-    if (!currentMessage || !editDialog) return;
+    if (!currentMessage) return;
 
-    const textField = editDialog.querySelector('#edit-message-input') as any;
+    const textField = editDialog.querySelector('#edit-message-input') as TextField;
     const newContent = textField?.value?.trim() || '';
 
     if (!newContent) {
@@ -231,26 +230,21 @@ function saveEdit(): void {
  * @param {Message} message - The message to reply to
  * @private
  */
-function showReplyDialog(message: Message): void {
-    if (!replyDialog) return;
-
+async function showReplyDialog(message: Message): Promise<void> {
     const preview = replyDialog.querySelector('#reply-preview') as HTMLElement;
-    if (preview) {
-        preview.innerHTML = `
-            <div class="reply-preview-content">
-                <strong>${message.username}</strong>: ${message.content}
-            </div>
-        `;
-    }
+    preview.innerHTML = `
+        <div class="reply-preview-content">
+            <strong>${message.username}</strong>: ${message.content}
+        </div>
+    `;
     
     currentMessage = message;
-    (replyDialog as any).open = true;
+    replyDialog.open = true;
     
     // Focus the text field
-    setTimeout(() => {
-        const textField = replyDialog?.querySelector('#reply-message-input') as any;
-        textField?.focus();
-    }, 100);
+    await delay(100);
+    const textField = replyDialog?.querySelector('#reply-message-input') as TextField;
+    textField?.focus();
 }
 
 /**
@@ -258,9 +252,7 @@ function showReplyDialog(message: Message): void {
  * @private
  */
 function hideReplyDialog(): void {
-    if (replyDialog) {
-        (replyDialog as any).open = false;
-    }
+    replyDialog.open = false;
 }
 
 /**
@@ -268,9 +260,9 @@ function hideReplyDialog(): void {
  * @private
  */
 function sendReply(): void {
-    if (!currentMessage || !replyDialog) return;
+    if (!currentMessage) return;
 
-    const textField = replyDialog.querySelector('#reply-message-input') as any;
+    const textField = replyDialog.querySelector('#reply-message-input') as TextField;
     const content = textField?.value?.trim() || '';
 
     if (!content) {

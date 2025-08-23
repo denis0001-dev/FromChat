@@ -319,61 +319,6 @@
     }
 }
 
-// Message Context Menu
-#message-context-menu {
-    position: fixed;
-    background-color: $color-dark-surface-container;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    padding: 0.5rem 0;
-    z-index: 1000;
-    display: none;
-    min-width: 150px;
-    max-width: 200px;
-    white-space: nowrap;
-
-    .context-menu-item {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.75rem 1rem;
-        cursor: pointer;
-        color: $color-dark-on-surface;
-        transition: background-color 0.2s ease;
-        font-size: 0.9rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-
-        &:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .material-symbols {
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-    }
-}
-
-// Dialog content styles
-.dialog-content {
-    padding: 1.5rem;
-
-    h3 {
-        margin: 0 0 1rem 0;
-        color: $color-dark-on-surface;
-        font-size: 1.2rem;
-    }
-
-    .dialog-actions {
-        display: flex;
-        gap: 0.75rem;
-        justify-content: flex-end;
-        margin-top: 1.5rem;
-    }
-}
-
 // Reply preview styles
 .reply-preview {
     background-color: $color-dark-surface;
