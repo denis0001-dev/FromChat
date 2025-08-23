@@ -10,6 +10,7 @@ import { API_BASE_URL } from "./config";
 import type { UserProfile } from "./types";
 import { showError, showSuccess } from "./utils/notification";
 import { formatTime } from "./utils/utils";
+import defaultAvatar from "./images/default-avatar.png";
 
 
 let dialog = document.getElementById("user-profile-dialog")!;
@@ -80,9 +81,15 @@ function populateDialog(profile: UserProfile): void {
 
     // Profile picture
     const profilePic = dialog.querySelector('.profile-picture') as HTMLImageElement;
-    profilePic.src = profile.profile_picture || './src/images/default-avatar.png';
+    profilePic.src = profile.profile_picture || defaultAvatar;
+
+    let errorLock = false
+
     profilePic.addEventListener("error", () => {
-        profilePic.src = './src/images/default-avatar.png';
+        if (!errorLock) {
+            profilePic.src = defaultAvatar;
+            errorLock = true;
+        }
     });
 
     // Username

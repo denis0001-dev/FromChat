@@ -12,6 +12,7 @@ import type { Message, Messages, WebSocketMessage } from "./types";
 import { formatTime } from "./utils/utils";
 import { show as showContextMenu } from "./message-context-menu";
 import { show as showUserProfileDialog } from "./user-profile-dialog";
+import defaultAvatar from "./images/default-avatar.png";
 
 /**
  * Adds a new message to the chat interface
@@ -41,11 +42,17 @@ export function addMessage(message: Message, isAuthor: boolean): void {
         profilePicDiv.classList.add('message-profile-pic');
         
         const profileImg = document.createElement('img');
-        profileImg.src = message.profile_picture || './src/images/default-avatar.png';
+        profileImg.src = message.profile_picture || defaultAvatar;
         profileImg.alt = message.username;
-        profileImg.onerror = () => {
-            profileImg.src = './src/images/default-avatar.png';
-        };
+
+        let errorLock = false
+
+        profileImg.addEventListener("error", () => {
+            if (!errorLock) {
+                profileImg.src = defaultAvatar;
+                errorLock = true
+            }
+        });
         
         // Add click handler to profile picture
         profileImg.style.cursor = 'pointer';
