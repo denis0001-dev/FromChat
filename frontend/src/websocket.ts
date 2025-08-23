@@ -17,7 +17,12 @@ import { delay } from "./utils/utils";
  * @private
  */
 function create(): WebSocket {
-    return new WebSocket(`ws://${API_FULL_BASE_URL}/chat/ws`);
+    let prefix = "ws://";
+    if (location.protocol.includes("https")) {
+        prefix = "wss://";
+    }
+
+    return new WebSocket(`${prefix}${API_FULL_BASE_URL}/chat/ws`);
 }
 
 /**

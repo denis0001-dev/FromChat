@@ -1,0 +1,25 @@
+services:
+  backend:
+    build: 
+      dockerfile: deployment/Dockerfile.backend
+      context: ..
+    environment:
+      PORT: 8300
+    ports:
+      - "8300:8300"
+    volumes:
+      - "data:/app/data"
+
+  frontend:
+    build: 
+      dockerfile: deployment/frontend/Dockerfile
+      context: ..
+    environment:
+      PORT: 8301
+      BACKEND_HOST: http://backend:8300
+    ports:
+      - "8301:8301"
+
+volumes:
+  data:
+    name: fromchat-data

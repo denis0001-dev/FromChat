@@ -17,7 +17,7 @@ export const API_BASE_URL: string = '/api';
  * @type {string}
  * @constant
  */
-export const API_FULL_BASE_URL: string = `${location.hostname}:8301/api`;
+export const API_FULL_BASE_URL: string = `${location.host}/api`;
 
 /**
  * Application name displayed in UI and document title
