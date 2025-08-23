@@ -194,7 +194,7 @@
         </div>
 
         <mdui-dialog id="profile-dialog" close-on-overlay-click close-on-esc>
-            <div class="profile-dialog-content">
+            <div class="content">
                 <div class="header-top">
                     <div class="profile-picture-container">
                         <img id="profile-picture" src="./src/images/default-avatar.png" alt="Ваше фото" />
@@ -320,6 +320,89 @@
                 </div>
             </div>
         </mdui-dialog>
+
+        <div id="message-context-menu">
+            <div class="context-menu-item" data-action="reply">
+                <span class="material-symbols">reply</span>
+                Reply
+            </div>
+            <div class="context-menu-item" data-action="edit">
+                <span class="material-symbols">edit</span>
+                Edit
+            </div>
+            <div class="context-menu-item" data-action="delete">
+                <span class="material-symbols">delete</span>
+                Delete
+            </div>
+        </div>
+
+        <mdui-dialog id="edit-message-dialog" close-on-overlay-click close-on-esc>
+            <div class="dialog-content">
+                <h3>Edit Message</h3>
+                <mdui-text-field 
+                    id="edit-message-input"
+                    label="Edit Message" 
+                    variant="outlined" 
+                    multiline 
+                    rows="4" 
+                    placeholder="Edit your message..."
+                    maxlength="1000">
+                </mdui-text-field>
+                <div class="dialog-actions">
+                    <mdui-button id="edit-cancel" variant="outlined">Cancel</mdui-button>
+                    <mdui-button id="edit-save">Save</mdui-button>
+                </div>
+            </div>
+        </mdui-dialog>
+
+        <mdui-dialog id="reply-message-dialog" close-on-overlay-click close-on-esc>
+            <div class="dialog-content">
+                <h3>Reply to Message</h3>
+                <div class="reply-preview" id="reply-preview"></div>
+                <mdui-text-field 
+                    id="reply-message-input"
+                    label="Reply" 
+                    variant="outlined" 
+                    multiline 
+                    rows="4" 
+                    placeholder="Type your reply..."
+                    maxlength="1000">
+                </mdui-text-field>
+                <div class="dialog-actions">
+                    <mdui-button id="reply-cancel" variant="outlined">Cancel</mdui-button>
+                    <mdui-button id="reply-send">Send Reply</mdui-button>
+                </div>
+            </div>
+        </mdui-dialog>
+
+        <mdui-dialog id="user-profile-dialog" close-on-overlay-click close-on-esc>
+            <div class="content">
+                <div class="profile-picture-section">
+                    <img class="profile-picture" src="" alt="Profile Picture">
+                </div>
+                <div class="profile-info">
+                    <div class="username-section">
+                        <h4 class="username"></h4>
+                        <div class="online-status"></div>
+                    </div>
+                    <div class="bio-section">
+                        <label>Bio:</label>
+                        <div class="bio-display"></div>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-label">Member since:</span>
+                            <span class="stat-value member-since"></span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Last seen:</span>
+                            <span class="stat-value last-seen"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mdui-dialog>
+
         <script src="src/main.ts" type="module"></script>
     </body>
 </html>

@@ -10,8 +10,8 @@ import { API_BASE_URL } from "./config";
 import { websocket } from "./websocket";
 import type { Message, Messages, WebSocketMessage } from "./types";
 import { formatTime } from "./utils/utils";
-import { messageContextMenu } from "./message-context-menu";
-import { userProfileDialog } from "./user-profile-dialog";
+import { show as showContextMenu } from "./message-context-menu";
+import { show as showUserProfileDialog } from "./user-profile-dialog";
 
 /**
  * Adds a new message to the chat interface
@@ -50,7 +50,7 @@ export function addMessage(message: Message, isAuthor: boolean): void {
         // Add click handler to profile picture
         profileImg.style.cursor = 'pointer';
         profileImg.addEventListener('click', () => {
-            userProfileDialog.show(message.username);
+            showUserProfileDialog(message.username);
         });
         
         profilePicDiv.appendChild(profileImg);
@@ -65,7 +65,7 @@ export function addMessage(message: Message, isAuthor: boolean): void {
         // Add click handler to username
         usernameDiv.style.cursor = 'pointer';
         usernameDiv.addEventListener('click', () => {
-            userProfileDialog.show(message.username);
+            showUserProfileDialog(message.username);
         });
         
         messageInner.appendChild(usernameDiv);
@@ -111,7 +111,7 @@ export function addMessage(message: Message, isAuthor: boolean): void {
     // Add right-click context menu
     messageDiv.addEventListener('contextmenu', (e) => {
         e.preventDefault();
-        messageContextMenu.show(message, e.clientX, e.clientY);
+        showContextMenu(message, e.clientX, e.clientY);
     });
 
     // Прокрутка к новому сообщению
