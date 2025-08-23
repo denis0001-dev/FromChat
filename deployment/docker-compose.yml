@@ -9,6 +9,13 @@ services:
       - "8300:8300"
     volumes:
       - "data:/app/data"
+    develop:
+      watch:
+        - action: sync+restart
+          path: ../backend
+          target: /app
+        - action: rebuild
+          path: ../backend/requirements.txt
 
   frontend:
     build: 
@@ -19,6 +26,17 @@ services:
       BACKEND_HOST: http://backend:8300
     ports:
       - "8301:8301"
+    depends_on:
+      - backend
+    develop:
+      watch:
+        - action: rebuild
+          path: ../frontend
+        - action: sync+restart
+          path: server.js
+          target: /server/server.js
+        - action: rebuild
+          path: package.json
 
 volumes:
   data:
