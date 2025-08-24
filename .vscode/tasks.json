@@ -15,8 +15,24 @@
                 "panel": "shared"
             },
             "group": {
-                "kind": "build",
-                "isDefault": true
+                "kind": "build"
+            }
+        },
+        {
+            "label": "Run (Electron)",
+            "type": "shell",
+            "command": "npm run dev:electron",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "group": {
+                "kind": "build"
             }
         }
     ]

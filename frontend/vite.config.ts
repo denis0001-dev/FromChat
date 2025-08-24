@@ -1,22 +1,39 @@
-import { defineConfig } from 'vite'
-import { createHtmlPlugin } from 'vite-plugin-html'
-import autoprefixer from 'autoprefixer'
+import { defineConfig, PluginOption } from 'vite';
+import { createHtmlPlugin } from 'vite-plugin-html';
+import autoprefixer from 'autoprefixer';
+import electron from 'vite-plugin-electron/simple';
+
+const plugins: PluginOption[] = [
+    createHtmlPlugin({
+        minify: {
+            collapseWhitespace: true,
+            removeComments: true,
+            removeRedundantAttributes: true,
+            removeScriptTypeAttributes: true,
+            removeStyleLinkTypeAttributes: true,
+            useShortDoctype: true,
+            minifyCSS: true,
+            minifyJS: true
+        }
+    })
+]
+
+if (process.env.VITE_ELECTRON) {
+    plugins.push(
+        electron({
+            main: {
+                entry: "electron/main.ts",
+            },
+            preload: {
+                input: "frontend/electron/preload.ts"
+            },
+            renderer: {},
+        })
+    );
+}
 
 export default defineConfig({
-    plugins: [
-        createHtmlPlugin({
-            minify: {
-                collapseWhitespace: true,
-                removeComments: true,
-                removeRedundantAttributes: true,
-                removeScriptTypeAttributes: true,
-                removeStyleLinkTypeAttributes: true,
-                useShortDoctype: true,
-                minifyCSS: true,
-                minifyJS: true
-            }
-        })
-    ],
+    plugins: plugins,
     server: {
         host: '0.0.0.0',
         port: 8301,
@@ -50,4 +67,4 @@ export default defineConfig({
         cssMinify: true,
         assetsInlineLimit: 0
     }
-})
+});
