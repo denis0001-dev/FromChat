@@ -60,9 +60,9 @@
         background-color: $color-dark-surface-container;
         width: 100%;
         justify-content: center;
-        gap: 110px;
         align-items: center;
         padding: 16px;
+        overflow: hidden;
 
         #productname {
             flex-grow: 1;
