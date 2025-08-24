@@ -7,185 +7,197 @@
         <link rel="icon" href="./src/images/logo.png" />
     </head>
     <body>
-        <!-- Login Form -->
-        <div id="login-form" class="auth-container">
-            <div class="auth-card fade-in">
-                <div class="auth-header">
-                    <h2>
-                        <span class="material-symbols filled large">login</span> 
-                        Добро пожаловать!
-                    </h2>
-                    <p>Войдите в свой аккаунт</p>
-                </div>
-                <div class="auth-body">
-                    <div id="login-alerts"></div>
-                    
-                    <form id="login-form-element">
-                        <mdui-text-field
-                            label="Имя пользователя" 
-                            id="login-username" 
-                            name="username" 
-                            variant="outlined"
-                            icon="person--filled"
-                            autocomplete="username"
-                            required>
-                        </mdui-text-field>
-                        <mdui-text-field
-                            label="Пароль" 
-                            id="login-password" 
-                            name="password" 
-                            variant="outlined" 
-                            type="password" 
-                            toggle-password
-                            icon="password--filled"
-                            autocomplete="current-password"
-                            required>
-                        </mdui-text-field>
-
-                        <mdui-button type="submit">Войти</mdui-button>
-                    </form>
-                    
-                    <div class="text-center">
-                        <p>Ещё нет аккаунта? <a href="#" id="register-link" class="link">Зарегистрируйтесь</a></p>
-                    </div>
-                </div>
-            </div>
+        <div id="electron-title-bar">
+            <div class="macos-padding"></div>
+            <div id="window-title"></div>
+            <!-- <div class="window-controls">
+                <mdui-button-icon icon="remove" id="window-minimize"></mdui-button-icon>
+                <mdui-button-icon icon="stack--outlined" id="window-restore" class="hidden"></mdui-button-icon>
+                <mdui-button-icon icon="ad--outlined" id="window-maximize"></mdui-button-icon>
+                <mdui-button-icon icon="close" id="window-close"></mdui-button-icon>
+            </div> -->
         </div>
-
-        <!-- Register Form -->
-        <div id="register-form" class="auth-container" style="display: none;">
-            <div class="auth-card fade-in">
-                <div class="auth-header">
-                    <h2>
-                        <span class="material-symbols filled large">person_add</span> 
-                        Регистрация
-                    </h2>
-                    <p>Создайте новый аккаунт</p>
-                </div>
-                <div class="auth-body">
-                    <div id="register-alerts"></div>
-                    
-                    <form id="register-form-element">
-                        <mdui-text-field 
-                            label="Имя пользователя" 
-                            id="register-username" 
-                            name="username" 
-                            variant="outlined"
-                            icon="person--filled"
-                            autocomplete="username"
-                            maxlength="20"
-                            counter
-                            required>
-                        </mdui-text-field>
-                        <mdui-text-field 
-                            label="Пароль" 
-                            id="register-password" 
-                            name="password" 
-                            variant="outlined" 
-                            type="password" 
-                            toggle-password
-                            icon="password--filled"
-                            autocomplete="new-password"
-                            required>
-                        </mdui-text-field>
-                        <mdui-text-field 
-                            label="Подтвердите пароль" 
-                            id="register-confirm-password" 
-                            name="confirm_password" 
-                            variant="outlined" 
-                            type="password" 
-                            toggle-password
-                            icon="password--filled"
-                            autocomplete="new-password"
-                            required>
-                        </mdui-text-field>
-
-                        <mdui-button type="submit">Зарегистрироваться</mdui-button>
-                    </form>
-                    
-                    <div class="text-center">
-                        <p>
-                            Уже есть аккаунт? 
-                            <a href="#" id="login-link" class="link">Войдите</a>
-                        </p>
+        <div id="main-wrapper">
+            <!-- Login Form -->
+            <div id="login-form" class="auth-container">
+                <div class="auth-card fade-in">
+                    <div class="auth-header">
+                        <h2>
+                            <span class="material-symbols filled large">login</span> 
+                            Добро пожаловать!
+                        </h2>
+                        <p>Войдите в свой аккаунт</p>
                     </div>
-                </div>
-            </div>
-        </div>
+                    <div class="auth-body">
+                        <div id="login-alerts"></div>
+                        
+                        <form id="login-form-element">
+                            <mdui-text-field
+                                label="Имя пользователя" 
+                                id="login-username" 
+                                name="username" 
+                                variant="outlined"
+                                icon="person--filled"
+                                autocomplete="username"
+                                required>
+                            </mdui-text-field>
+                            <mdui-text-field
+                                label="Пароль" 
+                                id="login-password" 
+                                name="password" 
+                                variant="outlined" 
+                                type="password" 
+                                toggle-password
+                                icon="password--filled"
+                                autocomplete="current-password"
+                                required>
+                            </mdui-text-field>
 
-        <!-- Chat Interface -->
-        <div id="chat-interface" style="display: none;">
-            <div class="all-container">
-                <div class="chat-list" id="chat-list">
-                    <header class="chat-header-left">
-                        <div id="productname">Loading...</div> 
-                        <div class="profile">
-                            <a href="#" id="profile-open">
-                                <img src="./src/images/default-avatar.png" alt="" id="preview1" />
-                            </a>
+                            <mdui-button type="submit">Войти</mdui-button>
+                        </form>
+                        
+                        <div class="text-center">
+                            <p>Ещё нет аккаунта? <a href="#" id="register-link" class="link">Зарегистрируйтесь</a></p>
                         </div>
-                    </header>
-                    <div class="chat-tabs">
-                        <mdui-tabs value="chats" full-width>
-                            <mdui-tab value="chats">
-                                Чаты
-                            </mdui-tab>
-                            <mdui-tab value="channels">
-                                Каналы
-                            </mdui-tab>
-                            <mdui-tab value="contacts">
-                                Контакты
-                            </mdui-tab>
-
-                            <mdui-tab-panel slot="panel" value="chats">
-                                <mdui-list>
-                                    <mdui-list-item headline="Общий чат" description="Вы: Последнее сообщение" id="chat-list-chat-1">
-                                        <img src="./src/images/default-avatar.png" alt="" slot="icon" />
-                                    </mdui-list-item>
-                                    <mdui-list-item headline="Общий чат 2" description="Вы: Последнее сообщение" id="chat-list-chat-2">
-                                        <img src="./src/images/default-avatar.png" alt="" slot="icon" />
-                                    </mdui-list-item>
-                                </mdui-list>
-                            </mdui-tab-panel>
-                            <mdui-tab-panel slot="panel" value="channels">Скоро будет...</mdui-tab-panel>
-                            <mdui-tab-panel slot="panel" value="contacts">Скоро будет...</mdui-tab-panel>
-                        </mdui-tabs>
                     </div>
-                    <mdui-bottom-app-bar>
-                        <mdui-button-icon icon="settings--filled" id="settings-open"></mdui-button-icon>
-                        <mdui-button-icon icon="group_add--filled"></mdui-button-icon>
-                        <div style="flex-grow: 1"></div>
-                        <mdui-fab icon="edit--filled"></mdui-fab>
-                    </mdui-bottom-app-bar>
                 </div>
-                <div class="chat-container">          
-                    <div class="chat-main" id="chat-inner">
-                        <div class="chat-header">
-                            <img src="src/images/default-avatar.png" alt="Avatar" class="chat-header-avatar">
-                            <div class="chat-header-info">
-                                <div class="info-chat">
-                                    <h4 id="chat-name">Общий чат</h4>
-                                    <p>
-                                        <span class="online-status"></span>
-                                        Онлайн
-                                    </p>
-                                </div>
-                                <a href="#" id="hide-chat">Свернуть чат</a>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-form" class="auth-container" style="display: none;">
+                <div class="auth-card fade-in">
+                    <div class="auth-header">
+                        <h2>
+                            <span class="material-symbols filled large">person_add</span> 
+                            Регистрация
+                        </h2>
+                        <p>Создайте новый аккаунт</p>
+                    </div>
+                    <div class="auth-body">
+                        <div id="register-alerts"></div>
+                        
+                        <form id="register-form-element">
+                            <mdui-text-field 
+                                label="Имя пользователя" 
+                                id="register-username" 
+                                name="username" 
+                                variant="outlined"
+                                icon="person--filled"
+                                autocomplete="username"
+                                maxlength="20"
+                                counter
+                                required>
+                            </mdui-text-field>
+                            <mdui-text-field 
+                                label="Пароль" 
+                                id="register-password" 
+                                name="password" 
+                                variant="outlined" 
+                                type="password" 
+                                toggle-password
+                                icon="password--filled"
+                                autocomplete="new-password"
+                                required>
+                            </mdui-text-field>
+                            <mdui-text-field 
+                                label="Подтвердите пароль" 
+                                id="register-confirm-password" 
+                                name="confirm_password" 
+                                variant="outlined" 
+                                type="password" 
+                                toggle-password
+                                icon="password--filled"
+                                autocomplete="new-password"
+                                required>
+                            </mdui-text-field>
+
+                            <mdui-button type="submit">Зарегистрироваться</mdui-button>
+                        </form>
+                        
+                        <div class="text-center">
+                            <p>
+                                Уже есть аккаунт? 
+                                <a href="#" id="login-link" class="link">Войдите</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div id="chat-interface" style="display: none;">
+                <div class="all-container">
+                    <div class="chat-list" id="chat-list">
+                        <header class="chat-header-left">
+                            <div id="productname">Loading...</div> 
+                            <div class="profile">
+                                <a href="#" id="profile-open">
+                                    <img src="./src/images/default-avatar.png" alt="" id="preview1" />
+                                </a>
                             </div>
+                        </header>
+                        <div class="chat-tabs">
+                            <mdui-tabs value="chats" full-width>
+                                <mdui-tab value="chats">
+                                    Чаты
+                                </mdui-tab>
+                                <mdui-tab value="channels">
+                                    Каналы
+                                </mdui-tab>
+                                <mdui-tab value="contacts">
+                                    Контакты
+                                </mdui-tab>
+
+                                <mdui-tab-panel slot="panel" value="chats">
+                                    <mdui-list>
+                                        <mdui-list-item headline="Общий чат" description="Вы: Последнее сообщение" id="chat-list-chat-1">
+                                            <img src="./src/images/default-avatar.png" alt="" slot="icon" />
+                                        </mdui-list-item>
+                                        <mdui-list-item headline="Общий чат 2" description="Вы: Последнее сообщение" id="chat-list-chat-2">
+                                            <img src="./src/images/default-avatar.png" alt="" slot="icon" />
+                                        </mdui-list-item>
+                                    </mdui-list>
+                                </mdui-tab-panel>
+                                <mdui-tab-panel slot="panel" value="channels">Скоро будет...</mdui-tab-panel>
+                                <mdui-tab-panel slot="panel" value="contacts">Скоро будет...</mdui-tab-panel>
+                            </mdui-tabs>
                         </div>
-                        
-                        <div class="chat-messages" id="chat-messages">
-                            <!-- Messages will be loaded here dynamically -->
-                        </div>
-                        
-                        <div class="chat-input-wrapper">
-                            <div class="chat-input">
-                                <form class="input-group" id="message-form">
-                                    <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
-                                    <button type="submit" class="send-btn">
-                                        <span class="material-symbols filled">send</span>
-                                    </button>
-                                </form>
+                        <mdui-bottom-app-bar>
+                            <mdui-button-icon icon="settings--filled" id="settings-open"></mdui-button-icon>
+                            <mdui-button-icon icon="group_add--filled"></mdui-button-icon>
+                            <div style="flex-grow: 1"></div>
+                            <mdui-fab icon="edit--filled"></mdui-fab>
+                        </mdui-bottom-app-bar>
+                    </div>
+                    <div class="chat-container">          
+                        <div class="chat-main" id="chat-inner">
+                            <div class="chat-header">
+                                <img src="src/images/default-avatar.png" alt="Avatar" class="chat-header-avatar">
+                                <div class="chat-header-info">
+                                    <div class="info-chat">
+                                        <h4 id="chat-name">Общий чат</h4>
+                                        <p>
+                                            <span class="online-status"></span>
+                                            Онлайн
+                                        </p>
+                                    </div>
+                                    <a href="#" id="hide-chat">Свернуть чат</a>
+                                </div>
+                            </div>
+                            
+                            <div class="chat-messages" id="chat-messages">
+                                <!-- Messages will be loaded here dynamically -->
+                            </div>
+                            
+                            <div class="chat-input-wrapper">
+                                <div class="chat-input">
+                                    <form class="input-group" id="message-form">
+                                        <input type="text" class="message-input" id="message-input" placeholder="Напишите сообщение..." autocomplete="off">
+                                        <button type="submit" class="send-btn">
+                                            <span class="material-symbols filled">send</span>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>

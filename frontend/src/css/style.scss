@@ -7,6 +7,7 @@
 @use "common/components";
 @use "common/colors" as *;
 @use "common/material" as *;
+@use "electron";
 
 @use "lib/fonts/montserrat";
 @use "lib/fonts/material-symbols";
@@ -24,6 +25,13 @@ body {
     height: 100vh;
     position: relative;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+
+    #main-wrapper {
+        flex: 1;
+        position: relative;
+    }
 }
 
 mdui-dialog {

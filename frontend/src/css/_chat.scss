@@ -2,6 +2,8 @@
 @use "common/material" as *;
 
 #chat-interface {
+    height: 100%;
+
     .header {
         display: flex;
         background-color: $color-dark-surface-container;
