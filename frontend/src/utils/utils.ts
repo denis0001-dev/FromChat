@@ -31,3 +31,12 @@ export function formatTime(dateString: string): string {
 export function delay(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
+
+export function b64(a: Uint8Array): string { return btoa(String.fromCharCode(...a)); }
+export function ub64(s: string): Uint8Array {
+	const bin = atob(s);
+	const arr = new Uint8Array(bin.length);
+	for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+	return arr;
+}

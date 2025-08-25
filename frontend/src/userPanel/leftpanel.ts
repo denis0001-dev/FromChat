@@ -7,7 +7,6 @@
 
 import type { Dialog } from "mdui/components/dialog";
 import { loadProfilePicture } from "./profile/upload";
-import { PublicChatPanel } from "../chat/panel";
 import { publicChatPanel } from "../chat/chat";
 
 // сварачивание и разворачивание чата
