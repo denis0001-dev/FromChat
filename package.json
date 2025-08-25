@@ -18,7 +18,7 @@
         "preview": "cd deployment && docker compose up --build --watch",
         "preview:clean": "cd deployment && docker compose down -v",
         "clean": "npm run backend:clean && npm run frontend:clean && npm run preview:clean",
-        "install": "npm run backend:dependencies && mv deployment/.env.example deployment/.env"
+        "install": "npm run backend:dependencies && cp deployment/.env.example deployment/.env"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.21",
