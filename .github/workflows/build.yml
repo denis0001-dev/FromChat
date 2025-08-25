@@ -9,6 +9,7 @@ on:
       - 'package.json'
       - 'package-lock.json'
       - 'frontend/electron/**'
+      - '.github/workflows/build.yml'
 
 jobs:
   build:
@@ -35,6 +36,7 @@ jobs:
         run: npm run frontend:electron:dependencies
 
       - name: Build Electron app
+        shell: bash
         run: npm run build:electron
 
       - name: Upload artifact
