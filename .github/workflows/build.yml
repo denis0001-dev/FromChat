@@ -61,6 +61,28 @@ jobs:
       - name: Install Electron Forge deps
         run: npm run frontend:electron:dependencies
 
+      - name: Cache Electron downloads (Linux/macOS)
+        if: runner.os != 'Windows'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/electron
+            ~/.cache/electron-builder
+          key: electron-${{ runner.os }}-${{ hashFiles('package.json', 'frontend/electron/forge/package.json') }}
+          restore-keys: |
+            electron-${{ runner.os }}-
+
+      - name: Cache Electron downloads (Windows)
+        if: runner.os == 'Windows'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~\AppData\Local\electron\Cache
+            ~\AppData\Local\electron-builder\Cache
+          key: electron-${{ runner.os }}-${{ hashFiles('package.json', 'frontend/electron/forge/package.json') }}
+          restore-keys: |
+            electron-${{ runner.os }}-
+
       - name: Build Electron app
         shell: bash
         run: npm run build:electron
