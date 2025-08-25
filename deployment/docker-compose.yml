@@ -5,6 +5,7 @@ services:
       context: ..
     environment:
       PORT: 8300
+      JWT_SECRET: ${JWT_SECRET}
     volumes:
       - "data:/app/data"
     develop:

@@ -4,17 +4,15 @@
     "version": "0.0.0",
     "type": "module",
     "scripts": {
-        "backend:run": "cd backend && ../.venv/bin/fastapi dev --port 8300 main.py",
+        "backend:run": "cd backend && dotenv -e ../deployment/.env -- ../.venv/bin/fastapi dev --port 8300 main.py",
         "backend:dependencies": "python3 -m venv .venv && ./.venv/bin/pip3 install -r backend/requirements.txt",
         "backend:reinstall": "rm -rf .venv && npm run backend:dependencies",
         "backend:clean": "rm -rf backend/data",
-
         "frontend:dev": "vite frontend",
         "frontend:build": "tsc --project frontend && vite build frontend",
         "frontend:preview": "vite preview frontend",
         "frontend:dependencies": "npm install",
         "frontend:clean": "rm -rf frontend/dist",
-
         "dev": "concurrently 'npm run frontend:dev' 'npm run backend:run'",
         "build": "npm run frontend:build",
         "preview": "cd deployment && docker compose up --build --watch",
@@ -25,6 +23,7 @@
     "devDependencies": {
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.2.0",
+        "dotenv-cli": "^10.0.0",
         "postcss": "^8.5.6",
         "sass-embedded": "^1.90.0",
         "terser": "^5.43.1",
