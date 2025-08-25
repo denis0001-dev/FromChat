@@ -5,6 +5,16 @@ on:
   # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - "deployment/**"
+      - "**/package.json"
+      - ".nvmrc"
+      - ".github/workflows/deploy.yml"
+      - "!frontend/electron/**"
+      - "!frontend/src/electron/**"
+      - "!**.d.ts"
   workflow_dispatch:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.

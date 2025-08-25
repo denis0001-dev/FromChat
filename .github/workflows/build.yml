@@ -3,12 +3,10 @@ name: Build Electron Apps
 on:
   workflow_dispatch:
   push:
-    branches: ["main", "electron"]
+    branches: ["main"]
     paths:
       - 'frontend/**'
       - 'package.json'
-      - 'package-lock.json'
-      - 'frontend/electron/**'
       - '.github/workflows/build.yml'
 
 concurrency:

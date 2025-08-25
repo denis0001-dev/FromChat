@@ -16,4 +16,4 @@ import "./init";
 import "./profile";
 import "./message-context-menu";
 import "./user-profile-dialog";
-import "./electron";
+import "./electron/electron";

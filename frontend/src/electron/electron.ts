@@ -1,5 +1,5 @@
-import "../electron.d.ts";
-import { PRODUCT_NAME } from "./config";
+import "../../electron.d.ts";
+import { PRODUCT_NAME } from "../config.ts";
 
 if (window.electronInterface !== undefined) {
     console.log("Running in Electron");
