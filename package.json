@@ -11,14 +11,14 @@
         "frontend:dev": "vite frontend",
         "frontend:build": "tsc --project frontend && vite build frontend",
         "frontend:preview": "vite preview frontend",
-        "frontend:dependencies": "npm install",
+        "frontend:dependencies": "npm install --ignore-scripts",
         "frontend:clean": "rm -rf frontend/dist",
         "dev": "concurrently 'npm run frontend:dev' 'npm run backend:run'",
         "build": "npm run frontend:build",
         "preview": "cd deployment && docker compose up --build --watch",
         "preview:clean": "cd deployment && docker compose down -v",
         "clean": "npm run backend:clean && npm run frontend:clean && npm run preview:clean",
-        "install": "npm run backend:dependencies"
+        "install": "npm run backend:dependencies && mv deployment/.env.example deployment/.env"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.21",
