@@ -9,7 +9,7 @@
  * Base API endpoint for all backend requests
  * @constant
  */
-export const API_BASE_URL = `${location.host || "https://fromchat.toolbox-io.ru"}/api`;
+export const API_BASE_URL = `${location.host ? "" : "https://fromchat.toolbox-io.ru"}/api`;
 
 /**
  * Full API URL including hostname and port for WebSocket connections
