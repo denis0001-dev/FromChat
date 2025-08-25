@@ -1,4 +1,4 @@
-name: Build Electron Apps
+name: Build Electron app
 
 on:
   workflow_dispatch:
