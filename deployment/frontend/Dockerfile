@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/root/.npm \
 
 # 1.2. Build
 COPY frontend frontend
-RUN npm run build:frontend
+RUN npm run frontend:build
 
 # 2. Build the static file server
 FROM node:24 AS server
