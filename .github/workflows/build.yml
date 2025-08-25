@@ -11,6 +11,10 @@ on:
       - 'frontend/electron/**'
       - '.github/workflows/build.yml'
 
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build (${{ matrix.os }})
