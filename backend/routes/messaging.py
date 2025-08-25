@@ -34,6 +34,12 @@ async def send_message(
             detail="No content provided"
         )
 
+    if len(request.content.strip()) > 4096:
+        raise HTTPException(
+            status_code=400,
+            detail="Message too long"
+        )
+
     new_message = Message(
         content=request.content.strip(),
         user_id=current_user.id,
