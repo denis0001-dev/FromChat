@@ -24,6 +24,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Force npm to use Bash
+        if: runner.os == 'Windows'
+        run: npm config set script-shell "C:\Program Files\Git\bin\bash.exe"
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
