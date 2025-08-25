@@ -380,3 +380,4 @@ data
 .vite
 *.db
 package-lock.json
+dist-electron

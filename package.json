@@ -3,6 +3,7 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "main": "frontend/dist-electron/main.js",
     "scripts": {
         "backend:run": "cd backend && dotenv -e ../deployment/.env -- ../.venv/bin/fastapi dev --port 8300 main.py",
         "backend:dependencies": "python3 -m venv .venv && ./.venv/bin/pip3 install -r backend/requirements.txt",
@@ -10,25 +11,33 @@
         "backend:clean": "rm -rf backend/data",
         "frontend:dev": "vite frontend",
         "frontend:build": "tsc --project frontend && vite build frontend",
+        "frontend:electron:dev": "VITE_ELECTRON=true npm run frontend:dev",
+        "frontend:electron:dependencies": "cd frontend/electron/forge && npm install",
+        "frontend:electron:build": "VITE_ELECTRON=true npm run frontend:build && cp -r frontend/dist frontend/dist-electron frontend/electron/forge && cd frontend/electron/forge && npm run make",
         "frontend:preview": "vite preview frontend",
         "frontend:dependencies": "npm install --ignore-scripts",
         "frontend:clean": "rm -rf frontend/dist",
         "dev": "concurrently 'npm run frontend:dev' 'npm run backend:run'",
-        "build": "npm run frontend:build",
+        "dev:electron": "concurrently 'npm run frontend:electron:dev' 'npm run backend:run'",
+        "build:electron": "npm run frontend:electron:build",
+        "build": "npm run frontend:build && npm run build:electron",
         "preview": "cd deployment && docker compose up --build --watch",
         "preview:clean": "cd deployment && docker compose down -v",
         "clean": "npm run backend:clean && npm run frontend:clean && npm run preview:clean",
-        "install": "npm run backend:dependencies && cp deployment/.env.example deployment/.env"
+        "install": "npm run backend:dependencies && npm run frontend:electron:dependencies && cp deployment/.env.example deployment/.env"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.21",
         "concurrently": "^9.2.0",
+        "electron": "^37.3.1",
         "dotenv-cli": "^10.0.0",
         "postcss": "^8.5.6",
         "sass-embedded": "^1.90.0",
         "terser": "^5.43.1",
         "typescript": "~5.9.2",
         "vite": "^7.1.2",
+        "vite-plugin-electron": "^0.29.0",
+        "vite-plugin-electron-renderer": "^0.14.6",
         "vite-plugin-html": "^3.2.2"
     },
     "dependencies": {

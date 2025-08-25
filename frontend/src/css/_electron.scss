@@ -1,0 +1,43 @@
+@use "common/material" as *;
+
+#electron-title-bar {
+    display: none;
+}
+
+html.electron {
+    #electron-title-bar {
+        display: flex;
+        flex-direction: row;
+        gap: 8px;
+        height: 40px;
+        background-color: $color-dark-surface-container;
+        width: 100%;
+        -webkit-app-region: drag;
+        user-select: none;
+        z-index: 10;
+        transition: background-color 0.5s ease;
+
+        &.color-surface {
+            background-color: $color-dark-surface;
+        }
+    }
+
+    #window-title {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+    }
+
+    &.platform-darwin .macos-padding {
+        width: 70px;
+    }
+
+    // .window-controls {
+    //     -webkit-app-region: no-drag;
+
+    //     .hidden {
+    //         display: none;
+    //     }
+    // }
+}

@@ -55,6 +55,7 @@ export function showLogin(): void {
     document.getElementById('register-form')!.style.display = 'none';
     document.getElementById('chat-interface')!.style.display = 'none';
     clearAlerts();
+    document.getElementById("electron-title-bar")!.classList.add("color-surface");
 }
 
 /**
@@ -68,6 +69,7 @@ export function showRegister(): void {
     document.getElementById('register-form')!.style.display = 'flex';
     document.getElementById('chat-interface')!.style.display = 'none';
     clearAlerts();
+    document.getElementById("electron-title-bar")!.classList.add("color-surface");
 }
 
 /**
@@ -81,6 +83,7 @@ export function showChat(): void {
     document.getElementById('register-form')!.style.display = 'none';
     document.getElementById('chat-interface')!.style.display = 'block';
     loadMessages();
+    document.getElementById("electron-title-bar")!.classList.remove("color-surface");
 }
 
 /**
