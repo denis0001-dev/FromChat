@@ -5,14 +5,12 @@
  * @version 1.0.0
  */
 
-import { handleWebSocketMessage } from "./chat";
-import { API_FULL_BASE_URL } from "./config";
-import type { WebSocketMessage } from "./types";
+import { handleWebSocketMessage } from "./chat/chat";
+import { API_WS_BASE_URL } from "./core/config";
 import { delay } from "./utils/utils";
 
 /**
  * Creates a new WebSocket connection to the chat server
- * @function create
  * @returns {WebSocket} New WebSocket instance
  * @private
  */
@@ -22,7 +20,7 @@ function create(): WebSocket {
         prefix = "wss://";
     }
 
-    return new WebSocket(`${prefix}${API_FULL_BASE_URL}/chat/ws`);
+    return new WebSocket(`${prefix}${API_WS_BASE_URL}/chat/ws`);
 }
 
 /**
@@ -31,16 +29,14 @@ function create(): WebSocket {
  */
 export let websocket: WebSocket = create();
 
-// --------------
-// Initialization
-// --------------
-
-websocket.addEventListener("message", (e) => {
-    const message: WebSocketMessage = JSON.parse(e.data);
-    handleWebSocketMessage(message);
-});
-
-websocket.addEventListener("error", async () => {
+/**
+ * This function will wait 3 seconds and them attempts to reconnect the WebSocket.
+ * If it fails, tries again in an endless loop until the connection is established
+ * again.
+ * 
+ * @private
+ */
+async function onError() {
     console.warn("WebSocket disconnected, retrying in 3 seconds...");
     await delay(3000);
     websocket = create();
@@ -52,4 +48,14 @@ websocket.addEventListener("error", async () => {
     }
 
     websocket.addEventListener("open", listener);
+    websocket.addEventListener("error", onError);
+}
+
+// --------------
+// Initialization
+// --------------
+
+websocket.addEventListener("message", (e) => {
+    handleWebSocketMessage(JSON.parse(e.data));
 });
+websocket.addEventListener("error", onError);

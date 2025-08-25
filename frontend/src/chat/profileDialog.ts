@@ -5,12 +5,12 @@
  * @version 1.0.0
  */
 
-import { getAuthHeaders, currentUser } from "./auth";
-import { API_BASE_URL } from "./config";
-import type { UserProfile } from "./types";
-import { showError, showSuccess } from "./utils/notification";
-import { formatTime } from "./utils/utils";
-import defaultAvatar from "./images/default-avatar.png";
+import { getAuthHeaders, currentUser } from "../auth/api";
+import { API_BASE_URL } from "../core/config";
+import type { UserProfile } from "../core/types";
+import { showError, showSuccess } from "../utils/notification";
+import { formatTime } from "../utils/utils";
+import defaultAvatar from "../resources/images/default-avatar.png";
 
 
 let dialog = document.getElementById("user-profile-dialog")!;

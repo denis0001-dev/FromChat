@@ -20,7 +20,6 @@ const dialogClose = document.getElementById("profile-dialog-close")!;
 
 /**
  * Sets up chat collapse functionality
- * @function setupChatCollapse
  * @private
  */
 function setupChatCollapse(): void {
@@ -32,7 +31,6 @@ function setupChatCollapse(): void {
 
 /**
  * Sets up chat switching functionality
- * @function setupChatSwitching
  * @private
  */
 function setupChatSwitching(): void {
@@ -51,7 +49,6 @@ function setupChatSwitching(): void {
 
 /**
  * Sets up profile dialog functionality
- * @function setupProfileDialog
  * @private
  */
 function setupProfileDialog(): void {

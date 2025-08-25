@@ -5,22 +5,19 @@
  * @version 1.0.0
  */
 
-import { getAuthHeaders, currentUser, authToken } from "./auth";
-import { API_BASE_URL } from "./config";
-import { websocket } from "./websocket";
-import type { Message, Messages, WebSocketMessage } from "./types";
-import { formatTime } from "./utils/utils";
-import { show as showContextMenu } from "./message-context-menu";
-import { show as showUserProfileDialog } from "./user-profile-dialog";
-import defaultAvatar from "./images/default-avatar.png";
+import { API_BASE_URL } from "../core/config";
+import { websocket } from "../websocket";
+import type { Message, Messages, WebSocketMessage } from "../core/types";
+import { formatTime } from "../utils/utils";
+import { show as showContextMenu } from "./contextMenu";
+import { show as showUserProfileDialog } from "./profileDialog";
+import defaultAvatar from "../resources/images/default-avatar.png";
+import { authToken, currentUser, getAuthHeaders } from "../auth/api";
 
 /**
  * Adds a new message to the chat interface
  * @param {Message} message - Message object to display
  * @param {boolean} isAuthor - Whether the current user is the message author
- * @function addMessage
- * @example
- * addMessage(messageData, messageData.username === currentUser.username);
  */
 export function addMessage(message: Message, isAuthor: boolean): void {
     const messagesContainer = document.querySelector('.chat-messages') as HTMLElement;
@@ -127,9 +124,6 @@ export function addMessage(message: Message, isAuthor: boolean): void {
 
 /**
  * Loads chat messages from the server
- * @function loadMessages
- * @example
- * loadMessages();
  */
 export function loadMessages(): void {
     fetch(`${API_BASE_URL}/get_messages`, {
@@ -158,9 +152,6 @@ export function loadMessages(): void {
 
 /**
  * Sends a message via WebSocket
- * @function sendMessage
- * @example
- * sendMessage();
  */
 export function sendMessage(): void {
     const input = document.querySelector('.message-input') as HTMLInputElement;
@@ -202,7 +193,6 @@ document.getElementById('message-form')!.addEventListener('submit', (e) => {
 /**
  * Updates an existing message in the chat interface
  * @param {Message} message - Updated message object
- * @function updateMessage
  */
 export function updateMessage(message: Message): void {
     const messageElement = document.querySelector(`[data-id="${message.id}"]`) as HTMLElement;
@@ -227,7 +217,6 @@ export function updateMessage(message: Message): void {
 /**
  * Removes a message from the chat interface
  * @param {number} messageId - ID of the message to remove
- * @function removeMessage
  */
 export function removeMessage(messageId: number): void {
     const messageElement = document.querySelector(`[data-id="${messageId}"]`) as HTMLElement;
@@ -239,7 +228,6 @@ export function removeMessage(messageId: number): void {
 /**
  * Handles WebSocket message updates
  * @param {WebSocketMessage} response - WebSocket response
- * @function handleWebSocketMessage
  */
 export function handleWebSocketMessage(response: WebSocketMessage): void {
     switch (response.type) {

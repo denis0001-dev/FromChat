@@ -7,7 +7,7 @@
 
 import { updateProfile } from './api';
 import { loadProfile } from './api';
-import { showSuccess, showError } from '../utils/notification';
+import { showSuccess, showError } from '../../utils/notification';
 import type { TextField } from 'mdui/components/text-field';
 
 let profileForm = document.getElementById('profile-form')!;
@@ -23,9 +23,6 @@ let isInitialized = false;
 /**
  * Sets the username field value
  * @param {string} value - The username value to set
- * @function setUsernameValue
- * @example
- * setUsernameValue('John Doe');
  */
 export function setUsernameValue(value: string): void {
     if (nicknameField && nicknameField.value !== undefined) {
@@ -36,9 +33,6 @@ export function setUsernameValue(value: string): void {
 /**
  * Sets the description field value
  * @param {string} value - The description value to set
- * @function setDescriptionValue
- * @example
- * setDescriptionValue('Software Developer');
  */
 export function setDescriptionValue(value: string): void {
     if (descriptionField && descriptionField.value !== undefined) {
@@ -49,10 +43,6 @@ export function setDescriptionValue(value: string): void {
 /**
  * Gets the current username field value
  * @returns {string} The current username value
- * @function getUsernameValue
- * @example
- * const username = getUsernameValue();
- * console.log('Current username:', username);
  */
 export function getUsernameValue(): string {
     if (nicknameField && nicknameField.value !== undefined) {
@@ -64,10 +54,6 @@ export function getUsernameValue(): string {
 /**
  * Gets the current description field value
  * @returns {string} The current description value
- * @function getDescriptionValue
- * @example
- * const description = getDescriptionValue();
- * console.log('Current description:', description);
  */
 export function getDescriptionValue(): string {
     if (descriptionField && descriptionField.value !== undefined) {
@@ -78,10 +64,6 @@ export function getDescriptionValue(): string {
 
 /**
  * Loads profile data from the server and populates the form fields
- * @async
- * @function loadProfileData
- * @example
- * await loadProfileData();
  */
 export async function loadProfileData(): Promise<void> {
     const userData = await loadProfile();
@@ -97,8 +79,6 @@ export async function loadProfileData(): Promise<void> {
 
 /**
  * Handles profile form submission
- * @async
- * @function handleFormSubmission
  * @param {Event} e - Form submission event
  * @private
  */
@@ -124,7 +104,6 @@ async function handleFormSubmission(e: Event): Promise<void> {
 
 /**
  * Sets up form submission handler
- * @function setupFormHandler
  * @private
  */
 function setupFormHandler(): void {
@@ -142,9 +121,6 @@ function setupFormHandler(): void {
 
 /**
  * Initializes profile editor functionality
- * @function initializeProfileEditor
- * @example
- * initializeProfileEditor();
  */
 export function initializeProfileEditor(): void {
     setupFormHandler();

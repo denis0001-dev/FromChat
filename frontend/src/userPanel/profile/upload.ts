@@ -6,10 +6,10 @@
  */
 
 import type { Dialog } from "mdui/components/dialog";
-import { ImageCropper } from './image-cropper';
+import { ImageCropper } from './imageCropper';
 import { uploadProfilePicture } from './api';
 import { loadProfile } from './api';
-import { showSuccess, showError } from '../utils/notification';
+import { showSuccess, showError } from '../../utils/notification';
 
 /**
  * Global image cropper instance
@@ -33,8 +33,6 @@ let cropperArea = document.getElementById('cropper-area')!;
 
 /**
  * Opens the image cropper with the selected file
- * @async
- * @function openCropper
  * @param {File} file - The image file to crop
  * @private
  */
@@ -54,7 +52,6 @@ async function openCropper(file: File): Promise<void> {
 
 /**
  * Closes the image cropper and cleans up resources
- * @function closeCropper
  * @private
  */
 function closeCropper(): void {
@@ -69,8 +66,6 @@ function closeCropper(): void {
 
 /**
  * Saves the cropped image and uploads it to the server
- * @async
- * @function saveCroppedImage
  * @private
  */
 async function saveCroppedImage(): Promise<void> {
@@ -87,7 +82,7 @@ async function saveCroppedImage(): Promise<void> {
     if (result) {
         // Update profile picture display
         const profilePicture = document.getElementById('profile-picture') as HTMLImageElement;
-        profilePicture.src = result.profile_picture_url + '?t=' + Date.now(); // Cache bust
+        profilePicture.src = `${result.profile_picture_url}?t=${Date.now()}`; // Cache bust
         
         // Close cropper
         closeCropper();
@@ -101,7 +96,6 @@ async function saveCroppedImage(): Promise<void> {
 
 /**
  * Sets up event listeners for upload functionality
- * @function setupEventListeners
  * @private
  */
 function setupEventListeners(): void {
@@ -136,9 +130,6 @@ function setupEventListeners(): void {
 /**
  * Loads and displays the user's profile picture
  * @async
- * @function loadProfilePicture
- * @example
- * await loadProfilePicture();
  */
 export async function loadProfilePicture(): Promise<void> {
     const userData = await loadProfile();
@@ -154,9 +145,6 @@ export async function loadProfilePicture(): Promise<void> {
 
 /**
  * Initializes profile upload functionality
- * @function initializeProfileUpload
- * @example
- * initializeProfileUpload();
  */
 export function initializeProfileUpload(): void {
     setupEventListeners();

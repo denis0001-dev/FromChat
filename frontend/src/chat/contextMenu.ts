@@ -5,13 +5,13 @@
  * @version 1.0.0
  */
 
-import { currentUser, authToken } from "./auth";
-import { websocket } from "./websocket";
-import type { Message, WebSocketMessage } from "./types";
-import { showSuccess, showError } from "./utils/notification";
-import { delay } from "./utils/utils";
+import { websocket } from "../websocket";
+import type { Message, WebSocketMessage } from "../core/types";
+import { showSuccess, showError } from "../utils/notification";
+import { delay } from "../utils/utils";
 import type { Dialog } from "mdui/components/dialog";
 import type { TextField } from "mdui/components/text-field";
+import { currentUser, authToken } from "../auth/api";
 
 
 let menu = document.getElementById("message-context-menu")!;
@@ -83,7 +83,7 @@ export function show(message: Message, x: number, y: number): void {
     const deleteItem = menu.querySelector('[data-action="delete"]') as HTMLElement;
     
     const isAuthor = message.username === currentUser?.username;
-    const isOwner = !!currentUser?.admin;
+    const isOwner = currentUser?.admin;
 
     editItem.style.display = isAuthor ? 'flex' : 'none';
     deleteItem.style.display = (isAuthor || isOwner) ? 'flex' : 'none';

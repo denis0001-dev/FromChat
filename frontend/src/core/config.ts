@@ -7,21 +7,18 @@
 
 /**
  * Base API endpoint for all backend requests
- * @type {string}
  * @constant
  */
-export const API_BASE_URL: string = '/api';
+export const API_BASE_URL = `${location.host || "https://fromchat.toolbox-io.ru"}/api`;
 
 /**
  * Full API URL including hostname and port for WebSocket connections
- * @type {string}
  * @constant
  */
-export const API_FULL_BASE_URL: string = `${location.host}/api`;
+export const API_WS_BASE_URL = `${location.host || "fromchat.toolbox-io.ru"}/api`;
 
 /**
  * Application name displayed in UI and document title
- * @type {string}
  * @constant
  */
-export const PRODUCT_NAME: string = "FromChat";
+export const PRODUCT_NAME = "FromChat";

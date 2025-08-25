@@ -32,7 +32,6 @@ const panelMapping = {
 /**
  * Handles click events on settings list items
  * @param {Element} item - The clicked list item element
- * @function handleListItemClick
  * @private
  */
 function handleListItemClick(item: Element): void {
@@ -58,7 +57,6 @@ function handleListItemClick(item: Element): void {
 
 /**
  * Sets up click listeners for all settings list items
- * @function setupSettingsNavigation
  * @private
  */
 function setupSettingsNavigation(): void {
@@ -70,7 +68,6 @@ function setupSettingsNavigation(): void {
 
 /**
  * Resets settings dialog to show the first panel
- * @function resetToFirstPanel
  * @private
  */
 function resetToFirstPanel(): void {
@@ -86,7 +83,6 @@ function resetToFirstPanel(): void {
 
 /**
  * Sets up dialog event listeners
- * @function setupDialogListeners
  * @private
  */
 function setupDialogListeners(): void {

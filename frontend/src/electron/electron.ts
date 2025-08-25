@@ -1,5 +1,12 @@
+/**
+ * @fileoverview Electron-specific code
+ * @description This module initializes Electron-specific functionality.
+ * @author denis0001-dev
+ * @version 1.0.0
+ */
+
 import "../../electron.d.ts";
-import { PRODUCT_NAME } from "../config.ts";
+import { PRODUCT_NAME } from "../core/config.ts";
 
 if (window.electronInterface !== undefined) {
     console.log("Running in Electron");

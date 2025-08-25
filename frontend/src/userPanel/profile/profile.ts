@@ -6,9 +6,9 @@
  */
 
 import type { Dialog } from "mdui/components/dialog";
-import { loadProfileData } from './profile/editor';
-import { loadProfilePicture, initializeProfileUpload } from "./profile/upload";
-import { initializeProfileEditor } from './profile/editor';
+import { loadProfileData } from './editor';
+import { loadProfilePicture, initializeProfileUpload } from "./upload";
+import { initializeProfileEditor } from './editor';
 
 // Handle profile form submission
 const form = document.getElementById("profile-form")!;
@@ -24,10 +24,6 @@ form.addEventListener("submit", async (e) => {
 
 /**
  * Initializes profile functionality after user login
- * @function initializeProfile
- * @example
- * // Called after successful authentication
- * initializeProfile();
  */
 export function initializeProfile(): void {
     // Initialize profile modules

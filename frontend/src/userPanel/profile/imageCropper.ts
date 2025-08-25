@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import type { Size2D } from "../types";
+import type { Size2D } from "../../core/types";
 
 /**
  * Image cropper class for circular profile picture cropping
@@ -63,7 +63,6 @@ export class ImageCropper {
 
     /**
      * Sets up mouse and touch event listeners
-     * @function setupEventListeners
      * @private
      */
     private setupEventListeners(): void {
@@ -78,7 +77,6 @@ export class ImageCropper {
     /**
      * Handles mouse down events
      * @param {MouseEvent} e - Mouse event
-     * @function onMouseDown
      * @private
      */
     private onMouseDown(e: MouseEvent): void {
@@ -89,7 +87,6 @@ export class ImageCropper {
     /**
      * Handles mouse move events during dragging
      * @param {MouseEvent} e - Mouse event
-     * @function onMouseMove
      * @private
      */
     private onMouseMove(e: MouseEvent): void {
@@ -107,7 +104,6 @@ export class ImageCropper {
 
     /**
      * Handles mouse up events
-     * @function onMouseUp
      * @private
      */
     private onMouseUp(): void {
@@ -117,7 +113,6 @@ export class ImageCropper {
     /**
      * Handles touch start events
      * @param {TouchEvent} e - Touch event
-     * @function onTouchStart
      * @private
      */
     private onTouchStart(e: TouchEvent): void {
@@ -130,7 +125,6 @@ export class ImageCropper {
     /**
      * Handles touch move events during dragging
      * @param {TouchEvent} e - Touch event
-     * @function onTouchMove
      * @private
      */
     private onTouchMove(e: TouchEvent): void {
@@ -150,7 +144,6 @@ export class ImageCropper {
 
     /**
      * Handles touch end events
-     * @function onTouchEnd
      * @private
      */
     private onTouchEnd(): void {
@@ -161,9 +154,6 @@ export class ImageCropper {
      * Loads an image file for cropping
      * @param {File} file - Image file to load
      * @returns {Promise<void>} Promise that resolves when image is loaded
-     * @async
-     * @example
-     * await cropper.loadImage(fileInput.files[0]);
      */
     loadImage(file: File): Promise<void> {
         return new Promise((resolve) => {
@@ -178,7 +168,6 @@ export class ImageCropper {
 
     /**
      * Renders the image with circular crop overlay
-     * @function render
      * @private
      */
     private render(): void {
@@ -216,9 +205,6 @@ export class ImageCropper {
     /**
      * Gets the cropped image as a data URL
      * @returns {string} Data URL of the cropped image
-     * @example
-     * const croppedImage = cropper.getCroppedImage();
-     * // Use croppedImage as src for an img element
      */
     getCroppedImage(): string {
         return this.canvas.toDataURL('image/jpeg', 0.8);
@@ -226,9 +212,6 @@ export class ImageCropper {
 
     /**
      * Destroys the cropper and removes the canvas from DOM
-     * @function destroy
-     * @example
-     * cropper.destroy();
      */
     destroy(): void {
         if (this.canvas.parentNode) {

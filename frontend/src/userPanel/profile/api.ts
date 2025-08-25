@@ -5,14 +5,13 @@
  * @version 1.0.0
  */
 
-import { getAuthHeaders } from '../auth';
+import { getAuthHeaders } from '../../auth/api';
 import type { ProfileData, UploadResponse } from './types';
 
 /**
  * Loads user profile data from the server
  * @async
- * @function loadProfile
- * @returns {Promise<ProfileData | null>} User profile data or null if failed
+ * @returns User profile data or null if failed
  * @example
  * const profile = await loadProfile();
  * if (profile) {
@@ -38,8 +37,6 @@ export async function loadProfile(): Promise<ProfileData | null> {
 
 /**
  * Uploads a profile picture to the server
- * @async
- * @function uploadProfilePicture
  * @param {Blob} file - The image file to upload
  * @returns {Promise<UploadResponse | null>} Upload response with URL or null if failed
  * @example
@@ -47,7 +44,7 @@ export async function loadProfile(): Promise<ProfileData | null> {
  * const file = fileInput.files[0];
  * const result = await uploadProfilePicture(file);
  * if (result) {
- *   console.log('Uploaded to:', result.profile_picture_url);
+ *     console.log('Uploaded to:', result.profile_picture_url);
  * }
  */
 export async function uploadProfilePicture(file: Blob): Promise<UploadResponse | null> {
@@ -73,8 +70,6 @@ export async function uploadProfilePicture(file: Blob): Promise<UploadResponse |
 
 /**
  * Updates user profile information
- * @async
- * @function updateProfile
  * @param {Partial<ProfileData>} data - Profile data to update
  * @returns {Promise<boolean>} True if update was successful, false otherwise
  * @example
@@ -103,8 +98,6 @@ export async function updateProfile(data: Partial<ProfileData>): Promise<boolean
 
 /**
  * Updates user bio
- * @async
- * @function updateBio
  * @param {string} bio - New bio text
  * @returns {Promise<boolean>} True if update was successful, false otherwise
  * @example

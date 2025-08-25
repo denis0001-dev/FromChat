@@ -5,7 +5,7 @@
  * @version 1.0.0
  */
 
-import { showLogin } from "./auth";
+import { showLogin } from "../navigation";
 import { PRODUCT_NAME } from "./config";
 
 showLogin();

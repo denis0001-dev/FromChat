@@ -15,7 +15,6 @@ export type NotificationType = 'success' | 'error';
  * Shows a notification with the specified message and type
  * @param {string} message - The message to display
  * @param {NotificationType} type - The type of notification (success or error)
- * @function showNotification
  * @private
  */
 function showNotification(message: string, type: NotificationType): void {
@@ -49,9 +48,6 @@ function showNotification(message: string, type: NotificationType): void {
 /**
  * Shows a success notification
  * @param {string} message - The success message to display
- * @function showSuccess
- * @example
- * showSuccess('Profile updated successfully!');
  */
 export function showSuccess(message: string): void {
     showNotification(message, 'success');
@@ -60,9 +56,6 @@ export function showSuccess(message: string): void {
 /**
  * Shows an error notification
  * @param {string} message - The error message to display
- * @function showError
- * @example
- * showError('Failed to update profile');
  */
 export function showError(message: string): void {
     showNotification(message, 'error');
