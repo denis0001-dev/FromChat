@@ -28,7 +28,7 @@ jobs:
         run: |
           mkdir -p deployment
           touch deployment/.env
-          cat < deployment/.env << EOF
+          cat > deployment/.env << EOF
           JWT_SECRET=${{ secrets.JWT_SECRET }}
           EOF
       - name: Build container

@@ -23,9 +23,11 @@ venv/
 
 # Common
 # Exclude editor and OS files, as well as test results
-/dist
-/build
-/coverage
-/test_results/
+dist
+dist-electron
+build
+coverage
+test_results/
+out
 
 data
