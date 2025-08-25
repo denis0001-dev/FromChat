@@ -4,6 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisco
 from fastapi.security import HTTPAuthorizationCredentials
 from sqlalchemy.orm import Session
 from dependencies import get_current_user, get_db
+from constants import OWNER_USERNAME
 from models import Message, SendMessageRequest, EditMessageRequest, ReplyMessageRequest, User
 
 router = APIRouter()
@@ -105,7 +106,8 @@ async def delete_message(
     if not message:
         raise HTTPException(status_code=404, detail="Message not found")
     
-    if message.user_id != current_user.id:
+    # Allow owner to delete any message
+    if current_user.username != OWNER_USERNAME and message.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="You can only delete your own messages")
     
     db.delete(message)

@@ -81,6 +81,7 @@ export interface User {
     last_seen: string;
     online: boolean;
     username: string;
+    admin?: boolean;
     bio?: string;
 }
 

@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from routes.messaging import convert_message
+from constants import OWNER_USERNAME
 from dependencies import get_current_user, get_db
 from models import LoginRequest, RegisterRequest, User
 from utils import create_token, get_password_hash, verify_password
@@ -16,14 +17,16 @@ def convert_user(user: User) -> dict:
         "created_at": user.created_at.isoformat(),
         "last_seen": user.last_seen.isoformat(),
         "online": user.online,
-        "username": user.username
+        "username": user.username,
+        "admin": user.username == OWNER_USERNAME
     }
 
 @router.get("/check_auth")
 def check_auth(current_user: User = Depends(get_current_user)):
     return {
         "authenticated": True,
-        "username": current_user.username
+        "username": current_user.username,
+        "admin": current_user.username == OWNER_USERNAME
     }
 
 
@@ -57,6 +60,16 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
     password = request.password.strip()
     confirm_password = request.confirm_password.strip()
 
+    # Determine if owner already exists
+    owner_exists = db.query(User).filter(User.username == OWNER_USERNAME).first() is not None
+
+    # If owner not yet registered, only allow the owner to register
+    if not owner_exists and username != OWNER_USERNAME:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Регистрация временно закрыта до регистрации владельца"
+        )
+
     # Validate input
     if not is_valid_username(username):
         raise HTTPException(
@@ -74,6 +87,13 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Пароли не совпадают"
+        )
+
+    # After owner exists, disallow registering the reserved owner username via public registration
+    if owner_exists and username == OWNER_USERNAME:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Это имя пользователя зарезервировано"
         )
 
     existing_user = db.query(User).filter(User.username == username).first()
@@ -99,6 +119,34 @@ def register(request: RegisterRequest, db: Session = Depends(get_db)):
         "status": "success",
         "message": "Регистрация прошла успешно Теперь вы можете войти."
     }
+
+
+@router.delete("/admin/user/{user_id}")
+def delete_user_as_owner(
+    user_id: int,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    # Only owner can delete users
+    if current_user.username != OWNER_USERNAME:
+        raise HTTPException(status_code=403, detail="Only owner can perform this action")
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Prevent deleting the owner account via API
+    if user.username == OWNER_USERNAME:
+        raise HTTPException(status_code=400, detail="Cannot delete owner account")
+
+    # Manually delete user's messages to satisfy FK constraints
+    from models import Message  # local import to avoid circular
+    db.query(Message).filter(Message.user_id == user.id).delete()
+
+    db.delete(user)
+    db.commit()
+
+    return {"status": "success", "deleted_user_id": user_id}
 
 @router.get("/logout")
 def logout(

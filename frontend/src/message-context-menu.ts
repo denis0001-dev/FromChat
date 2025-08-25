@@ -78,17 +78,15 @@ function bindEvents(): void {
 export function show(message: Message, x: number, y: number): void {
     currentMessage = message;
     
-    // Only show edit and delete for own messages
+    // Show delete for own messages and for owner on any message
     const editItem = menu.querySelector('[data-action="edit"]') as HTMLElement;
     const deleteItem = menu.querySelector('[data-action="delete"]') as HTMLElement;
     
-    if (message.username === currentUser?.username) {
-        editItem.style.display = 'flex';
-        deleteItem.style.display = 'flex';
-    } else {
-        editItem.style.display = 'none';
-        deleteItem.style.display = 'none';
-    }
+    const isAuthor = message.username === currentUser?.username;
+    const isOwner = !!currentUser?.admin;
+
+    editItem.style.display = isAuthor ? 'flex' : 'none';
+    deleteItem.style.display = (isAuthor || isOwner) ? 'flex' : 'none';
     
     // Position the menu properly
     menu.style.display = 'block';
